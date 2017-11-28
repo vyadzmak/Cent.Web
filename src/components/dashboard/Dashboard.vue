@@ -31,6 +31,7 @@
     </v-navigation-drawer>
     <v-toolbar app fixed :clipped-left="clipped"  dark class="primary">
       <v-toolbar-side-icon @click.stop="drawer = !drawer" dark></v-toolbar-side-icon>
+      <img width="50" src="/static/favicon.png"/>
       <v-toolbar-title v-html="title"  @click="logOut()">
       </v-toolbar-title>
       <v-spacer></v-spacer>

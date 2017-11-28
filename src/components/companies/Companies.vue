@@ -23,11 +23,7 @@
     >
     <template slot="items" scope="props">
     <tr  @click="goToUsers(props.item.id)">
-      <td>{{ props.item.id }}</td>
-      <td>{{ props.item.name }}</td>
-      <td>{{ props.item.registration_number }}</td>
-      <td>{{ props.item.registration_date | moment("DD.MM.YYYY HH:mm") }}</td>
-      <td>{{ props.item.client_type.name }}</td>
+      <td v-for="h in headers" :key="h.value">{{ _.get(props.item, h.value) }}</td>
       <td class="px-1">
          <v-tooltip top>
       <v-btn @click.stop="updatePressed(props.item)"  slot="activator" icon class="indigo--text"><v-icon>fa-pencil-square-o</v-icon></v-btn>
@@ -44,6 +40,48 @@
     </template>
   </v-data-table>
   </v-card>
+ <!--  <yandex-map 
+  :coords="[53.915746, 27.428979]"
+  zoom="10"
+  style="width: 100%; height: 600px;"
+  :cluster-options="{
+    1: {clusterDisableClickZoom: true}
+  }"
+  :behaviors="['drag', 'dblClickZoom', 'rightMouseButtonMagnifier','ruler']"
+  :controls="['fullscreenControl','geolocationControl','routeEditor','rulerControl','searchControl','trafficControl','typeSelector','zoomControl']"
+  :placemarks="placemarks" 
+  map-type="map"
+  >
+ 
+    <ymap-marker 
+      marker-type="placemark"
+      :coords="[54.7, 39.7]"
+      hint-content="Hint content 1"
+      :balloon="{header: 'header', body: 'body', footer: 'footer'}"
+      :icon="{color: 'green', glyph: 'cinema'}"
+      cluster-name="1"
+    ></ymap-marker>
+ 
+    <ymap-marker 
+      marker-type="placemark"
+      :coords="[54.6, 39.8]"
+      hint-content="Hint content 1"
+      :balloon="{header: 'header', body: 'body', footer: 'footer'}"
+      :icon="{color: 'green', glyph: 'cinema'}"
+      cluster-name="1"
+    ></ymap-marker>
+ 
+    <ymap-marker 
+      marker-type="circle"
+      :coords="[27.525773, 53.89079]"
+      circle-radius="1600"
+      hint-content="Hint content 1"
+      :marker-fill="{color: '#000000', opacity: 0.4}"
+      :marker-stroke="{color: '#ff0000', width: 5}"
+      :balloon="{header: 'header', body: 'body', footer: 'footer'}"
+    ></ymap-marker>
+ 
+</yandex-map> -->
 </div>
 </template>
 

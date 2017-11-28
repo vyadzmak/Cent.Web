@@ -3,7 +3,7 @@ import updateModal from './updateModal/updateModal.vue'
 import { ModalService } from 'vue-modal-dialog'
 
 export default {
-  name: 'projects',
+  name: 'factories',
   data () {
     return {
       msg: 'Проекты',
@@ -15,7 +15,7 @@ export default {
         { text: 'Дата создания', align: 'left', value: 'creation_date' },
         { text: 'Клиент', align: 'left', value: 'user_data.client.name' },
         { text: 'Пользователь', align: 'left', value: 'user_data.last_name' },
-        { text: 'Состояние', align: 'left', value: 'project_state.name' }
+        { text: 'Состояние', align: 'left', value: 'factory_state.name' }
       ],
       tableRowsShown: [10, 20, 50, 100, {text: 'Все', value: -1}],
       rowsPerPageText: 'Строк на странице',
@@ -27,8 +27,8 @@ export default {
     userData: function () {
       return this.$store.getters.userData
     },
-    projects: function () {
-      return this.$store.getters.projects
+    factories: function () {
+      return this.$store.getters.factories
     }
   },
   methods: {
@@ -50,34 +50,42 @@ export default {
       }
     )
     },
-    updatePressed (item) { console.log(item) },
     showUpdateModal: function (item) {
       let isUpdate = false
       if (item.id) {
         isUpdate = true
+      } else {
+        item.fields = []
+        item.group_title = ''
+        item.is_catalog = false
+        item.name = ''
+        item.title = ''
+        item.description = ''
+        item.user_id = this.userData.id
+        item.client_id = this.userData.client_id
       }
 
       let modalConfig = {
         size: 'lg',
         data: {
-          title: (isUpdate ? 'Обновление' : 'Добавление') + ' проекта',
+          title: (isUpdate ? 'Обновление' : 'Добавление') + ' конструктора',
           isClosable: true,
-          item: isUpdate ? Object.assign({}, item) : item
+          item: item
         }
       }
       ModalService.open(updateModal, modalConfig).then(
           modalSubmit => {
-            this.getAllProjects()
+            this.updateItem(modalSubmit, isUpdate)
           },
           modalCancel => { console.log(modalCancel) }
       ).catch(err => { console.log(err) })
     },
     deleteItem: function (itemId) {
       this.$store.commit('showSpinner', true)
-      this.$http.delete('project/' + itemId)
+      this.$http.delete('factory/' + itemId)
       .then(response => {
         if (response.data && response.data !== 'Error') {
-          this.projects.splice(this.projects.findIndex((element, index, array) => {
+          this.factories.splice(this.factories.findIndex((element, index, array) => {
             if (element.id === itemId) {
               return true
             }
@@ -95,34 +103,18 @@ export default {
       })
     },
     updateItem: function (item, isUpdate) {
-      this.$store.dispatch('updateProject', {http: this.$http, isUpdate: isUpdate, project: item})
+      this.$store.dispatch('updateFactory', {http: this.$http, isUpdate: isUpdate, item: item})
     },
-    goToProject (item) {
-      this.$store.commit('CURRENT_PROJECT', item)
-      this.$router.push({name: 'Project', params: {id: item.id}})
-    },
-    getAllProjects (isSilent) {
-      this.$store.commit('showSpinner', !isSilent)
-      this.$store.dispatch('getAllProjects', this.$http)
-      .then(response => {
-        this.$store.commit('showSpinner', false)
-      })
-      .catch(e => {
-        this.errors.push(e)
-        this.$store.commit('showSpinner', false)
-      })
+    getAllFactories () {
+      this.$store.dispatch('getAllFactories', this.$http)
     }
   },
   created () {
-    this.getAllProjects()
-    this.interval = setInterval(function () {
-      this.getAllProjects(true)
-    }.bind(this), 10000)
+    this.getAllFactories()
   },
   mounted () {
-    this.$refs.projectsDataTable.defaultPagination.descending = true
+    this.$refs.factoriesDataTable.defaultPagination.descending = true
   },
   beforeDestroy () {
-    clearInterval(this.interval)
   }
 }

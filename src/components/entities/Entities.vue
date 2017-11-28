@@ -2,7 +2,7 @@
     <div>
         <v-card>
       <v-card-title>
-      <v-btn @click.stop="showUpdateModal({})" color="success" dark>Добавить проект</v-btn>
+      <v-btn @click.stop="showUpdateModal({})" color="success" dark>Добавить объект</v-btn>
       <v-spacer></v-spacer>
       <v-text-field
         append-icon="search"
@@ -13,9 +13,9 @@
       ></v-text-field>
     </v-card-title>
         <v-data-table
-        ref = "projectsDataTable"
+        ref = "entitiesDataTable"
       :headers="headers"
-      :items="projects"
+      :items="entities"
       :search="search"
       :rows-per-page-items="tableRowsShown"
       :rows-per-page-text="rowsPerPageText"
@@ -23,13 +23,8 @@
       :no-data-text="noDataText"
     >
     <template slot="items" scope="props">
-    <tr  @click="goToProject(props.item)" :class="{'red--text':props.item.state_id===4}">
+    <tr  @click="goToEntity(props.item)" :class="{'red--text':props.item.state_id===4}">
       <td>{{ props.item.id }}</td>
-      <td>{{ props.item.name }}</td>
-      <td>{{ props.item.creation_date | moment("DD.MM.YYYY HH:mm") }}</td>
-      <td>{{props.item.user_data.client.name}}</td>
-      <td>{{props.item.user_data.last_name}} {{props.item.user_data.first_name}}</td>
-      <td>{{ props.item.project_state.name }}</td>
       <td class="px-1">
   <v-tooltip top>
       <v-btn @click.stop="infoPressed(props.item)"  slot="activator"
@@ -58,7 +53,7 @@
     </div>
 </template>
 
-<script src="./projectsJs.js"></script>
+<script src="./entitiesJs.js"></script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped src="./projects.css"></style>
+<style scoped src="./entities.css"></style>

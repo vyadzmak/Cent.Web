@@ -3,16 +3,14 @@ import * as actions from './actions'
 
 // initial state
 const state = {
-  cellDetails: {},
-  currentCell: {},
-  sheetUIData: {}
+  factories: [],
+  currentFactory: {}
 }
 
 // getters
 const getters = {
-  cellDetails: state => state.cellDetails,
-  currentCell: state => state.currentCell,
-  sheetUIData: state => state.sheetUIData
+  factories: state => state.factories,
+  currentFactory: state => state.currentFactory
 }
 export default {
   state,

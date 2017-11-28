@@ -13,7 +13,7 @@
         v-model="search"
       ></v-text-field>
     </v-card-title>
-        <v-data-table ref="projectDataTable"
+        <v-data-table ref="entityDataTable"
       :headers="headers"
       :items="documents"
       :search="search"
@@ -50,7 +50,7 @@
     </div>
 </template>
 
-<script src="./projectJs.js"></script>
+<script src="./entityJs.js"></script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped src="./project.css"></style>
+<style scoped src="./entity.css"></style>

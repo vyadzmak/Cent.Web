@@ -7,28 +7,31 @@
         </v-card-title>
         <v-form v-model="valid" ref="form" class="v-card-form">
         <v-text-field
-      label="Наименование клиента"
+      label="Название"
       v-model="data.item.name"
       :rules="nameRules"
       required
     ></v-text-field>
     <v-text-field
-      label="Регистрационный номер"
-      v-model="data.item.registration_number"
-      :rules="regRules"
+      label="Заголовок"
+      v-model="data.item.title"
+      :rules="nameRules"
       required
     ></v-text-field>
-    <v-select
-      label="Тип организации"
-      v-model="data.item.client_type_id"
-      item-text="name"
-      item-value="id"
-      :items="clientTypeItems"
-      :rules="[(v) => !!v || 'Выберите тип организации']"
+    <v-text-field
+      label="Описание"
+      v-model="data.item.description"
+      :rules="nameRules"
       required
-    ></v-select>
-    <v-switch :label="`Статус: ${data.item.lock_state?'заблокирован':'активный'}`"
-                        v-model="data.item.lock_state"
+    ></v-text-field>
+    <v-text-field
+      label="Заголовок группы"
+      v-model="data.item.group_title"
+      :rules="nameRules"
+      required
+    ></v-text-field>
+    <v-switch :label="`Тип: ${data.item.is_catalog?'каталог':'объект'}`"
+                        v-model="data.item.is_catalog"
                         color="error"></v-switch>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -37,17 +40,8 @@
           <v-btn color="error" dark @click="cancel">Отмена</v-btn>
         </v-card-actions>
         </v-form>
-        <v-form  class="v-card-form">
-      <vue-form-generator :schema="schema" :model="data.item" :options="formOptions" v-if="clientTypeItems">
-      </vue-form-generator>
-      <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn @click="clear">Очистить</v-btn>
-          <v-btn :class="{ green: valid, red: !valid }" color="success" dark @click="submit">Сохранить</v-btn>
-          <v-btn color="error" dark @click="cancel">Отмена</v-btn>
-        </v-card-actions>
-    </v-form>
       </v-card>
+      
 </template>
 
 <script src="./updateModalJs.js"></script>

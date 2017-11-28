@@ -1,22 +1,21 @@
 import questionDialog from '../questionDialog/questionDialog'
-// import updateModal from './updateModal/updateModal.vue'
+import updateModal from './updateModal/updateModal.vue'
 import { ModalService } from 'vue-modal-dialog'
 
 export default {
-  name: 'project',
+  name: 'entities',
   data () {
     return {
-      msg: 'Проект',
+      msg: 'Проекты',
       search: '',
       errors: [],
-      activeTab: null,
       headers: [
         { text: 'ID', align: 'left', value: 'id' },
-        { text: 'Имя файла', align: 'left', value: 'file_name' },
-        { text: 'Размер, MB', align: 'left', value: 'file_size' },
-        { text: 'Время загрузки', align: 'left', value: 'created_date' },
+        { text: 'Наименование', align: 'left', value: 'name' },
+        { text: 'Дата создания', align: 'left', value: 'creation_date' },
+        { text: 'Клиент', align: 'left', value: 'user_data.client.name' },
         { text: 'Пользователь', align: 'left', value: 'user_data.last_name' },
-        { text: 'Состояние', align: 'left', value: 'document_state.name' }
+        { text: 'Состояние', align: 'left', value: 'entity_state.name' }
       ],
       tableRowsShown: [10, 20, 50, 100, {text: 'Все', value: -1}],
       rowsPerPageText: 'Строк на странице',
@@ -25,17 +24,11 @@ export default {
     }
   },
   computed: {
-    userData () {
-      return this.$store.state.userData
+    userData: function () {
+      return this.$store.getters.userData
     },
-    project () {
-      return this.$store.getters.currentProject
-    },
-    documents () {
-      return this.$store.getters.currentDocuments
-    },
-    projectForm () {
-      return this.$store.getters.currentProjectForm
+    entities: function () {
+      return this.$store.getters.entities
     }
   },
   methods: {
@@ -58,12 +51,33 @@ export default {
     )
     },
     updatePressed (item) { console.log(item) },
-    deleteItem (itemId) {
+    showUpdateModal: function (item) {
+      let isUpdate = false
+      if (item.id) {
+        isUpdate = true
+      }
+
+      let modalConfig = {
+        size: 'lg',
+        data: {
+          title: (isUpdate ? 'Обновление' : 'Добавление') + ' проекта',
+          isClosable: true,
+          item: isUpdate ? Object.assign({}, item) : item
+        }
+      }
+      ModalService.open(updateModal, modalConfig).then(
+          modalSubmit => {
+            this.getAllEntities()
+          },
+          modalCancel => { console.log(modalCancel) }
+      ).catch(err => { console.log(err) })
+    },
+    deleteItem: function (itemId) {
       this.$store.commit('showSpinner', true)
-      this.$http.delete('userprojects', {params: {id: itemId}})
+      this.$http.delete('entity/' + itemId)
       .then(response => {
         if (response.data && response.data !== 'Error') {
-          this.projects.splice(this.projects.findIndex((element, index, array) => {
+          this.entities.splice(this.entities.findIndex((element, index, array) => {
             if (element.id === itemId) {
               return true
             }
@@ -80,20 +94,27 @@ export default {
         this.$store.commit('showSnackbar', {text: 'Удаление проекта не удалось. Обратитесь к администратору', snackbar: true, context: 'error'})
       })
     },
-    goToFinAnalysis () {
-      this.$router.push({name: 'FinAnalysis', params: {id: this.project.id}})
-    }
-  },
-  watch: {
-    projectForm: function (val) {
+    updateItem: function (item, isUpdate) {
+      this.$store.dispatch('updateEntity', {http: this.$http, isUpdate: isUpdate, entity: item})
+    },
+    goToEntity (item) {
+      this.$store.commit('CURRENT_ENTITY', item)
+      this.$router.push({name: 'Entity', params: {id: item.id}})
+    },
+    getAllEntities (isSilent) {
+      this.$store.dispatch('getAllEntities', this.$http, isSilent)
     }
   },
   created () {
-    this.$store.dispatch('getProjectAnalysisById', {http: this.$http, projectId: this.$route.params.id}).then(() => {
-      this.$store.dispatch('getProjectDocumentsById', {http: this.$http, projectId: this.$route.params.id})
-    })
+    this.getAllEntities()
+    this.interval = setInterval(function () {
+      this.getAllEntities(true)
+    }.bind(this), 100000)
   },
   mounted () {
-    this.$refs.projectDataTable.defaultPagination.descending = true
+    this.$refs.entitiesDataTable.defaultPagination.descending = true
+  },
+  beforeDestroy () {
+    clearInterval(this.interval)
   }
 }

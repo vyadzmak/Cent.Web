@@ -20,6 +20,15 @@ export default {
       rowsPerPageText: 'Строк на странице',
       noDataText: 'Нет данных',
       noResultsText: 'Поиск не дал результатов'
+      // placemarks: [
+      //   {
+      //     coords: [54.8, 39.8],
+      //     properties: {}, // define properties here
+      //     options: {}, // define options here
+      //     clusterName: '1',
+      //     callbacks: { click: function () {} }
+      //   }
+      // ]
     }
   },
   computed: {
@@ -57,7 +66,9 @@ export default {
         item = {name: '',
           registration_number: '',
           lock_state: false,
-          client_type_id: null
+          client_type_id: null,
+          employees: [],
+          bdate: null
         }
       }
       let modalConfig = {

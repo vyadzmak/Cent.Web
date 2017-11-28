@@ -2,8 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import VuexPersist from 'vuex-persist'
 import * as mutations from './mutations'
-import projects from './modules/projects/projects'
-import sheetUI from './modules/sheetUI/sheetUI'
+import entities from './modules/entities/entities'
+import factories from './modules/factories/factories'
 
 Vue.use(Vuex)
 
@@ -40,7 +40,7 @@ const store = new Vuex.Store({
   },
   mutations,
   plugins: [localStorage, sessionStorage],
-  modules: {projects, sheetUI}
+  modules: {entities, factories}
 })
 
 export default store

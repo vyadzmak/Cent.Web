@@ -10,14 +10,14 @@ export default {
       totalProgress: 0,
       filesCount: 0,
       showProgress: false,
-      updateItem: _.cloneDeep(this.$store.getters.currentProject),
+      updateItem: _.cloneDeep(this.$store.getters.currentEntity),
       sNameRules: [
         (v) => !!v || 'Наименование проекта должно быть заполнено',
         (v) => v && v.length <= 270 || 'Не более 270 символов'
       ],
       options: {
         acceptedFileTypes: ['.xlsx', '.xls'],
-        url: 'http://127.0.0.1:5000/upload;', // 'http://31.31.219.179:81/upload',
+        url: 'http://127.0.0.1:5000/upload;',
         clickable: false,
         autoProcessQueue: false,
         maxConcurrentUploads: 300,
