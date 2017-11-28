@@ -6,16 +6,17 @@ export default {
   name: 'factories',
   data () {
     return {
-      msg: 'Проекты',
+      msg: 'Конструкторы',
       search: '',
       errors: [],
       headers: [
-        { text: 'ID', align: 'left', value: 'id' },
+        { text: 'Id', align: 'left', value: 'id' },
         { text: 'Наименование', align: 'left', value: 'name' },
+        { text: 'Заголовок', align: 'left', value: 'title' },
+        { text: 'Описание', align: 'left', value: 'description' },
         { text: 'Дата создания', align: 'left', value: 'creation_date' },
-        { text: 'Клиент', align: 'left', value: 'user_data.client.name' },
-        { text: 'Пользователь', align: 'left', value: 'user_data.last_name' },
-        { text: 'Состояние', align: 'left', value: 'factory_state.name' }
+        { text: 'Тип', align: 'left', value: 'is_catalog' },
+        { text: 'Id польз.', align: 'left', value: 'user_id' }
       ],
       tableRowsShown: [10, 20, 50, 100, {text: 'Все', value: -1}],
       rowsPerPageText: 'Строк на странице',
@@ -36,8 +37,8 @@ export default {
       let modalConfig = {
         size: 'md',
         data: {
-          message: 'Вы действительно хотите удалить проект?',
-          title: 'Удаление проекта',
+          message: 'Вы действительно хотите удалить конструктор?',
+          title: 'Удаление конструктора',
           isClosable: true
         }
       }
@@ -81,32 +82,17 @@ export default {
       ).catch(err => { console.log(err) })
     },
     deleteItem: function (itemId) {
-      this.$store.commit('showSpinner', true)
-      this.$http.delete('factory/' + itemId)
-      .then(response => {
-        if (response.data && response.data !== 'Error') {
-          this.factories.splice(this.factories.findIndex((element, index, array) => {
-            if (element.id === itemId) {
-              return true
-            }
-          }), 1)
-          this.$store.commit('showSnackbar', {text: 'Удаление проекта прошло успешно', snackbar: true, context: 'success'})
-        } else {
-          this.$store.commit('showSnackbar', {text: 'Удаление проекта не удалось. Обратитесь к администратору', snackbar: true, context: 'error'})
-        }
-        this.$store.commit('showSpinner', false)
-      })
-      .catch(e => {
-        this.errors.push(e)
-        this.$store.commit('showSpinner', false)
-        this.$store.commit('showSnackbar', {text: 'Удаление проекта не удалось. Обратитесь к администратору', snackbar: true, context: 'error'})
-      })
+      this.$store.dispatch('deleteFactory', {id: itemId, http: this.$http})
     },
     updateItem: function (item, isUpdate) {
       this.$store.dispatch('updateFactory', {http: this.$http, isUpdate: isUpdate, item: item})
     },
     getAllFactories () {
       this.$store.dispatch('getAllFactories', this.$http)
+    },
+    goToFactory (item) {
+      this.$store.commit('CURRENT_FACTORY', item)
+      this.$router.push({name: 'Factory', params: {id: item.id}})
     }
   },
   created () {

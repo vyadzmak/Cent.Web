@@ -5,6 +5,7 @@ import Login from '@/components/login/Login'
 import Users from '@/components/users/Users'
 import Companies from '@/components/companies/Companies'
 import Factories from '@/components/factories/Factories'
+import Factory from '@/components/factory/Factory'
 import Entities from '@/components/entities/Entities'
 import Entity from '@/components/entity/Entity'
 import Settings from '@/components/settings/Settings'
@@ -18,10 +19,10 @@ function requireAuth (to, from, next) {
   if (store.state.userData) {
     let userRoutes = []
     switch (store.state.userData.user_role_id) {
-      case 1: userRoutes = ['Dashboard', 'Users', 'Companies', 'Factories', 'Entities', 'Settings', 'Log', 'Entity']
+      case 1: userRoutes = ['Dashboard', 'Users', 'Companies', 'Factories', 'Factory', 'Entities', 'Settings', 'Log', 'Entity']
         break
       case 2:
-      case 3: userRoutes = ['Dashboard', 'Users', 'Companies', 'Factories', 'Entities', 'Entity']
+      case 3: userRoutes = ['Dashboard', 'Users', 'Companies', 'Factories', 'Factory', 'Entities', 'Entity']
         break
       default: break
     }
@@ -66,6 +67,11 @@ const router = new Router({
       path: '/factories',
       name: 'Factories',
       component: Factories
+    },
+    {
+      path: '/factory',
+      name: 'Factory',
+      component: Factory
     },
     {
       path: '/entities',

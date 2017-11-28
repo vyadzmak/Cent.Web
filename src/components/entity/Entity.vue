@@ -22,7 +22,7 @@
       :no-results-text="noResultsText"
       :no-data-text="noDataText"
     >
-    <template slot="items" scope="props">
+    <template slot="items" slot-scope="props">
     <tr>
       <td>{{props.item.id}}</td>
       <td>{{props.item.file_name}}</td>

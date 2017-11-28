@@ -21,7 +21,7 @@
       :no-results-text="noResultsText"
       :no-data-text="noDataText"
     >
-    <template slot="items" scope="props">
+    <template slot="items" slot-scope="props">
     <tr>
       <td>{{ props.item.Id }}</td>
       <td>{{ props.item.SettingName }}</td>

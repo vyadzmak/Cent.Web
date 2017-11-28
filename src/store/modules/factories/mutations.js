@@ -14,7 +14,8 @@ const mutations = {
     state.factories[index] = factory
   },
 
-  [types.DELETE_FACTORY] (state, index) {
+  [types.DELETE_FACTORY] (state, id) {
+    let index = _.findIndex(state.factories, ['id', id])
     state.factories.splice(index, 1)
   },
 

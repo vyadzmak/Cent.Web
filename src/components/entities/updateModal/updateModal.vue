@@ -36,7 +36,7 @@
             </v-layout>
           </v-container>
         </v-card-media>
-        <template slot="files" scope="props">
+        <template slot="files" slot-scope="props">
           <v-card-text v-show="props.files.length>0">
             <v-list>
               <v-divider></v-divider>

@@ -45,7 +45,7 @@ export default {
 }
 </script>
 
-<styles <style lang="scss">
+<style lang="scss">
 @import "~vue-modal-dialog/src/modal";
 
 @mixin centerer() {

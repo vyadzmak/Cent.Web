@@ -22,7 +22,7 @@
       :no-results-text="noResultsText"
       :no-data-text="noDataText"
     >
-    <template slot="items" scope="props">
+    <template slot="items" slot-scope="props">
     <tr  @click="goToEntity(props.item)" :class="{'red--text':props.item.state_id===4}">
       <td>{{ props.item.id }}</td>
       <td class="px-1">

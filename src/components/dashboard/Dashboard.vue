@@ -6,6 +6,7 @@
       :clipped="clipped"
       v-model="drawer"
       enable-resize-watcher app
+      fixed
     >
       <v-list>
         <v-list-tile
@@ -107,13 +108,11 @@
       </v-btn> -->
     </v-speed-dial>
     </v-toolbar>
-    <main>
       <v-content>
     <v-container fluid>
         <router-view></router-view>
       </v-container>
       </v-content>
-    </main>
     <!-- <v-navigation-drawer
       temporary app
       :right="right"

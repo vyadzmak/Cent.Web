@@ -22,12 +22,18 @@
       :no-results-text="noResultsText"
       :no-data-text="noDataText"
     >
-    <template slot="items" scope="props">
-    <tr>
+    <template slot="items" slot-scope="props">
+    <tr @click="goToFactory(props.item)">
       <td>{{ props.item.id }}</td>
+      <td>{{ props.item.name }}</td>
+      <td>{{ props.item.title }}</td>
+      <td>{{ props.item.description }}</td>
+      <td>{{ props.item.creation_date | moment('DD.MM.YYYY') }}</td>
+      <td>{{ props.item.is_catalog?'каталог':'объект' }}</td>      
+      <td>{{ props.item.user_id }}</td>
       <td class="px-1">
          <v-tooltip top>
-      <v-btn @click.stop="updatePressed(props.item)"  slot="activator" icon class="indigo--text"><v-icon>fa-pencil-square-o</v-icon></v-btn>
+      <v-btn @click.stop="showUpdateModal(props.item)"  slot="activator" icon class="indigo--text"><v-icon>fa-pencil-square-o</v-icon></v-btn>
       <span>Редактировать</span>
     </v-tooltip>        
         </td>

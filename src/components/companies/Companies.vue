@@ -21,7 +21,7 @@
       :no-results-text="noResultsText"
       :no-data-text="noDataText"
     >
-    <template slot="items" scope="props">
+    <template slot="items" slot-scope="props">
     <tr  @click="goToUsers(props.item.id)">
       <td v-for="h in headers" :key="h.value">{{ _.get(props.item, h.value) }}</td>
       <td class="px-1">
