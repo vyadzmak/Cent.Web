@@ -7,7 +7,7 @@ export default {
     let cFactory = _.cloneDeep(this.$store.getters.currentFactory)
     cFactory.data = JSON.parse(cFactory.data)
     return {
-      msg: 'Конструкторы',
+      msg: 'Конструктор объекта ' + cFactory.title,
       search: '',
       errors: [],
       headers: [
@@ -42,22 +42,19 @@ export default {
       let modalConfig = {
         size: 'md',
         data: {
-          message: 'Вы действительно хотите удалить конструктор?',
-          title: 'Удаление конструктора',
+          message: 'Вы действительно хотите удалить поле конструктора?',
+          title: 'Удаление поля',
           isClosable: true
         }
       }
       ModalService.open(questionDialog, modalConfig).then(
-        modalSubmit => { this.deleteItem(itemId) },
+        modalSubmit => { this.deleteFieldItem(itemId) },
         modalCancel => {}
     ).catch(
       err => {
         console.log(err)
       }
     )
-    },
-    deleteItem: function (itemId) {
-      this.$store.dispatch('deleteFactory', {id: itemId, http: this.$http})
     },
     updateItem: function (item, isUpdate) {
       item.data = JSON.stringify(item.data)
@@ -138,6 +135,7 @@ export default {
     },
     deleteFieldItem (index) {
       this.factory.data.fields.splice(index)
+      this.updateItem(this.factory, true)
     }
   },
   created () {

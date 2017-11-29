@@ -2,7 +2,6 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import Vuetify from 'vuetify'
-import 'vuetify/dist/vuetify.css'
 import lodash from 'lodash'
 import VueLodash from 'vue-lodash'
 import VueTransmit from 'vue-transmit'
@@ -12,7 +11,11 @@ import VueMoment from 'vue-moment'
 import VueFormGenerator from 'vue-form-generator'
 import YmapPlugin from 'vue-yandex-maps'
 
+import 'vuetify/dist/vuetify.css'
 import './stylus/main.styl'
+import './stylus/material-design-icons/scss/materialdesignicons.scss'
+import './stylus/font-awesome/scss/font-awesome.scss'
+
 import App from './App'
 import router from './router'
 import store from './store/index'

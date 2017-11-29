@@ -35,9 +35,9 @@ export default {
     items: function () {
       return [
         { icon: 'dashboard', title: 'Объекты', path: '/entities', visible: this.userData.user_role_id !== 4 },
-        { icon: 'developer_board', title: 'Контруктор объектов', path: '/factories', visible: this.userData.user_role_id === 1 || this.userData.user_role_id === 2 },
+        { icon: 'web', title: 'Настройки данных', path: '/factories', visible: this.userData.user_role_id === 1 || this.userData.user_role_id === 2 },
         { icon: 'perm_contact_calendar', title: 'Компании', path: '/companies', visible: this.userData.user_role_id !== 4 },
-        { icon: 'settings', title: 'Настройки', path: '/settings', visible: this.userData.user_role_id === 1 },
+        { icon: 'settings', title: 'Системные настройки', path: '/settings', visible: this.userData.user_role_id === 1 },
         { icon: 'history', title: 'Лог', path: '/log', visible: this.userData.user_role_id === 1 }
       ]
     }

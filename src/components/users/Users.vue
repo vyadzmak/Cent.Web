@@ -31,13 +31,13 @@
       <td><template v-if="props.item.login_data.length>0">{{props.item.login_data[0].last_login_date| moment("DD.MM.YYYY HH:mm") }}</template></td>
       <td class="px-1">
          <v-tooltip top>
-      <v-btn @click.stop="showUpdateModal(props.item)"  slot="activator" icon class="indigo--text"><v-icon>fa-pencil-square-o</v-icon></v-btn>
+      <v-btn @click.stop="showUpdateModal(props.item)"  slot="activator" icon class="indigo--text"><v-icon>mdi-pen</v-icon></v-btn>
       <span>Редактировать</span>
     </v-tooltip>        
         </td>
       <td class="px-1">
         <v-tooltip top>
-      <v-btn @click.stop="showDeleteModal(props.item.id)"  slot="activator" icon class="pink--text"><v-icon>fa-trash</v-icon></v-btn>
+      <v-btn @click.stop="showDeleteModal(props.item.id)"  slot="activator" icon class="pink--text"><v-icon>mdi-delete-variant</v-icon></v-btn>
       <span>Удалить</span>
     </v-tooltip>
         </td>

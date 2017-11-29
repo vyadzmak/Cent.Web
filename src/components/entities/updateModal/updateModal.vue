@@ -48,7 +48,7 @@
               <v-list-tile-title v-text="item.name"></v-list-tile-title>
             </v-list-tile-content>
             <v-list-tile-avatar>
-              <v-icon class="red--text" @click="removeFile(item)">fa-trash</v-icon>
+              <v-icon class="red--text" @click="removeFile(item)">mdi-delete-variant</v-icon>
             </v-list-tile-avatar>
           </v-list-tile>
             <v-divider></v-divider>

@@ -2,14 +2,18 @@
     <div>
         <v-card>
       <v-card-title>
+        <h2 v-html="msg" class="mr-5"></h2>
+        </v-card-title>
+          <v-card-title class="pa-1">
       <v-select
               :items="factory.data.var_descritpions.variables"
               item-text="title"
               v-model="currentType"
               label="Тип поля"
+               class="mx-3"
             ></v-select>
-      <v-btn @click.stop="addField()" color="success" dark>Добавить поле</v-btn>
-      <v-btn @click.stop="updateItem(factory, true)" color="amber darken-4" dark>Сохранить</v-btn>
+      <v-btn @click.stop="addField()" color="success" dark class="mx-3">Добавить поле</v-btn>
+      <v-btn @click.stop="updateItem(factory, true)" color="amber darken-4" dark class="mx-3">Сохранить</v-btn>
       <v-spacer></v-spacer>
       <v-text-field
         append-icon="search"
@@ -37,15 +41,15 @@
       <td>{{ props.item.title }}</td>
       <td class="px-1">
         <v-tooltip top>
-      <v-btn @click.stop="deleteFieldItem(props.index)" slot="activator" icon class="pink--text"><v-icon>fa-trash</v-icon></v-btn>
+      <v-btn @click.stop="showDeleteModal(props.index)" slot="activator" icon class="pink--text"><v-icon>mdi-delete-variant</v-icon></v-btn>
       <span>Удалить</span>
     </v-tooltip>
         </td>
     </tr>
     </template>
     <template slot="expand" slot-scope="props">
-      <v-card flat>
-        <v-form  class="v-card-form">
+      <v-card flat class="mx-5">
+        <v-form  class="v-card-form mx-5">
           <vue-form-generator :schema="generateFormSchema(props.item)" :model="props.item" :options="formOptions">
           </vue-form-generator>
         </v-form>
