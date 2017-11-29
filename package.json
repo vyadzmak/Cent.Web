@@ -83,6 +83,7 @@
     "lodash-webpack-plugin": "^0.11.4",
     "mocha": "^3.2.0",
     "nightwatch": "^0.9.12",
+    "node-sass-loader":"^0.1.7",
     "opn": "^5.1.0",
     "optimize-css-assets-webpack-plugin": "^2.0.0",
     "ora": "^1.2.0",

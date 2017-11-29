@@ -20,8 +20,8 @@ export default {
       noDataText: 'Нет данных',
       noResultsText: 'Поиск не дал результатов',
 
-      currentType: null,
       factory: cFactory,
+      currentType: null,
       formOptions: {
         validateAfterLoad: true,
         validateAfterChanged: true,
@@ -61,12 +61,19 @@ export default {
     },
     updateItem: function (item, isUpdate) {
       item.data = JSON.stringify(item.data)
-      console.log(JSON.stringify(item))
-      this.$store.dispatch('updateFactory', {http: this.$http, isUpdate: isUpdate, item: item})
+      this.$store.dispatch('updateFactory', {http: this.$http, isUpdate: isUpdate, item: _.cloneDeep(item)})
+      .then(response => {
+        this.factory.data = JSON.parse(response.data)
+      })
+      .catch(e => {
+      })
+      item.data = JSON.parse(item.data)
+      item.data.fields[item.data.fields.length - 1].index = null
     },
     addField () {
       if (this.currentType) {
         let newField = {
+          'index': _.random(10000, 20000),
           'field_type': this.currentType.id,
           'name': this.currentType.name,
           'title': this.currentType.title,

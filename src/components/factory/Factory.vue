@@ -28,7 +28,7 @@
       :rows-per-page-text="rowsPerPageText"
       :no-results-text="noResultsText"
       :no-data-text="noDataText"
-      item-key="name"
+      item-key="index"
     >
     <template slot="items" slot-scope="props">
     <tr @click="props.expanded = !props.expanded">

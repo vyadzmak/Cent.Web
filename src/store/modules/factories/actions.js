@@ -15,12 +15,13 @@ export const getAllFactories = ({ commit, getters }, http) => {
 }
 
 export const updateFactory = ({ commit, getters }, {http, isUpdate, item}) => {
-  commit('showSpinner', true)
-  http({method: isUpdate ? 'put' : 'post',
-    url: isUpdate ? 'schema/' + item.id : 'schemas',
-    data: item,
-    config: { contentType: 'application/json' }
-  })
+  return new Promise((resolve, reject) => {
+    commit('showSpinner', true)
+    http({method: isUpdate ? 'put' : 'post',
+      url: isUpdate ? 'schema/' + item.id : 'schemas',
+      data: item,
+      config: { contentType: 'application/json' }
+    })
 .then(response => {
   let responseData = response.data && response.data !== 'Error' ? response.data : null
   if (responseData) {
@@ -35,11 +36,14 @@ export const updateFactory = ({ commit, getters }, {http, isUpdate, item}) => {
     commit('showSnackbar', {text: (isUpdate ? 'Обновление' : 'Добавление') + ' конструктора не удалось', snackbar: true, context: 'error'})
   }
   commit('showSpinner', false)
+  resolve(responseData)
 })
     .catch(e => {
       commit('showSnackbar', {text: (isUpdate ? 'Обновление' : 'Добавление') + ' конструктора не удалось. Обратитесь к администратору', snackbar: true, context: 'error'})
       commit('showSpinner', false)
+      reject()
     })
+  })
 }
 
 export const deleteFactory = ({ commit, getters }, {http, id}) => {
