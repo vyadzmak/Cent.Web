@@ -35,11 +35,20 @@
       <td>{{ props.item.field_type }}</td>
       <td>{{ props.item.name }}</td>
       <td>{{ props.item.title }}</td>
+      <td class="px-1">
+        <v-tooltip top>
+      <v-btn @click.stop="deleteFieldItem(props.index)" slot="activator" icon class="pink--text"><v-icon>fa-trash</v-icon></v-btn>
+      <span>Удалить</span>
+    </v-tooltip>
+        </td>
     </tr>
     </template>
     <template slot="expand" slot-scope="props">
       <v-card flat>
-        <v-card-text>Peek-a-boo!</v-card-text>
+        <v-form  class="v-card-form">
+          <vue-form-generator :schema="generateFormSchema(props.item)" :model="props.item" :options="formOptions">
+          </vue-form-generator>
+        </v-form>
       </v-card>
     </template>
   </v-data-table>

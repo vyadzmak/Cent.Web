@@ -21,7 +21,12 @@ export default {
       noResultsText: 'Поиск не дал результатов',
 
       currentType: null,
-      factory: cFactory
+      factory: cFactory,
+      formOptions: {
+        validateAfterLoad: true,
+        validateAfterChanged: true,
+        fieldIdPrefix: 'prefix-'
+      }
     }
   },
   computed: {
@@ -56,10 +61,11 @@ export default {
     },
     updateItem: function (item, isUpdate) {
       item.data = JSON.stringify(item.data)
+      console.log(JSON.stringify(item))
       this.$store.dispatch('updateFactory', {http: this.$http, isUpdate: isUpdate, item: item})
     },
     addField () {
-      if (this.currentType.id) {
+      if (this.currentType) {
         let newField = {
           'field_type': this.currentType.id,
           'name': this.currentType.name,
@@ -68,6 +74,63 @@ export default {
         }
         this.factory.data.fields.push(newField)
       }
+    },
+    generateFormSchema (factory) {
+      var schema = {}
+      schema.fields = [{
+        type: 'vtext',
+        inputType: 'text',
+        label: 'Наименование переменной',
+        noLabel: true,
+        model: 'name',
+        id: 'name',
+        required: true,
+        rules: [
+          (v) => !!v || 'Наименование должно быть заполнено',
+          (v) => v && v.length <= 15 || 'Не более 15 символов',
+          (v) => /^\w+$/i.test(v) || 'Только латинские буквы, цифры и "_"'
+        ]
+      }, {
+        type: 'vtext',
+        inputType: 'text',
+        label: 'Заголовок переменной',
+        noLabel: true,
+        model: 'title',
+        id: 'title',
+        required: true,
+        rules: [
+          (v) => !!v || 'Заголовок должен быть заполнено',
+          (v) => v && v.length <= 270 || 'Не более 270 символов'
+        ]
+      }]
+
+      _.forEach(factory.var, function (value, key) {
+        var schemaItem = {
+          type: 'vtext',
+          inputType: 'text',
+          label: key,
+          noLabel: true,
+          model: 'var.' + key,
+          id: key,
+          required: true,
+          rules: [
+            (v) => !!v || key + ' должен быть заполнено',
+            (v) => v && v.length <= 270 || 'Не более 270 символов'
+          ]
+        }
+        if (_.isBoolean(value)) {
+          schemaItem.type = 'vcheckbox'
+          schemaItem.inputType = 'bool'
+        } else if (_.isFinite(value)) {
+          schemaItem.inputType = 'number'
+        }
+        schema.fields.push(schemaItem)
+      })
+
+      return schema
+    },
+    deleteFieldItem (index) {
+      this.factory.data.fields.splice(index)
     }
   },
   created () {

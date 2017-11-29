@@ -2,6 +2,7 @@
 <template>
 <v-text-field
       v-model="value"
+      :type="schema.inputType"
       :label="schema.label"
       :disabled="disabled"
       :placeholder="schema.placeholder"
