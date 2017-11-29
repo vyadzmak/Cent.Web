@@ -2,7 +2,6 @@
     <div>
         <v-card>
       <v-card-title>
-      <v-btn @click.stop="updateItem(factory, true)" color="success" dark>Обновить</v-btn>
       <v-select
               :items="factory.data.var_descritpions.variables"
               item-text="title"
@@ -10,6 +9,7 @@
               label="Тип поля"
             ></v-select>
       <v-btn @click.stop="addField()" color="success" dark>Добавить поле</v-btn>
+      <v-btn @click.stop="updateItem(factory, true)" color="amber darken-4" dark>Сохранить</v-btn>
       <v-spacer></v-spacer>
       <v-text-field
         append-icon="search"
