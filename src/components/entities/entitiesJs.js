@@ -50,19 +50,21 @@ export default {
       }
     )
     },
-    updatePressed (item) { console.log(item) },
+
     showUpdateModal: function (item) {
       let isUpdate = false
-      if (item.id) {
+      if (item) {
         isUpdate = true
+      } else {
+        item = {schema_type_id: null}
       }
 
       let modalConfig = {
         size: 'lg',
         data: {
-          title: (isUpdate ? 'Обновление' : 'Добавление') + ' проекта',
+          title: (isUpdate ? 'Обновление' : 'Добавление') + ' объекта',
           isClosable: true,
-          item: isUpdate ? Object.assign({}, item) : item
+          item: isUpdate ? _.cloneDeep(item) : item
         }
       }
       ModalService.open(updateModal, modalConfig).then(

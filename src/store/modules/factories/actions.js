@@ -16,6 +16,7 @@ export const getAllFactories = ({ commit, getters }, http) => {
 
 export const updateFactory = ({ commit, getters }, {http, isUpdate, item}) => {
   return new Promise((resolve, reject) => {
+    console.log(JSON.stringify(item))
     commit('showSpinner', true)
     http({method: isUpdate ? 'put' : 'post',
       url: isUpdate ? 'schema/' + item.id : 'schemas',
@@ -61,5 +62,19 @@ export const deleteFactory = ({ commit, getters }, {http, id}) => {
     .catch(e => {
       commit('showSpinner', false)
       commit('showSnackbar', {text: 'Удаление проекта не удалось. Обратитесь к администратору', snackbar: true, context: 'error'})
+    })
+}
+
+export const getSchemaTypes = ({ commit, getters }, http) => {
+  commit('showSpinner', true)
+  http.get(`schemaTypes`)
+    .then(response => {
+      let schemaTypes = response.data
+      commit(types.setUpdateProperty, schemaTypes)
+      commit('showSpinner', false)
+    })
+    .catch(e => {
+      commit('showSnackbar', {text: 'Не удалось загрузить данные. Обратитесь к администратору', snackbar: true, context: 'error'})
+      commit('showSpinner', false)
     })
 }

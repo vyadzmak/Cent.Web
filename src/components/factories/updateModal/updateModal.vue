@@ -30,9 +30,14 @@
       :rules="nameRules"
       required
     ></v-text-field>
-    <v-switch :label="`Тип: ${data.item.is_catalog?'каталог':'объект'}`"
-                        v-model="data.item.is_catalog"
-                        color="error"></v-switch>
+    <v-select
+              :items="schemaTypes"
+              item-text="title"
+              item-value="id"
+              v-model="data.item.schema_type_id"
+              label="Тип"
+               required
+            ></v-select>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn @click="clear">Очистить</v-btn>

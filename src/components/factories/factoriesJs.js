@@ -52,13 +52,14 @@ export default {
     )
     },
     showUpdateModal: function (item) {
+      this.$store.dispatch('getSchemaTypes', this.$http)
       let isUpdate = false
       if (item.id) {
         isUpdate = true
       } else {
         item.fields = []
         item.group_title = ''
-        item.is_catalog = false
+        item.schema_type_id = null
         item.name = ''
         item.title = ''
         item.description = ''
@@ -71,7 +72,7 @@ export default {
         data: {
           title: (isUpdate ? 'Обновление' : 'Добавление') + ' конструктора',
           isClosable: true,
-          item: item
+          item: isUpdate ? _.cloneDeep(item) : item
         }
       }
       ModalService.open(updateModal, modalConfig).then(

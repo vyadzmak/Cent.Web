@@ -2,7 +2,7 @@
     <div>
         <v-card>
       <v-card-title>
-      <v-btn @click.stop="showUpdateModal({})" color="success" dark>Добавить объект</v-btn>
+      <v-btn @click.stop="showUpdateModal()" color="success" dark>Добавить объект</v-btn>
       <v-spacer></v-spacer>
       <v-text-field
         append-icon="search"
@@ -36,7 +36,7 @@
       </td>
       <td class="px-1">
          <v-tooltip top>
-      <v-btn @click.stop="updatePressed(props.item)"  slot="activator" icon class="indigo--text"><v-icon>mdi-pen</v-icon></v-btn>
+      <v-btn @click.stop="showUpdateModal(props.item)"  slot="activator" icon class="indigo--text"><v-icon>mdi-pen</v-icon></v-btn>
       <span>Редактировать</span>
     </v-tooltip>        
         </td>
