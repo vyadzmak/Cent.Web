@@ -35,6 +35,9 @@ export default {
     },
     tableItems () {
       return _.get(this.factory, 'data.fields') ? this.factory.data.fields : []
+    },
+    updateProperty () {
+      return this.$store.getters.updateProperty ? this.$store.getters.updateProperty : []
     }
   },
   methods: {
@@ -69,6 +72,11 @@ export default {
     },
     addField () {
       if (this.currentType) {
+        if (this.currentType.id === 9) {
+          this.$store.dispatch('getSchemaUpdateProperty', {http: this.$http, link: 'schemaCatalogs', id: this.userData.client_id})
+        } else if (this.currentType.id === 5) {
+          this.$store.dispatch('getSchemaUpdateProperty', {http: this.$http, link: 'schemaLinks', id: this.userData.client_id})
+        }
         let newField = {
           'index': _.random(10000, 20000),
           'field_type': this.currentType.id,
@@ -79,7 +87,7 @@ export default {
         this.factory.data.fields.push(newField)
       }
     },
-    generateFormSchema (factory) {
+    generateFormSchema (factory, updateProperty) {
       var schema = {}
       schema.fields = [{
         type: 'vtext',
@@ -122,7 +130,15 @@ export default {
             (v) => v && v.length <= 270 || 'Не более 270 символов'
           ]
         }
-        if (_.isBoolean(value)) {
+        if (key.indexOf('schema_id') === 0) {
+          schemaItem.type = 'vselect'
+          schemaItem.noLabel = false
+          schemaItem.vName = 'title'
+          schemaItem.vId = 'id'
+          schemaItem.items = updateProperty
+          schemaItem.required = true
+          schemaItem.rules = []
+        } else if (_.isBoolean(value)) {
           schemaItem.type = 'vcheckbox'
           schemaItem.inputType = 'bool'
         } else if (_.isFinite(value)) {

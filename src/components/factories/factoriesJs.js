@@ -52,14 +52,14 @@ export default {
     )
     },
     showUpdateModal: function (item) {
-      this.$store.dispatch('getSchemaTypes', this.$http)
+      this.$store.dispatch('getSchemaUpdateProperty', {http: this.$http, link: 'schemaTypes', id: null})
       let isUpdate = false
       if (item.id) {
         isUpdate = true
       } else {
         item.fields = []
         item.group_title = ''
-        item.schema_type_id = null
+        item.schema_type_id = 0
         item.name = ''
         item.title = ''
         item.description = ''

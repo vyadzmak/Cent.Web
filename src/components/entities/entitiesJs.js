@@ -104,11 +104,14 @@ export default {
       this.$router.push({name: 'Entity', params: {id: item.id}})
     },
     getAllEntities (isSilent) {
-      this.$store.dispatch('getAllEntities', this.$http, isSilent)
+      this.$store.dispatch('getAllEntities', {http: this.$http, isSilent: isSilent})
+    },
+    getEntitySchemas () {
+      this.$store.dispatch('getEntitySchemas', {http: this.$http, id: this.userData.client_id})
     }
   },
   created () {
-    this.getAllEntities()
+    this.getEntitySchemas()
     this.interval = setInterval(function () {
       this.getAllEntities(true)
     }.bind(this), 100000)

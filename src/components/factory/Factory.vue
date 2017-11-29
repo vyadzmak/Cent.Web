@@ -50,7 +50,7 @@
     <template slot="expand" slot-scope="props">
       <v-card flat class="mx-5">
         <v-form  class="v-card-form mx-5">
-          <vue-form-generator :schema="generateFormSchema(props.item)" :model="props.item" :options="formOptions">
+          <vue-form-generator :schema="generateFormSchema(props.item, updateProperty)" :model="props.item" :options="formOptions">
           </vue-form-generator>
         </v-form>
       </v-card>

@@ -65,12 +65,11 @@ export const deleteFactory = ({ commit, getters }, {http, id}) => {
     })
 }
 
-export const getSchemaTypes = ({ commit, getters }, http) => {
+export const getSchemaUpdateProperty = ({ commit, getters }, {http, link, id}) => {
   commit('showSpinner', true)
-  http.get(`schemaTypes`)
+  http.get(link + (id ? '/' + id : ''))
     .then(response => {
-      let schemaTypes = response.data
-      commit(types.setUpdateProperty, schemaTypes)
+      commit(types.setUpdateProperty, response.data)
       commit('showSpinner', false)
     })
     .catch(e => {
