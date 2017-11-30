@@ -55,16 +55,7 @@ export const updateEntity = ({ commit, getters }, {http, isUpdate, item}) => {
     })
 .then(response => {
   let responseData = response.data && response.data !== 'Error' ? response.data : null
-  if (responseData) {
-    if (isUpdate) {
-      commit('UPDATE_ENTITY', responseData)
-    } else {
-      commit('ADD_ENTITY', responseData)
-    }
-    commit('showSnackbar', {text: (isUpdate ? 'Обновление' : 'Добавление') + ' объекта прошло успешно', snackbar: true, context: 'success'})
-  } else {
-    commit('showSnackbar', {text: (isUpdate ? 'Обновление' : 'Добавление') + ' объекта не удалось', snackbar: true, context: 'error'})
-  }
+  commit('showSnackbar', {text: (isUpdate ? 'Обновление' : 'Добавление') + ' объекта прошло успешно', snackbar: true, context: 'success'})
   commit('showSpinner', false)
   resolve(responseData)
 })

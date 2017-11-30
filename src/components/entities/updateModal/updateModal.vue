@@ -6,7 +6,7 @@
           <v-btn icon dark v-if="data.isClosable" @click="cancel"><v-icon>clear</v-icon></v-btn>
         </v-card-title>
         <v-form  class="v-card-form">
-      <vue-form-generator :schema="formSchema" :model="updateItem" v-if="formSchema.fields">
+      <vue-form-generator :schema="formSchema" :model="updateItem" :options="formOptions" v-if="formSchema.fields">
       </vue-form-generator>
       <v-card-actions>
           <v-spacer></v-spacer>
@@ -15,7 +15,6 @@
           <v-btn color="error" dark @click="cancel">Отмена</v-btn>
         </v-card-actions>
     </v-form>
-    {{updateItem|json}}
       </v-card>
       
 </template>

@@ -92,6 +92,7 @@ export default {
     },
     updateItem: function (item, isUpdate) {
       this.$store.dispatch('updateEntity', {http: this.$http, isUpdate: isUpdate, item: item})
+      .then(response => this.getEntities())
     },
     goToEntity (item) {
       this.$store.commit('CURRENT_ENTITY', item)
