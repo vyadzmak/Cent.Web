@@ -5,13 +5,15 @@ import * as actions from './actions'
 const state = {
   entities: [],
   currentEntity: {},
-  entitySchemas: []
+  entitySchemas: [],
+  entitySchema: {}
 }
 
 // getters
 const getters = {
   entities: state => state.entities,
   entitySchemas: state => state.entitySchemas,
+  entitySchema: state => state.entitySchema,
   currentEntity: state => state.currentEntity
 }
 export default {

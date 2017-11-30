@@ -5,22 +5,17 @@
           <v-spacer></v-spacer>
           <v-btn icon dark v-if="data.isClosable" @click="cancel"><v-icon>clear</v-icon></v-btn>
         </v-card-title>
-         <v-form v-model="valid" ref="form" class="v-card-form">
-        
-    <!-- <v-text-field
-      label="Заголовок"
-      v-model="data.item.title"
-      :rules="nameRules"
-      required
-    ></v-text-field> -->
-    
-        <v-card-actions>
+        <v-form  class="v-card-form">
+      <vue-form-generator :schema="formSchema" :model="updateItem" v-if="formSchema.fields">
+      </vue-form-generator>
+      <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn @click="clear">Очистить</v-btn>
           <v-btn :class="{ green: valid, red: !valid }" color="success" dark @click="submit">Сохранить</v-btn>
           <v-btn color="error" dark @click="cancel">Отмена</v-btn>
         </v-card-actions>
-        </v-form>
+    </v-form>
+    {{updateItem|json}}
       </v-card>
       
 </template>

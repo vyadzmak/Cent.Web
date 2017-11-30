@@ -17,6 +17,10 @@ const mutations = {
     state.entitySchemas = payload
   },
 
+  [types.UPDATE_ENTITY_SCHEMA] (state, payload) {
+    state.entitySchema = payload
+  },
+
   [types.DELETE_ENTITY] (state, index) {
     state.entities.splice(index, 1)
   },

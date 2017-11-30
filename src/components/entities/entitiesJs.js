@@ -21,25 +21,7 @@ export default {
       rowsPerPageText: 'Строк на странице',
       noDataText: 'Нет данных',
       noResultsText: 'Поиск не дал результатов',
-
       currentSchema: null
-
-    }
-  },
-  computed: {
-    userData () {
-      return this.$store.getters.userData
-    },
-    entities () {
-      return this.$store.getters.entities
-    },
-    entitySchemas: {
-      get: function () { return this.$store.getters.entitySchemas },
-      set: function (newValue) {
-        if (newValue.length > 0) {
-          this.currentSchema = newValue[0]
-        }
-      }
     }
   },
   methods: {
@@ -63,11 +45,12 @@ export default {
     },
 
     showUpdateModal: function (item) {
+      this.getEntitySchema()
       let isUpdate = false
       if (item) {
         isUpdate = true
       } else {
-        item = {schema_type_id: null}
+        item = {}
       }
 
       let modalConfig = {
@@ -80,7 +63,11 @@ export default {
       }
       ModalService.open(updateModal, modalConfig).then(
           modalSubmit => {
-            this.getAllEntities()
+            modalSubmit.schema_id = this.currentSchema.id
+            modalSubmit.client_id = this.userData.client_id
+            modalSubmit.user_id = this.userData.id
+            modalSubmit.parent_id = -1
+            this.updateItem(modalSubmit, isUpdate)
           },
           modalCancel => { console.log(modalCancel) }
       ).catch(err => { console.log(err) })
@@ -108,29 +95,49 @@ export default {
       })
     },
     updateItem: function (item, isUpdate) {
-      this.$store.dispatch('updateEntity', {http: this.$http, isUpdate: isUpdate, entity: item})
+      this.$store.dispatch('updateEntity', {http: this.$http, isUpdate: isUpdate, item: item})
     },
     goToEntity (item) {
       this.$store.commit('CURRENT_ENTITY', item)
       this.$router.push({name: 'Entity', params: {id: item.id}})
     },
-    getAllEntities (isSilent) {
-      this.$store.dispatch('getAllEntities', {http: this.$http, isSilent: isSilent})
+    getEntities () {
+      // this.$store.dispatch('getAllEntities', {http: this.$http})
     },
     getEntitySchemas () {
       this.$store.dispatch('getEntitySchemas', {http: this.$http, id: this.userData.client_id})
+    },
+    getEntitySchema () {
+      if (this.currentSchema.id) {
+        this.$store.dispatch('getEntitySchema', {http: this.$http, id: this.currentSchema.id})
+      }
+    }
+  },
+  computed: {
+    userData: function () {
+      return this.$store.getters.userData
+    },
+    entities: function () {
+      return this.$store.getters.entities
+    },
+    entitySchemas: function () {
+      return this.$store.getters.entitySchemas
+    }
+  },
+  watch: {
+    entitySchemas: function (newValue) {
+      this.currentSchema = newValue[0]
+    },
+    currentSchema: function (newValue) {
+      this.getEntities()
     }
   },
   created () {
     this.getEntitySchemas()
-    this.interval = setInterval(function () {
-      this.getAllEntities(true)
-    }.bind(this), 100000)
   },
   mounted () {
     this.$refs.entitiesDataTable.defaultPagination.descending = true
   },
   beforeDestroy () {
-    clearInterval(this.interval)
   }
 }
