@@ -20,8 +20,8 @@
     </v-card-title>
         <v-data-table
         ref = "entitiesDataTable"
-      :headers="headers"
-      :items="entities"
+      :headers="entities.headers"
+      :items="entities.items"
       :search="search"
       :rows-per-page-items="tableRowsShown"
       :rows-per-page-text="rowsPerPageText"
@@ -29,20 +29,11 @@
       :no-data-text="noDataText"
     >
     <template slot="items" slot-scope="props">
-    <tr  @click="goToEntity(props.item)" :class="{'red--text':props.item.state_id===4}">
-      <td>{{ props.item.id }}</td>
-      <td class="px-1">
-  <v-tooltip top>
-      <v-btn @click.stop="infoPressed(props.item)"  slot="activator"
-      v-show="props.item.state_id===3||props.item.state_id===4||props.item.state_id===5"
-      :class="{'green--text':props.item.state_id===3||props.item.state_id===5, 'red--text':props.item.state_id===4}"
-      icon><v-icon>fa-info</v-icon></v-btn>
-      <span>Информация</span>
-    </v-tooltip>
-      </td>
+    <tr  @click="goToEntity(props.item.id)">
+      <td v-for="h in entities.headers" :key="h.value">{{ _.get(props.item, h.value) }}</td>
       <td class="px-1">
          <v-tooltip top>
-      <v-btn @click.stop="showUpdateModal(props.item)"  slot="activator" icon class="indigo--text"><v-icon>mdi-pen</v-icon></v-btn>
+      <v-btn @click.stop="updatePressed(props.item)"  slot="activator" icon class="indigo--text"><v-icon>mdi-pen</v-icon></v-btn>
       <span>Редактировать</span>
     </v-tooltip>        
         </td>

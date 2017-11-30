@@ -3,7 +3,7 @@ import * as actions from './actions'
 
 // initial state
 const state = {
-  entities: [],
+  entities: {},
   currentEntity: {},
   entitySchemas: [],
   entitySchema: {}

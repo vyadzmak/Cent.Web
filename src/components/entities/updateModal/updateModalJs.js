@@ -51,9 +51,9 @@ export default {
       return field
     },
     getFieldType (fieldType) {
-      let type = 'vtext'
+      let type = 'input'
       switch (fieldType) {
-        case 1: type = 'vtext'
+        case 1: type = 'input'
           break
       }
       return type

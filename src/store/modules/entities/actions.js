@@ -1,10 +1,10 @@
 import types from '../../mutation-types'
 
-export const getAllEntities = ({ commit, getters }, {http, isSilent}) => {
-  commit('showSpinner', !isSilent)
-  http.get(`entities`)
+export const getAllEntities = ({ commit, getters }, {http, id}) => {
+  commit('showSpinner', true)
+  http.get('schemaObjects' + '/' + id)
     .then(response => {
-      let entities = response.data
+      let entities = JSON.parse(response.data)
       commit(types.UPDATE_ENTITIES, entities)
       commit('showSpinner', false)
     })
@@ -28,16 +28,20 @@ export const getEntitySchemas = ({ commit, getters }, {http, id}) => {
 }
 
 export const getEntitySchema = ({ commit, getters }, {http, id}) => {
-  commit('showSpinner', true)
-  http.get(`schema` + '/' + id)
+  return new Promise((resolve, reject) => {
+    commit('showSpinner', true)
+    http.get(`schema` + '/' + id)
     .then(response => {
       commit(types.UPDATE_ENTITY_SCHEMA, response.data)
       commit('showSpinner', false)
+      resolve()
     })
     .catch(e => {
       commit('showSnackbar', {text: 'Не удалось загрузить данные. Обратитесь к администратору', snackbar: true, context: 'error'})
       commit('showSpinner', false)
+      reject()
     })
+  })
 }
 
 export const updateEntity = ({ commit, getters }, {http, isUpdate, item}) => {

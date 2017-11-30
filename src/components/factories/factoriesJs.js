@@ -75,12 +75,15 @@ export default {
           item: isUpdate ? _.cloneDeep(item) : item
         }
       }
-      ModalService.open(updateModal, modalConfig).then(
+      this.$store.dispatch('getSchemaUpdateProperty', {http: this.$http, link: 'schemaTypes', id: null})
+      .then(response => {
+        ModalService.open(updateModal, modalConfig).then(
           modalSubmit => {
             this.updateItem(modalSubmit, isUpdate)
           },
           modalCancel => { console.log(modalCancel) }
       ).catch(err => { console.log(err) })
+      })
     },
     deleteItem: function (itemId) {
       this.$store.dispatch('deleteFactory', {id: itemId, http: this.$http})

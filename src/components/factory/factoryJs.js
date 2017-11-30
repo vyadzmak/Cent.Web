@@ -88,25 +88,21 @@ export default {
       }
     },
     generateFormSchema (factory, updateProperty) {
+      for (let i = 0; i < updateProperty.length; i++) {
+        updateProperty[i].name = updateProperty[i].title
+      }
       var schema = {}
       schema.fields = [{
-        type: 'vtext',
+        type: 'input',
         inputType: 'text',
         label: 'Наименование переменной',
-        noLabel: true,
         model: 'name',
         id: 'name',
-        required: true,
-        rules: [
-          (v) => !!v || 'Наименование должно быть заполнено',
-          (v) => v && v.length <= 15 || 'Не более 15 символов',
-          (v) => /^\w+$/i.test(v) || 'Только латинские буквы, цифры и "_"'
-        ]
+        required: true
       }, {
-        type: 'vtext',
+        type: 'input',
         inputType: 'text',
         label: 'Заголовок переменной',
-        noLabel: true,
         model: 'title',
         id: 'title',
         required: true,
@@ -118,29 +114,19 @@ export default {
 
       _.forEach(factory.var, function (value, key) {
         var schemaItem = {
-          type: 'vtext',
+          type: 'input',
           inputType: 'text',
           label: key,
-          noLabel: true,
           model: 'var.' + key,
           id: key,
-          required: true,
-          rules: [
-            (v) => !!v || key + ' должен быть заполнено',
-            (v) => v && v.length <= 270 || 'Не более 270 символов'
-          ]
+          required: true
         }
         if (key.indexOf('schema_id') === 0) {
-          schemaItem.type = 'vselect'
-          schemaItem.noLabel = false
-          schemaItem.vName = 'title'
-          schemaItem.vId = 'id'
-          schemaItem.items = updateProperty
+          schemaItem.type = 'select'
+          schemaItem.values = updateProperty
           schemaItem.required = true
-          schemaItem.rules = []
         } else if (_.isBoolean(value)) {
-          schemaItem.type = 'vcheckbox'
-          schemaItem.inputType = 'bool'
+          schemaItem.type = 'checkbox'
         } else if (_.isFinite(value)) {
           schemaItem.inputType = 'number'
         }

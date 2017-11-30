@@ -9,14 +9,6 @@ export default {
       msg: 'Проекты',
       search: '',
       errors: [],
-      headers: [
-        { text: 'ID', align: 'left', value: 'id' },
-        { text: 'Наименование', align: 'left', value: 'name' },
-        { text: 'Дата создания', align: 'left', value: 'creation_date' },
-        { text: 'Клиент', align: 'left', value: 'user_data.client.name' },
-        { text: 'Пользователь', align: 'left', value: 'user_data.last_name' },
-        { text: 'Состояние', align: 'left', value: 'entity_state.name' }
-      ],
       tableRowsShown: [10, 20, 50, 100, {text: 'Все', value: -1}],
       rowsPerPageText: 'Строк на странице',
       noDataText: 'Нет данных',
@@ -45,7 +37,6 @@ export default {
     },
 
     showUpdateModal: function (item) {
-      this.getEntitySchema()
       let isUpdate = false
       if (item) {
         isUpdate = true
@@ -61,7 +52,10 @@ export default {
           item: isUpdate ? _.cloneDeep(item) : item
         }
       }
-      ModalService.open(updateModal, modalConfig).then(
+      if (this.currentSchema.id) {
+        this.$store.dispatch('getEntitySchema', {http: this.$http, id: this.currentSchema.id})
+      .then(response => {
+        ModalService.open(updateModal, modalConfig).then(
           modalSubmit => {
             modalSubmit.schema_id = this.currentSchema.id
             modalSubmit.client_id = this.userData.client_id
@@ -71,6 +65,8 @@ export default {
           },
           modalCancel => { console.log(modalCancel) }
       ).catch(err => { console.log(err) })
+      })
+      }
     },
     deleteItem: function (itemId) {
       this.$store.commit('showSpinner', true)
@@ -102,15 +98,10 @@ export default {
       this.$router.push({name: 'Entity', params: {id: item.id}})
     },
     getEntities () {
-      // this.$store.dispatch('getAllEntities', {http: this.$http})
+      this.$store.dispatch('getAllEntities', {http: this.$http, id: this.currentSchema.id})
     },
     getEntitySchemas () {
       this.$store.dispatch('getEntitySchemas', {http: this.$http, id: this.userData.client_id})
-    },
-    getEntitySchema () {
-      if (this.currentSchema.id) {
-        this.$store.dispatch('getEntitySchema', {http: this.$http, id: this.currentSchema.id})
-      }
     }
   },
   computed: {
@@ -118,7 +109,7 @@ export default {
       return this.$store.getters.userData
     },
     entities: function () {
-      return this.$store.getters.entities
+      return this.$store.getters.entities.headers ? this.$store.getters.entities : {headers: [], items: []}
     },
     entitySchemas: function () {
       return this.$store.getters.entitySchemas

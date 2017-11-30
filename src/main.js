@@ -15,6 +15,7 @@ import 'vuetify/dist/vuetify.css'
 import './stylus/main.styl'
 import './stylus/material-design-icons/scss/materialdesignicons.scss'
 import './stylus/font-awesome/scss/font-awesome.scss'
+import 'vue-form-generator/dist/vfg.css'
 
 import App from './App'
 import router from './router'

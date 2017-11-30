@@ -66,14 +66,18 @@ export const deleteFactory = ({ commit, getters }, {http, id}) => {
 }
 
 export const getSchemaUpdateProperty = ({ commit, getters }, {http, link, id}) => {
-  commit('showSpinner', true)
-  http.get(link + (id ? '/' + id : ''))
+  return new Promise((resolve, reject) => {
+    commit('showSpinner', true)
+    http.get(link + (id ? '/' + id : ''))
     .then(response => {
       commit(types.setUpdateProperty, response.data)
       commit('showSpinner', false)
+      resolve()
     })
     .catch(e => {
       commit('showSnackbar', {text: 'Не удалось загрузить данные. Обратитесь к администратору', snackbar: true, context: 'error'})
       commit('showSpinner', false)
+      reject()
     })
+  })
 }
