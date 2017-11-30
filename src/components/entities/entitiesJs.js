@@ -20,15 +20,26 @@ export default {
       tableRowsShown: [10, 20, 50, 100, {text: 'Все', value: -1}],
       rowsPerPageText: 'Строк на странице',
       noDataText: 'Нет данных',
-      noResultsText: 'Поиск не дал результатов'
+      noResultsText: 'Поиск не дал результатов',
+
+      currentSchema: null
+
     }
   },
   computed: {
-    userData: function () {
+    userData () {
       return this.$store.getters.userData
     },
-    entities: function () {
+    entities () {
       return this.$store.getters.entities
+    },
+    entitySchemas: {
+      get: function () { return this.$store.getters.entitySchemas },
+      set: function (newValue) {
+        if (newValue.length > 0) {
+          this.currentSchema = newValue[0]
+        }
+      }
     }
   },
   methods: {

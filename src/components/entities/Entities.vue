@@ -2,6 +2,12 @@
     <div>
         <v-card>
       <v-card-title>
+        <v-select
+              :items="entitySchemas"
+              item-text="title"
+              v-model="currentSchema"
+              label="Тип"
+            ></v-select>
       <v-btn @click.stop="showUpdateModal()" color="success" dark>Добавить объект</v-btn>
       <v-spacer></v-spacer>
       <v-text-field
