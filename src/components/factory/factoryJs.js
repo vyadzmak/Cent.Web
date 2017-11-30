@@ -105,11 +105,15 @@ export default {
         label: 'Заголовок переменной',
         model: 'title',
         id: 'title',
-        required: true,
-        rules: [
-          (v) => !!v || 'Заголовок должен быть заполнено',
-          (v) => v && v.length <= 270 || 'Не более 270 символов'
-        ]
+        required: true
+      }, {
+        type: 'checkbox',
+        label: 'Индекс',
+        model: 'is_index'
+      }, {
+        type: 'checkbox',
+        label: 'Значение',
+        model: 'is_value'
       }]
 
       _.forEach(factory.var, function (value, key) {
@@ -127,6 +131,7 @@ export default {
           schemaItem.required = true
         } else if (_.isBoolean(value)) {
           schemaItem.type = 'checkbox'
+          schemaItem.required = false
         } else if (_.isFinite(value)) {
           schemaItem.inputType = 'number'
         }
