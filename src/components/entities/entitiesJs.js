@@ -110,7 +110,7 @@ export default {
       return this.$store.getters.userData
     },
     entities: function () {
-      return this.$store.getters.entities.headers ? this.$store.getters.entities : {headers: [], items: []}
+      return this.$store.getters.entities && this.$store.getters.entities.headers ? this.$store.getters.entities : {headers: [], items: []}
     },
     entitySchemas: function () {
       return this.$store.getters.entitySchemas
