@@ -2,7 +2,7 @@
     <div>
         <v-card>
       <v-card-title>
-      <v-btn @click.stop="showUpdateModal({})" color="success" dark>Добавить объект</v-btn>
+      <v-btn @click.stop="showUpdateModal({})" color="success" dark>Добавить схему объекта</v-btn>
       <v-spacer></v-spacer>
       <v-text-field
         append-icon="search"

@@ -1,6 +1,6 @@
 <template>
       <v-card>
-        <v-card-title v-bind:class="[data.titleClass ? data.titleClass : 'blue lighten-2 white--text']">
+        <v-card-title v-bind:class="[data.titleClass ? data.titleClass : 'green lighten-2 white--text']">
           <div v-bind:class="[data.headlineClass ? data.headlineClass : 'headline']">{{data.title ? data.title : "Modal header"}}</div>
           <v-spacer></v-spacer>
           <v-btn icon dark v-if="data.isClosable" @click="cancel"><v-icon>clear</v-icon></v-btn>

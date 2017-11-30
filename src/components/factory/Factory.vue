@@ -8,6 +8,7 @@
       <v-select
               :items="factory.data.var_descritpions.variables"
               item-text="title"
+              item-disabled="not_used"
               v-model="currentType"
               label="Тип поля"
                class="mx-3"

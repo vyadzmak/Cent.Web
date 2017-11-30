@@ -40,7 +40,15 @@ Vue.component('fieldVdatepicker', fieldDatepicker)
 Vue.use(VueFormGenerator)
 
 // create vue plugins to use them in our components without import
-Vue.use(Vuetify)
+Vue.use(Vuetify, {theme: {
+  primary: '#568e00',
+  secondary: '#424242',
+  accent: '#82B1FF',
+  error: '#FF5252',
+  info: '#2196F3',
+  success: '#4CAF50',
+  warning: '#FFC107'
+}})
 Vue.use(VueLodash, lodash)
 Vue.use(VueModalDialog)
 Vue.use(VueTransmit)
