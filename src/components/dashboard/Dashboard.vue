@@ -49,11 +49,11 @@
             </v-btn>
             <v-list>
               <v-list-tile avatar @click="showUpdateModal()">
-                <v-list-tile-avatar><v-icon>fa-cog fa-fw</v-icon></v-list-tile-avatar>
+                <v-list-tile-avatar><v-icon>mdi-settings</v-icon></v-list-tile-avatar>
                 <v-list-tile-content>Настройки профиля {{ userData.first_name + ' ' + userData.last_name }}</v-list-tile-content>
               </v-list-tile>
               <v-list-tile @click="logOut()">
-                <v-list-tile-avatar><v-icon>fa-sign-out fa-fw</v-icon></v-list-tile-avatar>
+                <v-list-tile-avatar><v-icon>mdi-logout</v-icon></v-list-tile-avatar>
                 <v-list-tile-title>Выход</v-list-tile-title>
               </v-list-tile>
             </v-list>

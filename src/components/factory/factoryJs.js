@@ -7,7 +7,7 @@ export default {
     let cFactory = _.cloneDeep(this.$store.getters.currentFactory)
     cFactory.data = JSON.parse(cFactory.data)
     return {
-      msg: 'Конструктор объекта ' + cFactory.title,
+      msg: 'Конструктор схемы ' + cFactory.title,
       search: '',
       errors: [],
       headers: [

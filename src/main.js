@@ -41,7 +41,7 @@ Vue.use(VueFormGenerator)
 
 // create vue plugins to use them in our components without import
 Vue.use(Vuetify, {theme: {
-  primary: '#568e00',
+  primary: '#2E7D32',
   secondary: '#424242',
   accent: '#82B1FF',
   error: '#FF5252',

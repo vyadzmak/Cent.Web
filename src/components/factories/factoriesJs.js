@@ -70,7 +70,7 @@ export default {
       let modalConfig = {
         size: 'lg',
         data: {
-          title: (isUpdate ? 'Обновление' : 'Добавление') + ' конструктора',
+          title: (isUpdate ? 'Обновление' : 'Создание') + ' схемы объекта',
           isClosable: true,
           item: isUpdate ? _.cloneDeep(item) : item
         }
@@ -97,6 +97,14 @@ export default {
     goToFactory (item) {
       this.$store.commit('CURRENT_FACTORY', item)
       this.$router.push({name: 'Factory', params: {id: item.id}})
+    },
+    getSchemaTypeName (id) {
+      switch (id) {
+        case 0: return 'Объект'
+        case 1: return 'Субъект'
+        case 2: return 'Документ'
+        case 3: return 'Справочник'
+      }
     }
   },
   created () {

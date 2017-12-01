@@ -23,7 +23,11 @@
     >
     <template slot="items" slot-scope="props">
     <tr  @click="goToUsers(props.item.id)">
-      <td v-for="h in headers" :key="h.value">{{ _.get(props.item, h.value) }}</td>
+      <td>{{ props.item.id }}</td>
+      <td>{{ props.item.name }}</td>
+      <td>{{ props.item.registration_number }}</td>
+      <td>{{ props.item.registration_date | moment("DD.MM.YYYY HH:mm") }}</td>
+      <td>{{ props.item.client_type.name }}</td>
       <td class="px-1">
          <v-tooltip top>
       <v-btn @click.stop="updatePressed(props.item)"  slot="activator" icon class="indigo--text"><v-icon>mdi-pen</v-icon></v-btn>

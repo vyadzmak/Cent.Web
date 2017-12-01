@@ -12,6 +12,13 @@ export default {
     }
   },
   methods: {
+    goToSetting (n) {
+      switch (n) {
+        case 1:
+          this.$router.push({name: 'Factories'})
+          break
+      }
+    }
   },
   created () {
   },

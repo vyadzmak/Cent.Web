@@ -98,7 +98,7 @@ export default {
           break
         case 5: field.type = 'select'
           field.required = value.var.not_null
-          field.values = []
+          field.values = value.items
           break
         case 6: field.type = 'switch'
           field.textOn = value.var.true_value ? value.var.true_value : 'да'

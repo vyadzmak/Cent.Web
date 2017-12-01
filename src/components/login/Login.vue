@@ -3,7 +3,7 @@
     <v-container fluid>       
       <v-layout column class="pa-5">
     <v-flex xs12 sm8 offset-sm2 md6 offset-md3 lg4 offset-lg4>
-      <v-toolbar class="indigo" dark>
+      <v-toolbar class="primary" dark>
         <v-toolbar-title>{{ msg }}</v-toolbar-title>
       </v-toolbar>
       <v-container fluid grid-list-md class="grey lighten-4">
