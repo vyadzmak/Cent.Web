@@ -33,7 +33,7 @@
       <td v-for="h in entities.headers" :key="h.value">{{ _.get(props.item, h.value) }}</td>
       <td class="px-1">
          <v-tooltip top>
-      <v-btn @click.stop="updatePressed(props.item)"  slot="activator" icon class="indigo--text"><v-icon>mdi-pen</v-icon></v-btn>
+      <v-btn @click.stop="showUpdateModal(props.item)"  slot="activator" icon class="indigo--text"><v-icon>mdi-pen</v-icon></v-btn>
       <span>Редактировать</span>
     </v-tooltip>        
         </td>

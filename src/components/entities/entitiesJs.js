@@ -37,34 +37,53 @@ export default {
     },
 
     showUpdateModal: function (item) {
+      let vum = this
       let isUpdate = false
+      let updateItem = {}
       if (item) {
         isUpdate = true
       } else {
-        item = {}
+        updateItem = {schema_id: this.currentSchema.id,
+          client_id: this.userData.client_id,
+          user_id: this.userData.id,
+          parent_id: -1}
       }
 
-      let modalConfig = {
-        size: 'lg',
-        data: {
-          title: (isUpdate ? 'Обновление' : 'Добавление') + ' объекта',
-          isClosable: true,
-          item: isUpdate ? _.cloneDeep(item) : item
-        }
-      }
       if (this.currentSchema.id) {
-        this.$store.dispatch('getEntitySchema', {http: this.$http, id: this.currentSchema.id})
+        vum.$store.dispatch('getEntitySchema', {http: vum.$http, id: vum.currentSchema.id})
       .then(response => {
-        ModalService.open(updateModal, modalConfig).then(
-          modalSubmit => {
-            modalSubmit.schema_id = this.currentSchema.id
-            modalSubmit.client_id = this.userData.client_id
-            modalSubmit.user_id = this.userData.id
-            modalSubmit.parent_id = -1
-            this.updateItem(modalSubmit, isUpdate)
-          },
-          modalCancel => { console.log(modalCancel) }
-      ).catch(err => { console.log(err) })
+        if (isUpdate) {
+          vum.$store.dispatch('getUpdateEntity', {http: vum.$http, id: item.g_id})
+          .then(response => {
+            updateItem = _.cloneDeep(vum.$store.getters.updateEntity)
+            updateItem.fields = updateItem.data.fields
+            updateItem.data = undefined
+            updateItem.parent_id = -1
+            let modalConfig = {
+              size: 'lg',
+              data: {
+                title: (isUpdate ? 'Обновление' : 'Добавление') + ' объекта',
+                isClosable: true,
+                item: updateItem
+              }
+            }
+            ModalService.open(updateModal, modalConfig)
+            .then(modalSubmit => { vum.updateItem(modalSubmit, isUpdate) }, modalCancel => { console.log(modalCancel) })
+            .catch(err => { console.log(err) })
+          })
+        } else {
+          let modalConfig = {
+            size: 'lg',
+            data: {
+              title: (isUpdate ? 'Обновление' : 'Добавление') + ' объекта',
+              isClosable: true,
+              item: updateItem
+            }
+          }
+          ModalService.open(updateModal, modalConfig)
+          .then(modalSubmit => { vum.updateItem(modalSubmit, isUpdate) }, modalCancel => { console.log(modalCancel) })
+          .catch(err => { console.log(err) })
+        }
       })
       }
     },
@@ -94,9 +113,8 @@ export default {
       this.$store.dispatch('updateEntity', {http: this.$http, isUpdate: isUpdate, item: item})
       .then(response => this.getEntities())
     },
-    goToEntity (item) {
-      this.$store.commit('CURRENT_ENTITY', item)
-      this.$router.push({name: 'Entity', params: {id: item.id}})
+    goToEntity (itemId) {
+      this.$router.push({name: 'Entity', params: {id: itemId}})
     },
     getEntities () {
       this.$store.dispatch('getAllEntities', {http: this.$http, id: this.currentSchema.id})

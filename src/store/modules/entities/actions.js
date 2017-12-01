@@ -44,6 +44,25 @@ export const getEntitySchema = ({ commit, getters }, {http, id}) => {
   })
 }
 
+export const getUpdateEntity = ({ commit, getters }, {http, id}) => {
+  return new Promise((resolve, reject) => {
+    commit('showSpinner', true)
+    http.get(`object` + '/' + id)
+    .then(response => {
+      let responseData = response.data
+      responseData.data = JSON.parse(responseData.data)
+      commit(types.UPDATE_UPDATE_ENTITY, responseData)
+      commit('showSpinner', false)
+      resolve()
+    })
+    .catch(e => {
+      commit('showSnackbar', {text: 'Не удалось загрузить данные. Обратитесь к администратору', snackbar: true, context: 'error'})
+      commit('showSpinner', false)
+      reject()
+    })
+  })
+}
+
 export const updateEntity = ({ commit, getters }, {http, isUpdate, item}) => {
   return new Promise((resolve, reject) => {
     console.log(JSON.stringify(item))

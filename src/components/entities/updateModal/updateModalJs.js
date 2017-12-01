@@ -5,16 +5,28 @@ export default {
   name: 'dialogHeader',
   props: ['data'],
   data () {
+    let vm = this
     let mData = JSON.parse(this.$store.getters.entitySchema.data)
+    if (this.data.item.id) {
+      _.forEach(this.data.item.fields, function (value, key) {
+        _.forEach(mData.fields, function (mvalue, mkey) {
+          if (value.index === mvalue.index) {
+            vm.data.item.fields[key].var = mvalue.var
+          }
+        })
+      })
+    } else {
+      this.data.item.fields = _.cloneDeep(mData.fields)
+    }
     return {
-      isUpdate: !this.data.item.name,
+      isUpdate: !!this.data.item.id,
       valid: false,
       sNameRules: [
         (v) => !!v || 'Наименование проекта должно быть заполнено',
         (v) => v && v.length <= 270 || 'Не более 270 символов'
       ],
 
-      updateItem: {fields: _.cloneDeep(mData.fields)},
+      updateItem: this.data.item,
       formSchema: {},
       formOptions: {
         validateAfterLoad: true,
@@ -43,11 +55,17 @@ export default {
       let vm = this
       this.formSchema.fields = []
       _.forEach(this.updateItem.fields, function (value, key) {
-        _.forEach(value.var, function (vValue, vKey) {
-          if (vKey.indexOf('default_value') === 0) {
-            vm.updateItem.fields[key].value = vValue
+        if (!vm.isUpdate) {
+          if (value.field_type === 5 || value.field_type === 9) {
+            let listItems = JSON.parse(value.items)
+            value.value = listItems && listItems.length > 0 ? listItems[0].id : null
           }
-        })
+          _.forEach(value.var, function (vValue, vKey) {
+            if (vKey.indexOf('default_value') === 0) {
+              vm.updateItem.fields[key].value = vValue
+            }
+          })
+        }
         vm.formSchema.fields.push(vm.generateField(value, key))
       })
     },
@@ -57,7 +75,6 @@ export default {
         model: 'fields[' + key + '].value'
       }
       this.getFieldType(field, value)
-      console.log(field)
       return field
     },
     getFieldType (field, value) {

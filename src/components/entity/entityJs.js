@@ -6,11 +6,11 @@ export default {
   name: 'entity',
   data () {
     return {
-      msg: 'Детали' + this.entity.title,
+      msg: 'Детали' + (this.entity ? this.entity.title : ''),
       search: '',
       errors: [],
       activeTab: null,
-      tabs: [{}],
+      tabs: [{id: 'tab-1', name: 'Общая информация'}, {id: 'tab-2', name: 'Объекты'}, {id: 'tab-3', name: 'Документы'}, {id: 'tab-4', name: 'История'}, {id: 'tab-5', name: 'Связи'}],
       headers: [
         { text: 'ID', align: 'left', value: 'id' },
         { text: 'Имя файла', align: 'left', value: 'file_name' },
@@ -37,6 +37,20 @@ export default {
     },
     entityForm () {
       return this.$store.getters.currentEntityForm
+    },
+    entities: function () {
+      return this.$store.getters.entities && this.$store.getters.entities.headers ? this.$store.getters.entities : {headers: [], items: []}
+    },
+    entitySchemas: function () {
+      return this.$store.getters.entitySchemas
+    }
+  },
+  watch: {
+    entitySchemas: function (newValue) {
+      this.currentSchema = newValue[0]
+    },
+    currentSchema: function (newValue) {
+      this.getEntities()
     }
   },
   methods: {
@@ -83,10 +97,9 @@ export default {
     },
     goToFinAnalysis () {
       this.$router.push({name: 'FinAnalysis', params: {id: this.entity.id}})
-    }
-  },
-  watch: {
-    entityForm: function (val) {
+    },
+    getEntities () {
+      this.$store.dispatch('getAllEntities', {http: this.$http, id: this.currentSchema.id})
     }
   },
   created () {

@@ -25,6 +25,10 @@ const mutations = {
     state.entities.splice(index, 1)
   },
 
+  [types.UPDATE_UPDATE_ENTITY] (state, payload) {
+    state.updateEntity = payload
+  },
+
   [types.CURRENT_ENTITY] (state, currentEntity) {
     state.currentEntity = currentEntity
   }
