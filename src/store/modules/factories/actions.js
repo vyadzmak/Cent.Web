@@ -16,7 +16,6 @@ export const getAllFactories = ({ commit, getters }, http) => {
 
 export const updateFactory = ({ commit, getters }, {http, isUpdate, item}) => {
   return new Promise((resolve, reject) => {
-    console.log(JSON.stringify(item))
     commit('showSpinner', true)
     http({method: isUpdate ? 'put' : 'post',
       url: isUpdate ? 'schema/' + item.id : 'schemas',

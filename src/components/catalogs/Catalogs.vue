@@ -3,12 +3,12 @@
         <v-card>
       <v-card-title>
         <v-select
-              :items="entitySchemas"
+              :items="catalogSchemas"
               item-text="title"
               v-model="currentSchema"
               label="Тип"
             ></v-select>
-      <v-btn @click.stop="showUpdateModal()" color="success" dark>Добавить объект</v-btn>
+      <v-btn @click.stop="showUpdateModal()" color="success" dark>Добавить объект справочника</v-btn>
       <v-spacer></v-spacer>
       <v-text-field
         append-icon="search"
@@ -19,9 +19,9 @@
       ></v-text-field>
     </v-card-title>
         <v-data-table
-        ref = "entitiesDataTable"
-      :headers="entities.headers"
-      :items="entities.items"
+        ref = "catalogsDataTable"
+      :headers="catalogs.headers"
+      :items="catalogs.items"
       :search="search"
       :rows-per-page-items="tableRowsShown"
       :rows-per-page-text="rowsPerPageText"
@@ -29,8 +29,8 @@
       :no-data-text="noDataText"
     >
     <template slot="items" slot-scope="props">
-    <tr  @click="goToEntity(props.item.g_id)">
-      <td v-for="h in entities.headers" :key="h.value">{{ _.get(props.item, h.value) }}</td>
+    <tr>
+      <td v-for="h in catalogs.headers" :key="h.value">{{ _.get(props.item, h.value) }}</td>
       <td class="px-1">
          <v-tooltip top>
       <v-btn @click.stop="showUpdateModal(props.item)"  slot="activator" icon class="indigo--text"><v-icon>mdi-pen</v-icon></v-btn>
@@ -50,7 +50,7 @@
     </div>
 </template>
 
-<script src="./entitiesJs.js"></script>
+<script src="./catalogsJs.js"></script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped src="./entities.css"></style>
+<style scoped src="./catalogs.css"></style>

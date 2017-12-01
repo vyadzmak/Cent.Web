@@ -4,6 +4,7 @@ import VuexPersist from 'vuex-persist'
 import * as mutations from './mutations'
 import entities from './modules/entities/entities'
 import factories from './modules/factories/factories'
+import catalogs from './modules/catalogs/catalogs'
 
 Vue.use(Vuex)
 
@@ -40,7 +41,7 @@ const store = new Vuex.Store({
   },
   mutations,
   plugins: [localStorage, sessionStorage],
-  modules: {entities, factories}
+  modules: {entities, factories, catalogs}
 })
 
 export default store

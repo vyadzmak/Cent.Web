@@ -10,6 +10,7 @@ import Entities from '@/components/entities/Entities'
 import Entity from '@/components/entity/Entity'
 import Settings from '@/components/settings/Settings'
 import DataSettings from '@/components/dataSettings/DataSettings'
+import Catalogs from '@/components/catalogs/Catalogs'
 import Log from '@/components/log/Log'
 import store from '../store/index'
 
@@ -20,10 +21,10 @@ function requireAuth (to, from, next) {
   if (store.state.userData) {
     let userRoutes = []
     switch (store.state.userData.user_role_id) {
-      case 1: userRoutes = ['Dashboard', 'Users', 'Companies', 'Factories', 'Factory', 'Entities', 'Settings', 'DataSettings', 'Log', 'Entity']
+      case 1: userRoutes = ['Dashboard', 'Users', 'Companies', 'Factories', 'Factory', 'Entities', 'Settings', 'DataSettings', 'Catalogs', 'Log', 'Entity']
         break
       case 2:
-      case 3: userRoutes = ['Dashboard', 'Users', 'Companies', 'Factories', 'Factory', 'Entities', 'Entity', 'DataSettings']
+      case 3: userRoutes = ['Dashboard', 'Users', 'Companies', 'Factories', 'Factory', 'Entities', 'Entity', 'DataSettings', 'Catalogs']
         break
       default: break
     }
@@ -88,6 +89,11 @@ const router = new Router({
       path: '/dataSettings',
       name: 'DataSettings',
       component: DataSettings
+    },
+    {
+      path: '/catalogs',
+      name: 'Catalogs',
+      component: Catalogs
     },
     {
       path: '/settings',

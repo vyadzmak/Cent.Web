@@ -15,12 +15,13 @@
       </v-tabs-bar>
     </v-toolbar>
     <v-tabs-items>
+<!-- GENERAL INFO -->
       <v-tabs-content id="tab-1">
         <v-card flat>
           
         </v-card>
       </v-tabs-content>
-      <!-- dataTable start -->
+<!-- OBJECTS -->
       <v-tabs-content id="tab-2">
         <v-card>
       <v-card-title>
@@ -70,18 +71,201 @@
   </v-data-table>
   </v-card>
       </v-tabs-content>
-
+<!-- SUBJECTS -->
       <v-tabs-content id="tab-3">
-        <v-card flat>
-          
-        </v-card>
+        <v-card>
+      <v-card-title>
+        <v-select
+              :items="entitySchemas"
+              item-text="title"
+              v-model="currentSchema"
+              label="Тип"
+            ></v-select>
+      <v-btn @click.stop="showUpdateModal()" color="success" dark>Добавить субъекта</v-btn>
+      <v-spacer></v-spacer>
+      <v-text-field
+        append-icon="search"
+        label="Поиск"
+        single-line
+        hide-details
+        v-model="search"
+      ></v-text-field>
+    </v-card-title>
+        <v-data-table
+        ref = "entityDataTable"
+      :headers="entities.headers"
+      :items="entities.items"
+      :search="search"
+      :rows-per-page-items="tableRowsShown"
+      :rows-per-page-text="rowsPerPageText"
+      :no-results-text="noResultsText"
+      :no-data-text="noDataText"
+    >
+    <template slot="items" slot-scope="props">
+    <tr  @click="goToEntity(props.item.id)">
+      <td v-for="h in entities.headers" :key="h.value">{{ _.get(props.item, h.value) }}</td>
+      <td class="px-1">
+         <v-tooltip top>
+      <v-btn @click.stop="showUpdateModal(props.item)"  slot="activator" icon class="indigo--text"><v-icon>mdi-pen</v-icon></v-btn>
+      <span>Редактировать</span>
+    </v-tooltip>        
+        </td>
+      <td class="px-1">
+        <v-tooltip top>
+      <v-btn @click.stop="showDeleteModal(props.item.id)"  slot="activator" icon class="pink--text"><v-icon>mdi-delete-variant</v-icon></v-btn>
+      <span>Удалить</span>
+    </v-tooltip>
+        </td>
+    </tr>
+    </template>
+  </v-data-table>
+  </v-card>
       </v-tabs-content>
+<!-- DOCUMENTS -->
       <v-tabs-content id="tab-4">
-        <v-card flat>
-          
-        </v-card>
+        <v-card>
+      <v-card-title>
+        <v-select
+              :items="entitySchemas"
+              item-text="title"
+              v-model="currentSchema"
+              label="Тип"
+            ></v-select>
+      <v-btn @click.stop="showUpdateModal()" color="success" dark>Добавить документ</v-btn>
+      <v-spacer></v-spacer>
+      <v-text-field
+        append-icon="search"
+        label="Поиск"
+        single-line
+        hide-details
+        v-model="search"
+      ></v-text-field>
+    </v-card-title>
+        <v-data-table
+        ref = "entityDataTable"
+      :headers="entities.headers"
+      :items="entities.items"
+      :search="search"
+      :rows-per-page-items="tableRowsShown"
+      :rows-per-page-text="rowsPerPageText"
+      :no-results-text="noResultsText"
+      :no-data-text="noDataText"
+    >
+    <template slot="items" slot-scope="props">
+    <tr  @click="goToEntity(props.item.id)">
+      <td v-for="h in entities.headers" :key="h.value">{{ _.get(props.item, h.value) }}</td>
+      <td class="px-1">
+         <v-tooltip top>
+      <v-btn @click.stop="showUpdateModal(props.item)"  slot="activator" icon class="indigo--text"><v-icon>mdi-pen</v-icon></v-btn>
+      <span>Редактировать</span>
+    </v-tooltip>        
+        </td>
+      <td class="px-1">
+        <v-tooltip top>
+      <v-btn @click.stop="showDeleteModal(props.item.id)"  slot="activator" icon class="pink--text"><v-icon>mdi-delete-variant</v-icon></v-btn>
+      <span>Удалить</span>
+    </v-tooltip>
+        </td>
+    </tr>
+    </template>
+  </v-data-table>
+  </v-card>
       </v-tabs-content>
+<!-- RELATIONS -->
       <v-tabs-content id="tab-5">
+       <v-card>
+      <v-card-title>
+        <v-select
+              :items="entitySchemas"
+              item-text="title"
+              v-model="currentSchema"
+              label="Тип"
+            ></v-select>
+      <v-btn @click.stop="showUpdateModal()" color="success" dark>Добавить связь</v-btn>
+      <v-spacer></v-spacer>
+      <v-text-field
+        append-icon="search"
+        label="Поиск"
+        single-line
+        hide-details
+        v-model="search"
+      ></v-text-field>
+    </v-card-title>
+        <v-data-table
+        ref = "entityDataTable"
+      :headers="entities.headers"
+      :items="entities.items"
+      :search="search"
+      :rows-per-page-items="tableRowsShown"
+      :rows-per-page-text="rowsPerPageText"
+      :no-results-text="noResultsText"
+      :no-data-text="noDataText"
+    >
+    <template slot="items" slot-scope="props">
+    <tr  @click="goToEntity(props.item.id)">
+      <td v-for="h in entities.headers" :key="h.value">{{ _.get(props.item, h.value) }}</td>
+      <td class="px-1">
+         <v-tooltip top>
+      <v-btn @click.stop="showUpdateModal(props.item)"  slot="activator" icon class="indigo--text"><v-icon>mdi-pen</v-icon></v-btn>
+      <span>Редактировать</span>
+    </v-tooltip>        
+        </td>
+      <td class="px-1">
+        <v-tooltip top>
+      <v-btn @click.stop="showDeleteModal(props.item.id)"  slot="activator" icon class="pink--text"><v-icon>mdi-delete-variant</v-icon></v-btn>
+      <span>Удалить</span>
+    </v-tooltip>
+        </td>
+    </tr>
+    </template>
+  </v-data-table>
+  </v-card>
+      </v-tabs-content>
+<!-- HISTORY -->
+      <v-tabs-content id="tab-6">
+       <v-card>
+      <v-card-title>
+      <v-spacer></v-spacer>
+      <v-text-field
+        append-icon="search"
+        label="Поиск"
+        single-line
+        hide-details
+        v-model="search"
+      ></v-text-field>
+    </v-card-title>
+        <v-data-table
+        ref = "entityDataTable"
+      :headers="entities.headers"
+      :items="entities.items"
+      :search="search"
+      :rows-per-page-items="tableRowsShown"
+      :rows-per-page-text="rowsPerPageText"
+      :no-results-text="noResultsText"
+      :no-data-text="noDataText"
+    >
+    <template slot="items" slot-scope="props">
+    <tr  @click="goToEntity(props.item.id)">
+      <td v-for="h in entities.headers" :key="h.value">{{ _.get(props.item, h.value) }}</td>
+      <td class="px-1">
+         <v-tooltip top>
+      <v-btn @click.stop="showUpdateModal(props.item)"  slot="activator" icon class="indigo--text"><v-icon>mdi-pen</v-icon></v-btn>
+      <span>Редактировать</span>
+    </v-tooltip>        
+        </td>
+      <td class="px-1">
+        <v-tooltip top>
+      <v-btn @click.stop="showDeleteModal(props.item.id)"  slot="activator" icon class="pink--text"><v-icon>mdi-delete-variant</v-icon></v-btn>
+      <span>Удалить</span>
+    </v-tooltip>
+        </td>
+    </tr>
+    </template>
+  </v-data-table>
+  </v-card>
+      </v-tabs-content>
+<!-- REPORTS -->
+      <v-tabs-content id="tab-7">
         <v-card flat>
           
         </v-card>

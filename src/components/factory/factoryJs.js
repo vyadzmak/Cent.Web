@@ -6,8 +6,12 @@ export default {
   data () {
     let cFactory = _.cloneDeep(this.$store.getters.currentFactory)
     cFactory.data = JSON.parse(cFactory.data)
+    _.forEach(cFactory.data.fields, function (value, key) {
+      let result = _.find(cFactory.data.var_descritpions.variables, function (o) { return o.id === value.field_type })
+      value.type_title = result ? result.title : ''
+    })
     return {
-      msg: 'Конструктор схемы ' + cFactory.title,
+      msg: 'Конструктор схемы ',
       search: '',
       errors: [],
       headers: [
@@ -80,6 +84,7 @@ export default {
         let newField = {
           'index': _.random(10000, 20000),
           'field_type': this.currentType.id,
+          'type_title': this.getFieldTypeName(this.currentType.id, this.factory.data.var_descritpions.variables),
           'name': this.currentType.name,
           'title': this.currentType.title,
           'var': _.cloneDeep(this.currentType.var)
@@ -143,12 +148,21 @@ export default {
     deleteFieldItem (index) {
       this.factory.data.fields.splice(index)
       this.updateItem(this.factory, true)
+    },
+    getFieldTypeName (fieldTypeId, collection) {
+      let result = _.find(collection, function (o) { return o.id === fieldTypeId })
+      return result ? result.title : ''
+    }
+  },
+  watch: {
+    factory: function (newValue) {
+      alert('ya')
     }
   },
   created () {
   },
   mounted () {
-    // this.$refs.factoryDataTable.defaultPagination.descending = true
+    this.$refs.factoryDataTable.defaultPagination.descending = true
   },
   beforeDestroy () {
   }

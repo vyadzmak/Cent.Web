@@ -3,10 +3,10 @@ import updateModal from './updateModal/updateModal.vue'
 import { ModalService } from 'vue-modal-dialog'
 
 export default {
-  name: 'entities',
+  name: 'catalogs',
   data () {
     return {
-      msg: 'объекты',
+      msg: 'Каталоги',
       search: '',
       errors: [],
       tableRowsShown: [10, 20, 50, 100, {text: 'Все', value: -1}],
@@ -21,8 +21,8 @@ export default {
       let modalConfig = {
         size: 'md',
         data: {
-          message: 'Вы действительно хотите удалить объект?',
-          title: 'Удаление объекта',
+          message: 'Вы действительно хотите удалить каталог?',
+          title: 'Удаление каталога',
           isClosable: true
         }
       }
@@ -50,19 +50,19 @@ export default {
       }
 
       if (this.currentSchema.id) {
-        vum.$store.dispatch('getEntitySchema', {http: vum.$http, id: vum.currentSchema.id})
+        vum.$store.dispatch('getCatalogSchema', {http: vum.$http, id: vum.currentSchema.id})
       .then(response => {
         if (isUpdate) {
-          vum.$store.dispatch('getUpdateEntity', {http: vum.$http, id: item.g_id})
+          vum.$store.dispatch('getUpdateCatalog', {http: vum.$http, id: item.g_id})
           .then(response => {
-            updateItem = _.cloneDeep(vum.$store.getters.updateEntity)
+            updateItem = _.cloneDeep(vum.$store.getters.updateCatalog)
             updateItem.fields = updateItem.data.fields
             updateItem.data = undefined
             updateItem.parent_id = -1
             let modalConfig = {
               size: 'lg',
               data: {
-                title: (isUpdate ? 'Обновление' : 'Добавление') + ' объекта',
+                title: (isUpdate ? 'Обновление' : 'Добавление') + ' каталога',
                 isClosable: true,
                 item: updateItem
               }
@@ -75,7 +75,7 @@ export default {
           let modalConfig = {
             size: 'lg',
             data: {
-              title: (isUpdate ? 'Обновление' : 'Добавление') + ' объекта',
+              title: (isUpdate ? 'Обновление' : 'Добавление') + ' каталога',
               isClosable: true,
               item: updateItem
             }
@@ -91,56 +91,53 @@ export default {
       this.$store.commit('showSpinner', true)
       this.$http.delete('object/' + itemId)
       .then(response => {
-        this.getEntities()
-        this.$store.commit('showSnackbar', {text: 'Удаление объекта прошло успешно', snackbar: true, context: 'success'})
+        this.getCatalogs()
+        this.$store.commit('showSnackbar', {text: 'Удаление каталога прошло успешно', snackbar: true, context: 'success'})
         this.$store.commit('showSpinner', false)
       })
       .catch(e => {
         this.errors.push(e)
         this.$store.commit('showSpinner', false)
-        this.$store.commit('showSnackbar', {text: 'Удаление объекта не удалось. Обратитесь к администратору', snackbar: true, context: 'error'})
+        this.$store.commit('showSnackbar', {text: 'Удаление каталога не удалось. Обратитесь к администратору', snackbar: true, context: 'error'})
       })
     },
     updateItem: function (item, isUpdate) {
-      this.$store.dispatch('updateEntity', {http: this.$http, isUpdate: isUpdate, item: item})
-      .then(response => this.getEntities())
+      this.$store.dispatch('updateCatalog', {http: this.$http, isUpdate: isUpdate, item: item})
+      .then(response => this.getCatalogs())
     },
-    goToEntity (itemId) {
-      this.$router.push({name: 'Entity', params: {id: itemId}})
+    getCatalogs () {
+      this.$store.dispatch('getAllCatalogs', {http: this.$http, id: this.currentSchema.id})
     },
-    getEntities () {
-      this.$store.dispatch('getAllEntities', {http: this.$http, id: this.currentSchema.id})
-    },
-    getEntitySchemas () {
-      this.$store.dispatch('getEntitySchemas', {http: this.$http, id: this.userData.client_id})
+    getCatalogSchemas () {
+      this.$store.dispatch('getCatalogSchemas', {http: this.$http, id: this.userData.client_id})
     }
   },
   computed: {
     userData: function () {
       return this.$store.getters.userData
     },
-    entities: function () {
-      return this.$store.getters.entities && this.$store.getters.entities.headers ? this.$store.getters.entities : {headers: [], items: []}
+    catalogs: function () {
+      return this.$store.getters.catalogs && this.$store.getters.catalogs.headers ? this.$store.getters.catalogs : {headers: [], items: []}
     },
-    entitySchemas: function () {
-      return this.$store.getters.entitySchemas
+    catalogSchemas: function () {
+      return this.$store.getters.catalogSchemas
     }
   },
   watch: {
-    entitySchemas: function (newValue) {
+    catalogSchemas: function (newValue) {
       this.currentSchema = newValue[0]
     },
     currentSchema: function (newValue) {
-      this.getEntities()
+      this.getCatalogs()
     }
   },
   created () {
-    this.getEntitySchemas()
+    this.getCatalogSchemas()
   },
   mounted () {
-    this.$refs.entitiesDataTable.defaultPagination.descending = true
+    this.$refs.catalogsDataTable.defaultPagination.descending = true
   },
   beforeDestroy () {
-    this.$store.commit('UPDATE_ENTITIES', {})
+    this.$store.commit('UPDATE_CATALOGS', {})
   }
 }

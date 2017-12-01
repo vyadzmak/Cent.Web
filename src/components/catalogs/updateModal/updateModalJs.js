@@ -6,7 +6,7 @@ export default {
   props: ['data'],
   data () {
     let vm = this
-    let mData = JSON.parse(this.$store.getters.entitySchema.data)
+    let mData = JSON.parse(this.$store.getters.catalogSchema.data)
     if (this.data.item.id) {
       _.forEach(this.data.item.fields, function (value, key) {
         _.forEach(mData.fields, function (mvalue, mkey) {
@@ -37,8 +37,8 @@ export default {
     }
   },
   computed: {
-    updEntitySchema () {
-      return this.$store.getters.entitySchema
+    updCatalogSchema () {
+      return this.$store.getters.catalogSchema
     }
   },
   methods: {

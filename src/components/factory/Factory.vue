@@ -37,7 +37,7 @@
     >
     <template slot="items" slot-scope="props">
     <tr @click="props.expanded = !props.expanded">
-      <td>{{ props.item.field_type }}</td>
+      <td>{{ props.item.type_title }}</td>
       <td>{{ props.item.name }}</td>
       <td>{{ props.item.title }}</td>
       <td class="px-1">
