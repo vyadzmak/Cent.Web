@@ -6,10 +6,11 @@ export default {
   name: 'entity',
   data () {
     return {
-      msg: 'Проект',
+      msg: 'Детали' + this.entity.title,
       search: '',
       errors: [],
       activeTab: null,
+      tabs: [{}],
       headers: [
         { text: 'ID', align: 'left', value: 'id' },
         { text: 'Имя файла', align: 'left', value: 'file_name' },
