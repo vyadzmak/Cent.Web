@@ -11,6 +11,7 @@ export default {
       _.forEach(this.data.item.fields, function (value, key) {
         _.forEach(mData.fields, function (mvalue, mkey) {
           if (value.index === mvalue.index) {
+            vm.data.item.fields[key].items = mvalue.items ? mvalue.items : undefined
             vm.data.item.fields[key].var = mvalue.var
           }
         })
