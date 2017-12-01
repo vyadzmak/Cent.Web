@@ -33,6 +33,19 @@ export const getEntitySchemas = ({ commit, getters }, {http, id}) => {
     })
 }
 
+export const getCurrentEntity = ({ commit, getters }, {http, id}) => {
+  commit('showSpinner', true)
+  http.get(`entityDetails` + '/' + id)
+    .then(response => {
+      commit(types.CURRENT_ENTITY, JSON.parse(response.data))
+      commit('showSpinner', false)
+    })
+    .catch(e => {
+      commit('showSnackbar', {text: 'Не удалось загрузить данные. Обратитесь к администратору', snackbar: true, context: 'error'})
+      commit('showSpinner', false)
+    })
+}
+
 export const getEntitySchema = ({ commit, getters }, {http, id}) => {
   return new Promise((resolve, reject) => {
     commit('showSpinner', true)

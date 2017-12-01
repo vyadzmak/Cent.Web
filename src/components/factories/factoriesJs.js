@@ -95,7 +95,8 @@ export default {
       this.$store.dispatch('getAllFactories', this.$http)
     },
     goToFactory (item) {
-      this.$store.commit('CURRENT_FACTORY', item)
+      let clonedItem = _.cloneDeep(item)
+      this.$store.commit('CURRENT_FACTORY', clonedItem)
       this.$router.push({name: 'Factory', params: {id: item.id}})
     },
     getSchemaTypeName (id) {

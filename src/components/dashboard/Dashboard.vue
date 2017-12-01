@@ -70,7 +70,7 @@
     >
       <v-btn
         slot="activator"
-        class="green lighten-2"
+        class="amber lighten-2"
         dark
         fab
         hover

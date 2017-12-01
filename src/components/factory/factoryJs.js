@@ -4,12 +4,6 @@ import { ModalService } from 'vue-modal-dialog'
 export default {
   name: 'factory',
   data () {
-    let cFactory = _.cloneDeep(this.$store.getters.currentFactory)
-    cFactory.data = JSON.parse(cFactory.data)
-    _.forEach(cFactory.data.fields, function (value, key) {
-      let result = _.find(cFactory.data.var_descritpions.variables, function (o) { return o.id === value.field_type })
-      value.type_title = result ? result.title : ''
-    })
     return {
       msg: 'Конструктор схемы ',
       search: '',
@@ -23,8 +17,6 @@ export default {
       rowsPerPageText: 'Строк на странице',
       noDataText: 'Нет данных',
       noResultsText: 'Поиск не дал результатов',
-
-      factory: cFactory,
       currentType: null,
       formOptions: {
         validateAfterLoad: true,
@@ -42,6 +34,22 @@ export default {
     },
     updateProperty () {
       return this.$store.getters.updateProperty ? this.$store.getters.updateProperty : []
+    },
+    factory: {
+      get: function () {
+        let cFactory = this.$store.getters.currentFactory
+        _.forEach(cFactory.data.fields, function (value, key) {
+          let result = _.find(cFactory.data.var_descritpions.variables, function (o) { return o.id === value.field_type })
+          value.type_title = result ? result.title : ''
+        })
+        return cFactory
+      },
+      set: function () { this.$store.commit('CURRENT_FACTORY', this.factory) }
+    },
+    listOfTypes () {
+      if (this.$store.getters.currentFactory.data.var_descritpions.variables) {
+        return this.$store.getters.currentFactory.data.var_descritpions.variables
+      } else { return [] }
     }
   },
   methods: {
@@ -67,7 +75,6 @@ export default {
       item.data = JSON.stringify(item.data)
       this.$store.dispatch('updateFactory', {http: this.$http, isUpdate: isUpdate, item: _.cloneDeep(item)})
       .then(response => {
-        this.factory.data = JSON.parse(response.data)
       })
       .catch(e => {
       })
@@ -152,11 +159,6 @@ export default {
     getFieldTypeName (fieldTypeId, collection) {
       let result = _.find(collection, function (o) { return o.id === fieldTypeId })
       return result ? result.title : ''
-    }
-  },
-  watch: {
-    factory: function (newValue) {
-      alert('ya')
     }
   },
   created () {

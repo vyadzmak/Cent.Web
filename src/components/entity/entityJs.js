@@ -28,14 +28,26 @@ export default {
       tableRowsShown: [10, 20, 50, 100, {text: 'Все', value: -1}],
       rowsPerPageText: 'Строк на странице',
       noDataText: 'Нет данных',
-      noResultsText: 'Поиск не дал результатов'
+      noResultsText: 'Поиск не дал результатов',
+      objsListItem: null,
+      objsList: [],
+      objsTable: {headers: [], items: []},
+      docsListItem: null,
+      docsList: [],
+      docsTable: {headers: [], items: []},
+      relsListItem: null,
+      relsList: [],
+      relsTable: {headers: [], items: []},
+      subsListItem: null,
+      subsList: [],
+      subsTable: {headers: [], items: []}
     }
   },
   computed: {
     userData () {
       return this.$store.state.userData
     },
-    entity () {
+    entity: function () {
       return this.$store.getters.currentEntity
     },
     documents () {
@@ -52,11 +64,26 @@ export default {
     }
   },
   watch: {
-    entitySchemas: function (newValue) {
-      this.currentSchema = newValue[0]
+    objsListItem: function (newValue) {
+      this.getEntities(this.objsTable, newValue.id, 0)
     },
-    currentSchema: function (newValue) {
-      this.getEntities()
+    entity: function (newValue) {
+      if (newValue && newValue.objects_section && newValue.objects_section.items) {
+        this.objsList = newValue.objects_section.items
+        this.objsListItem = this.objsList[0]
+      }
+      if (newValue && newValue.documents_section && newValue.documents_section.items) {
+        this.docsList = newValue.documents_section.items
+        this.docsListItem = this.docsList[0]
+      }
+      if (newValue && newValue.relations_section && newValue.relations_section.items) {
+        this.relsList = newValue.relations_section.items
+        this.relsListItem = this.relsList[0]
+      }
+      if (newValue && newValue.subjects_section && newValue.subjects_section.items) {
+        this.subsList = newValue.subjects_section.items
+        this.subsListItem = this.subsList[0]
+      }
     }
   },
   methods: {
@@ -109,7 +136,7 @@ export default {
     }
   },
   created () {
-
+    this.$store.dispatch('getCurrentEntity', {http: this.$http, id: this.$route.params.id})
   },
   mounted () {
     this.$refs.entityDataTable.defaultPagination.descending = true

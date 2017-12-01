@@ -1,9 +1,9 @@
 <template>
 <v-tabs dark grow>
-    <v-toolbar color="cyan" dark>
+    <v-toolbar color="success" dark>
       <v-toolbar-title>{{msg}}</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-tabs-bar class="cyan" slot="extension">
+      <v-tabs-bar class="success" slot="extension">
         <v-tabs-slider color="yellow"></v-tabs-slider>
         <v-tabs-item
           v-for="item in tabs"
@@ -18,7 +18,7 @@
 <!-- GENERAL INFO -->
       <v-tabs-content id="tab-1">
         <v-card flat>
-          
+          {{entity|json}}
         </v-card>
       </v-tabs-content>
 <!-- OBJECTS -->
@@ -26,9 +26,9 @@
         <v-card>
       <v-card-title>
         <v-select
-              :items="entitySchemas"
-              item-text="title"
-              v-model="currentSchema"
+              :items="objsList"
+              item-text="name"
+              v-model="objsListItem"
               label="Тип"
             ></v-select>
       <v-btn @click.stop="showUpdateModal()" color="success" dark>Добавить объект</v-btn>
@@ -76,9 +76,9 @@
         <v-card>
       <v-card-title>
         <v-select
-              :items="entitySchemas"
-              item-text="title"
-              v-model="currentSchema"
+              :items="subsList"
+              item-text="name"
+              v-model="subsListItem"
               label="Тип"
             ></v-select>
       <v-btn @click.stop="showUpdateModal()" color="success" dark>Добавить субъекта</v-btn>
@@ -126,9 +126,9 @@
         <v-card>
       <v-card-title>
         <v-select
-              :items="entitySchemas"
-              item-text="title"
-              v-model="currentSchema"
+              :items="docsList"
+              item-text="name"
+              v-model="docsListItem"
               label="Тип"
             ></v-select>
       <v-btn @click.stop="showUpdateModal()" color="success" dark>Добавить документ</v-btn>
@@ -176,9 +176,9 @@
        <v-card>
       <v-card-title>
         <v-select
-              :items="entitySchemas"
-              item-text="title"
-              v-model="currentSchema"
+              :items="relsList"
+              item-text="name"
+              v-model="relsListItem"
               label="Тип"
             ></v-select>
       <v-btn @click.stop="showUpdateModal()" color="success" dark>Добавить связь</v-btn>

@@ -20,6 +20,7 @@ const mutations = {
   },
 
   [types.CURRENT_FACTORY] (state, currentFactory) {
+    currentFactory.data = JSON.parse(currentFactory.data)
     state.currentFactory = currentFactory
   }
 }

@@ -6,7 +6,7 @@
         </v-card-title>
           <v-card-title class="pa-1">
       <v-select
-              :items="factory.data.var_descritpions.variables"
+              :items="listOfTypes"
               item-text="title"
               item-disabled="not_used"
               v-model="currentType"
