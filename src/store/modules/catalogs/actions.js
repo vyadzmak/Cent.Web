@@ -16,7 +16,7 @@ export const getAllCatalogs = ({ commit, getters }, {http, id}) => {
 
 export const getCatalogSchemas = ({ commit, getters }, {http, id}) => {
   commit('showSpinner', true)
-  http.get(`schemaClients` + '/' + id)
+  http.get(`schemaCatalogs` + '/' + id)
     .then(response => {
       let catalogs = []
       _.forEach(response.data, function (value, key) {
