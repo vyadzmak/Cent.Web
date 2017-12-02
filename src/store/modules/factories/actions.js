@@ -52,15 +52,15 @@ export const deleteFactory = ({ commit, getters }, {http, id}) => {
     .then(response => {
       if (response.status === 204) {
         commit('DELETE_FACTORY', id)
-        commit('showSnackbar', {text: 'Удаление проекта прошло успешно', snackbar: true, context: 'success'})
+        commit('showSnackbar', {text: 'Удаление конструктора прошло успешно', snackbar: true, context: 'success'})
       } else {
-        commit('showSnackbar', {text: 'Удаление проекта не удалось. Обратитесь к администратору', snackbar: true, context: 'error'})
+        commit('showSnackbar', {text: 'Удаление конструктора не удалось. Обратитесь к администратору', snackbar: true, context: 'error'})
       }
       commit('showSpinner', false)
     })
     .catch(e => {
       commit('showSpinner', false)
-      commit('showSnackbar', {text: 'Удаление проекта не удалось. Обратитесь к администратору', snackbar: true, context: 'error'})
+      commit('showSnackbar', {text: 'Удаление конструктора не удалось. Обратитесь к администратору', snackbar: true, context: 'error'})
     })
 }
 
