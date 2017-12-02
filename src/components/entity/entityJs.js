@@ -11,10 +11,10 @@ export default {
       errors: [],
       activeTab: null,
       tabs: [{id: 'tab-1', name: 'Общая информация'},
-       {id: 'tab-2', name: 'Объекты'},
-       {id: 'tab-3', name: 'Субъекты'},
-       {id: 'tab-4', name: 'Документы'},
-       {id: 'tab-5', name: 'Связи'},
+       {id: 'tab-2', name: 'Объекты', hidden: true},
+       {id: 'tab-3', name: 'Субъекты', hidden: true},
+       {id: 'tab-4', name: 'Документы', hidden: true},
+       {id: 'tab-5', name: 'Связи', hidden: true},
        {id: 'tab-6', name: 'История'},
        {id: 'tab-7', name: 'Отчеты'}],
       headers: [
@@ -76,37 +76,45 @@ export default {
   watch: {
     objsListItem: function (newValue) {
       if (newValue && newValue.id) {
+        this.tabs[1].hidden = false
         this.getEntities(newValue.id)
         .then(resp => { this.objsTable = resp })
         .catch(resp => { this.objsTable = resp })
       } else {
+        this.tabs[1].hidden = true
         this.objsTable = {headers: [], items: []}
       }
     },
     docsListItem: function (newValue) {
       if (newValue && newValue.id) {
+        this.tabs[3].hidden = false
         this.getEntities(newValue.id)
         .then(resp => { this.docsTable = resp })
         .catch(resp => { this.docsTable = resp })
       } else {
+        this.tabs[3].hidden = true
         this.docsTable = {headers: [], items: []}
       }
     },
     relsListItem: function (newValue) {
       if (newValue && newValue.id) {
+        this.tabs[4].hidden = false
         this.getEntities(newValue.id)
         .then(resp => { this.relsTable = resp })
         .catch(resp => { this.relsTable = resp })
       } else {
+        this.tabs[4].hidden = true
         this.relsTable = {headers: [], items: []}
       }
     },
     subsListItem: function (newValue) {
       if (newValue && newValue.id) {
+        this.tabs[2].hidden = false
         this.getEntities(newValue.id)
         .then(resp => { this.subsTable = resp })
         .catch(resp => { this.subsTable = resp })
       } else {
+        this.tabs[2].hidden = true
         this.subsTable = {headers: [], items: []}
       }
     },

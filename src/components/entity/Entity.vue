@@ -10,6 +10,7 @@
           v-for="item in tabs"
           :key="item.id"
           :href="'#' + item.id"
+          v-show="!item.hidden"
         >
           {{ item.name }}
         </v-tabs-item>
