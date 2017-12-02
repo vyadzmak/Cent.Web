@@ -38,6 +38,7 @@
               label="Тип"
                required
             ></v-select>
+    <v-checkbox :label="'Отображать на главной странице'" v-model="data.item.is_show" color="error"></v-checkbox>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn @click="clear">Очистить</v-btn>

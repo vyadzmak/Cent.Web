@@ -65,6 +65,7 @@ export default {
         item.description = ''
         item.user_id = this.userData.id
         item.client_id = this.userData.client_id
+        item.is_show = false
       }
 
       let modalConfig = {
