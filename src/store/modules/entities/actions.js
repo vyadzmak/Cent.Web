@@ -37,7 +37,9 @@ export const getCurrentEntity = ({ commit, getters }, {http, id}) => {
   commit('showSpinner', true)
   http.get(`entityDetails` + '/' + id)
     .then(response => {
-      commit(types.CURRENT_ENTITY, JSON.parse(response.data))
+      let responseData = JSON.parse(response.data)
+      responseData.general_section.data = JSON.parse(responseData.general_section.data)
+      commit(types.CURRENT_ENTITY, responseData)
       commit('showSpinner', false)
     })
     .catch(e => {
@@ -113,7 +115,9 @@ export const getEntityTable = ({ commit, getters }, {http, item}) => {
       config: { contentType: 'application/json' }
     })
     .then(response => {
-      resolve(JSON.parse(response.data))
+      if (response.data) {
+        resolve(JSON.parse(response.data))
+      } else { reject() }
     })
     .catch(e => {
       commit('showSnackbar', {text: 'Не удалось загрузить данные. Обратитесь к администратору', snackbar: true, context: 'error'})

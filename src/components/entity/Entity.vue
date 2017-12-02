@@ -18,8 +18,16 @@
 <!-- GENERAL INFO -->
       <v-tabs-content id="tab-1">
         <v-card flat>
-          {{entity|json}}
-        </v-card>
+          <v-card-title>
+              <h3>Общая информация</h3>
+          </v-card-title>
+          <v-card-text>
+        <v-layout row  v-for="item in generalFields" :key="item.index">
+          <v-flex xs4 sm3 offset-sm1><v-subheader  v-text="item.title"></v-subheader></v-flex>     
+          <v-flex xs8 sm5 v-text="item.output_value"></v-flex>   
+        </v-layout>
+        </v-card-text>
+        </v-card>        
       </v-tabs-content>
 <!-- OBJECTS -->
       <v-tabs-content id="tab-2">
@@ -31,7 +39,7 @@
               v-model="objsListItem"
               label="Тип"
             ></v-select>
-      <v-btn @click.stop="showUpdateModal()" color="success" dark>Добавить объект</v-btn>
+      <v-btn @click.stop="showUpdateModal('objs', objsListItem)" color="success" dark>Добавить объект</v-btn>
       <v-spacer></v-spacer>
       <v-text-field
         append-icon="search"
@@ -52,17 +60,17 @@
       :no-data-text="noDataText"
     >
     <template slot="items" slot-scope="props">
-    <tr  @click="goToEntity(props.item.id)">
+    <tr  @click="goToEntity(props.item.g_id)">
       <td v-for="h in objsTable.headers" :key="h.value">{{ _.get(props.item, h.value) }}</td>
       <td class="px-1">
          <v-tooltip top>
-      <v-btn @click.stop="showUpdateModal(props.item)"  slot="activator" icon class="indigo--text"><v-icon>mdi-pen</v-icon></v-btn>
+      <v-btn @click.stop="showUpdateModal('objs', objsListItem, props.item)"  slot="activator" icon class="indigo--text"><v-icon>mdi-pen</v-icon></v-btn>
       <span>Редактировать</span>
     </v-tooltip>        
         </td>
       <td class="px-1">
         <v-tooltip top>
-      <v-btn @click.stop="showDeleteModal(props.item.id)"  slot="activator" icon class="pink--text"><v-icon>mdi-delete-variant</v-icon></v-btn>
+      <v-btn @click.stop="showDeleteModal('objs', objsListItem, props.item.g_id)"  slot="activator" icon class="pink--text"><v-icon>mdi-delete-variant</v-icon></v-btn>
       <span>Удалить</span>
     </v-tooltip>
         </td>
@@ -81,7 +89,7 @@
               v-model="subsListItem"
               label="Тип"
             ></v-select>
-      <v-btn @click.stop="showUpdateModal()" color="success" dark>Добавить субъекта</v-btn>
+      <v-btn @click.stop="showUpdateModal('subs', subsListItem)" color="success" dark>Добавить субъекта</v-btn>
       <v-spacer></v-spacer>
       <v-text-field
         append-icon="search"
@@ -102,17 +110,17 @@
       :no-data-text="noDataText"
     >
     <template slot="items" slot-scope="props">
-    <tr  @click="goToEntity(props.item.id)">
+    <tr  @click="goToEntity(props.item.g_id)">
       <td v-for="h in subsTable.headers" :key="h.value">{{ _.get(props.item, h.value) }}</td>
       <td class="px-1">
          <v-tooltip top>
-      <v-btn @click.stop="showUpdateModal(props.item)"  slot="activator" icon class="indigo--text"><v-icon>mdi-pen</v-icon></v-btn>
+      <v-btn @click.stop="showUpdateModal('subs', subsListItem, props.item)"  slot="activator" icon class="indigo--text"><v-icon>mdi-pen</v-icon></v-btn>
       <span>Редактировать</span>
     </v-tooltip>        
         </td>
       <td class="px-1">
         <v-tooltip top>
-      <v-btn @click.stop="showDeleteModal(props.item.id)"  slot="activator" icon class="pink--text"><v-icon>mdi-delete-variant</v-icon></v-btn>
+      <v-btn @click.stop="showDeleteModal('subs', subsListItem, props.item.g_id)"  slot="activator" icon class="pink--text"><v-icon>mdi-delete-variant</v-icon></v-btn>
       <span>Удалить</span>
     </v-tooltip>
         </td>
@@ -131,7 +139,7 @@
               v-model="docsListItem"
               label="Тип"
             ></v-select>
-      <v-btn @click.stop="showUpdateModal()" color="success" dark>Добавить документ</v-btn>
+      <v-btn @click.stop="showUpdateModal('docs', docsListItem)" color="success" dark>Добавить документ</v-btn>
       <v-spacer></v-spacer>
       <v-text-field
         append-icon="search"
@@ -152,17 +160,17 @@
       :no-data-text="noDataText"
     >
     <template slot="items" slot-scope="props">
-    <tr  @click="goToEntity(props.item.id)">
+    <tr  @click="goToEntity(props.item.g_id)">
       <td v-for="h in docsTable.headers" :key="h.value">{{ _.get(props.item, h.value) }}</td>
       <td class="px-1">
          <v-tooltip top>
-      <v-btn @click.stop="showUpdateModal(props.item)"  slot="activator" icon class="indigo--text"><v-icon>mdi-pen</v-icon></v-btn>
+      <v-btn @click.stop="showUpdateModal('docs', docsListItem, props.item)"  slot="activator" icon class="indigo--text"><v-icon>mdi-pen</v-icon></v-btn>
       <span>Редактировать</span>
     </v-tooltip>        
         </td>
       <td class="px-1">
         <v-tooltip top>
-      <v-btn @click.stop="showDeleteModal(props.item.id)"  slot="activator" icon class="pink--text"><v-icon>mdi-delete-variant</v-icon></v-btn>
+      <v-btn @click.stop="showDeleteModal('docs', docsListItem, props.item.g_id)"  slot="activator" icon class="pink--text"><v-icon>mdi-delete-variant</v-icon></v-btn>
       <span>Удалить</span>
     </v-tooltip>
         </td>
@@ -181,7 +189,7 @@
               v-model="relsListItem"
               label="Тип"
             ></v-select>
-      <v-btn @click.stop="showUpdateModal()" color="success" dark>Добавить связь</v-btn>
+      <v-btn @click.stop="showUpdateModal('rels', relsListItem)" color="success" dark>Добавить связь</v-btn>
       <v-spacer></v-spacer>
       <v-text-field
         append-icon="search"
@@ -202,17 +210,17 @@
       :no-data-text="noDataText"
     >
     <template slot="items" slot-scope="props">
-    <tr  @click="goToEntity(props.item.id)">
+    <tr  @click="goToEntity(props.item.g_id)">
       <td v-for="h in relsTable.headers" :key="h.value">{{ _.get(props.item, h.value) }}</td>
       <td class="px-1">
          <v-tooltip top>
-      <v-btn @click.stop="showUpdateModal(props.item)"  slot="activator" icon class="indigo--text"><v-icon>mdi-pen</v-icon></v-btn>
+      <v-btn @click.stop="showUpdateModal('rels', relsListItem, props.item)"  slot="activator" icon class="indigo--text"><v-icon>mdi-pen</v-icon></v-btn>
       <span>Редактировать</span>
     </v-tooltip>        
         </td>
       <td class="px-1">
         <v-tooltip top>
-      <v-btn @click.stop="showDeleteModal(props.item.id)"  slot="activator" icon class="pink--text"><v-icon>mdi-delete-variant</v-icon></v-btn>
+      <v-btn @click.stop="showDeleteModal('rels', relsListItem, props.item.g_id)"  slot="activator" icon class="pink--text"><v-icon>mdi-delete-variant</v-icon></v-btn>
       <span>Удалить</span>
     </v-tooltip>
         </td>
@@ -245,7 +253,7 @@
       :no-data-text="noDataText"
     >
     <template slot="items" slot-scope="props">
-    <tr  @click="goToEntity(props.item.id)">
+    <tr  @click="goToEntity(props.item.g_id)">
       <td v-for="h in entities.headers" :key="h.value">{{ _.get(props.item, h.value) }}</td>
       <td class="px-1">
          <v-tooltip top>
@@ -255,7 +263,7 @@
         </td>
       <td class="px-1">
         <v-tooltip top>
-      <v-btn @click.stop="showDeleteModal(props.item.id)"  slot="activator" icon class="pink--text"><v-icon>mdi-delete-variant</v-icon></v-btn>
+      <v-btn @click.stop="showDeleteModal(props.item.g_id)"  slot="activator" icon class="pink--text"><v-icon>mdi-delete-variant</v-icon></v-btn>
       <span>Удалить</span>
     </v-tooltip>
         </td>
