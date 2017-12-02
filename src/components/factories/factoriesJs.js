@@ -116,5 +116,6 @@ export default {
     this.$refs.factoriesDataTable.defaultPagination.descending = true
   },
   beforeDestroy () {
+    this.$store.commit('UPDATE_FACTORIES', [])
   }
 }

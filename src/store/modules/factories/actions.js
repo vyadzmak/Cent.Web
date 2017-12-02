@@ -26,8 +26,8 @@ export const updateFactory = ({ commit, getters }, {http, isUpdate, item}) => {
   let responseData = response.data && response.data !== 'Error' ? response.data : null
   if (responseData) {
     if (isUpdate) {
-      commit('UPDATE_FACTORY', responseData)
-      commit('CURRENT_FACTORY', responseData)
+      commit('UPDATE_FACTORY', _.cloneDeep(responseData))
+      commit('CURRENT_FACTORY', _.cloneDeep(responseData))
     } else {
       commit('ADD_FACTORY', responseData)
     }
