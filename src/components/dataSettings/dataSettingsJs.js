@@ -24,6 +24,8 @@ export default {
         case 2:
           this.$router.push({name: 'Catalogs'})
           break
+        default: this.$store.commit('showSnackbar', {text: 'На данный момент функция недоступна, появится в ближайшее время', snackbar: true, context: 'success'})
+          break
       }
     }
   },

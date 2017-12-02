@@ -5,7 +5,6 @@ export default {
   name: 'factory',
   data () {
     return {
-      msg: 'Конструктор схемы ',
       search: '',
       errors: [],
       headers: [
@@ -50,7 +49,8 @@ export default {
       if (this.$store.getters.currentFactory.data.var_descritpions.variables) {
         return this.$store.getters.currentFactory.data.var_descritpions.variables
       } else { return [] }
-    }
+    },
+    msg () { return 'Конструктор схемы "' + (this.factory ? this.factory.title : '') + '"' }
   },
   methods: {
     showDeleteModal: function (itemId) {

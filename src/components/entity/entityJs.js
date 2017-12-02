@@ -7,7 +7,6 @@ export default {
   name: 'entity',
   data () {
     return {
-      msg: 'Детали' + (this.entity ? this.entity.title : ''),
       search: '',
       errors: [],
       activeTab: null,
@@ -71,43 +70,52 @@ export default {
     },
     generalFields () {
       return this.entity && this.entity.general_section ? this.entity.general_section.data.fields : []
-    }
+    },
+    msg () { return 'Детали ' + (this.entity && this.entity.general_section ? this.entity.general_section.data.fields[0].output_value : '') }
   },
   watch: {
     objsListItem: function (newValue) {
-      if (newValue.id) {
+      if (newValue && newValue.id) {
         this.getEntities(newValue.id)
         .then(resp => { this.objsTable = resp })
         .catch(resp => { this.objsTable = resp })
+      } else {
+        this.objsTable = {headers: [], items: []}
       }
     },
     docsListItem: function (newValue) {
-      if (newValue.id) {
+      if (newValue && newValue.id) {
         this.getEntities(newValue.id)
         .then(resp => { this.docsTable = resp })
         .catch(resp => { this.docsTable = resp })
+      } else {
+        this.docsTable = {headers: [], items: []}
       }
     },
     relsListItem: function (newValue) {
-      if (newValue.id) {
+      if (newValue && newValue.id) {
         this.getEntities(newValue.id)
         .then(resp => { this.relsTable = resp })
         .catch(resp => { this.relsTable = resp })
+      } else {
+        this.relsTable = {headers: [], items: []}
       }
     },
     subsListItem: function (newValue) {
-      if (newValue.id) {
+      if (newValue && newValue.id) {
         this.getEntities(newValue.id)
         .then(resp => { this.subsTable = resp })
         .catch(resp => { this.subsTable = resp })
+      } else {
+        this.subsTable = {headers: [], items: []}
       }
     },
     entity: function (newValue) {
       if (newValue && newValue.objects_section && newValue.objects_section.items) {
         this.objsList = newValue.objects_section.items
-        if (this.objsList.length > 0) {
-          this.objsListItem = this.objsList[0]
-        }
+        // if (this.objsList.length > 0) {
+        this.objsListItem = this.objsList.length > 0 ? this.objsList[0] : null
+        // }
       }
       if (newValue && newValue.documents_section && newValue.documents_section.items) {
         this.docsList = newValue.documents_section.items
@@ -220,7 +228,7 @@ export default {
           })
     },
     goToFinAnalysis () {
-      this.$router.push({name: 'FinAnalysis', params: {id: this.entity.id}})
+      this.$router.replace({name: 'FinAnalysis', params: {id: this.entity.id}})
     },
     getEntities (id) {
       return new Promise((resolve, reject) => {
@@ -250,5 +258,11 @@ export default {
     this.$refs.relsTable.defaultPagination.descending = true
     this.$refs.subsTable.defaultPagination.descending = true
     this.$refs.entityDataTable.defaultPagination.descending = true
+  },
+  beforeRouteUpdate (to, from, next) {
+    if (to.name === from.name) {
+      this.$store.dispatch('getCurrentEntity', {http: this.$http, id: to.params.id})
+    }
+    next()
   }
 }

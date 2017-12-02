@@ -1,7 +1,8 @@
 <template>
 <v-tabs dark grow>
     <v-toolbar color="success" dark>
-      <v-toolbar-title>{{msg}}</v-toolbar-title>
+      <v-toolbar-title>{{msg}}
+      </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-tabs-bar class="success" slot="extension">
         <v-tabs-slider color="yellow"></v-tabs-slider>
