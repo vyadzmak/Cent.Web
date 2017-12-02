@@ -42,9 +42,9 @@
       ></v-text-field>
     </v-card-title>
         <v-data-table
-        ref = "entityDataTable"
-      :headers="entities.headers"
-      :items="entities.items"
+        ref = "objsTable"
+      :headers="objsTable.headers"
+      :items="objsTable.items"
       :search="search"
       :rows-per-page-items="tableRowsShown"
       :rows-per-page-text="rowsPerPageText"
@@ -53,7 +53,7 @@
     >
     <template slot="items" slot-scope="props">
     <tr  @click="goToEntity(props.item.id)">
-      <td v-for="h in entities.headers" :key="h.value">{{ _.get(props.item, h.value) }}</td>
+      <td v-for="h in objsTable.headers" :key="h.value">{{ _.get(props.item, h.value) }}</td>
       <td class="px-1">
          <v-tooltip top>
       <v-btn @click.stop="showUpdateModal(props.item)"  slot="activator" icon class="indigo--text"><v-icon>mdi-pen</v-icon></v-btn>
@@ -92,9 +92,9 @@
       ></v-text-field>
     </v-card-title>
         <v-data-table
-        ref = "entityDataTable"
-      :headers="entities.headers"
-      :items="entities.items"
+        ref = "subsTable"
+      :headers="subsTable.headers"
+      :items="subsTable.items"
       :search="search"
       :rows-per-page-items="tableRowsShown"
       :rows-per-page-text="rowsPerPageText"
@@ -103,7 +103,7 @@
     >
     <template slot="items" slot-scope="props">
     <tr  @click="goToEntity(props.item.id)">
-      <td v-for="h in entities.headers" :key="h.value">{{ _.get(props.item, h.value) }}</td>
+      <td v-for="h in subsTable.headers" :key="h.value">{{ _.get(props.item, h.value) }}</td>
       <td class="px-1">
          <v-tooltip top>
       <v-btn @click.stop="showUpdateModal(props.item)"  slot="activator" icon class="indigo--text"><v-icon>mdi-pen</v-icon></v-btn>
@@ -142,9 +142,9 @@
       ></v-text-field>
     </v-card-title>
         <v-data-table
-        ref = "entityDataTable"
-      :headers="entities.headers"
-      :items="entities.items"
+        ref = "docsTable"
+      :headers="docsTable.headers"
+      :items="docsTable.items"
       :search="search"
       :rows-per-page-items="tableRowsShown"
       :rows-per-page-text="rowsPerPageText"
@@ -153,7 +153,7 @@
     >
     <template slot="items" slot-scope="props">
     <tr  @click="goToEntity(props.item.id)">
-      <td v-for="h in entities.headers" :key="h.value">{{ _.get(props.item, h.value) }}</td>
+      <td v-for="h in docsTable.headers" :key="h.value">{{ _.get(props.item, h.value) }}</td>
       <td class="px-1">
          <v-tooltip top>
       <v-btn @click.stop="showUpdateModal(props.item)"  slot="activator" icon class="indigo--text"><v-icon>mdi-pen</v-icon></v-btn>
@@ -192,9 +192,9 @@
       ></v-text-field>
     </v-card-title>
         <v-data-table
-        ref = "entityDataTable"
-      :headers="entities.headers"
-      :items="entities.items"
+        ref = "relsTable"
+      :headers="relsTable.headers"
+      :items="relsTable.items"
       :search="search"
       :rows-per-page-items="tableRowsShown"
       :rows-per-page-text="rowsPerPageText"
@@ -203,7 +203,7 @@
     >
     <template slot="items" slot-scope="props">
     <tr  @click="goToEntity(props.item.id)">
-      <td v-for="h in entities.headers" :key="h.value">{{ _.get(props.item, h.value) }}</td>
+      <td v-for="h in relsTable.headers" :key="h.value">{{ _.get(props.item, h.value) }}</td>
       <td class="px-1">
          <v-tooltip top>
       <v-btn @click.stop="showUpdateModal(props.item)"  slot="activator" icon class="indigo--text"><v-icon>mdi-pen</v-icon></v-btn>

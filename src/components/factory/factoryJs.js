@@ -126,6 +126,10 @@ export default {
         type: 'checkbox',
         label: 'Значение',
         model: 'is_value'
+      }, {
+        type: 'checkbox',
+        label: 'Видимость',
+        model: 'is_visible'
       }]
 
       _.forEach(factory.var, function (value, key) {

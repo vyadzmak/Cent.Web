@@ -104,3 +104,20 @@ export const updateEntity = ({ commit, getters }, {http, isUpdate, item}) => {
     })
   })
 }
+
+export const getEntityTable = ({ commit, getters }, {http, item}) => {
+  return new Promise((resolve, reject) => {
+    http({method: 'post',
+      url: 'entityObjects',
+      data: item,
+      config: { contentType: 'application/json' }
+    })
+    .then(response => {
+      resolve(JSON.parse(response.data))
+    })
+    .catch(e => {
+      commit('showSnackbar', {text: 'Не удалось загрузить данные. Обратитесь к администратору', snackbar: true, context: 'error'})
+      reject()
+    })
+  })
+}

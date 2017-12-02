@@ -65,24 +65,57 @@ export default {
   },
   watch: {
     objsListItem: function (newValue) {
-      this.getEntities(this.objsTable, newValue.id, 0)
+      if (newValue.id) {
+        this.getEntities(newValue.id)
+        .then(resp => { this.objsTable = resp })
+        .catch(resp => { this.objsTable = resp })
+      }
+    },
+    docsListItem: function (newValue) {
+      if (newValue.id) {
+        this.getEntities(newValue.id)
+        .then(resp => { this.objsTable = resp })
+        .catch(resp => { this.objsTable = resp })
+      }
+    },
+    relsListItem: function (newValue) {
+      if (newValue.id) {
+        this.getEntities(newValue.id)
+        .then(resp => { this.objsTable = resp })
+        .catch(resp => { this.objsTable = resp })
+      }
+    },
+    subsListItem: function (newValue) {
+      if (newValue.id) {
+        this.getEntities(newValue.id)
+        .then(resp => { this.objsTable = resp })
+        .catch(resp => { this.objsTable = resp })
+      }
     },
     entity: function (newValue) {
       if (newValue && newValue.objects_section && newValue.objects_section.items) {
         this.objsList = newValue.objects_section.items
-        this.objsListItem = this.objsList[0]
+        if (this.objsList.length > 0) {
+          this.objsListItem = this.objsList[0]
+        }
       }
       if (newValue && newValue.documents_section && newValue.documents_section.items) {
         this.docsList = newValue.documents_section.items
-        this.docsListItem = this.docsList[0]
+        if (this.docsList.length > 0) {
+          this.docsListItem = this.docsList[0]
+        }
       }
       if (newValue && newValue.relations_section && newValue.relations_section.items) {
         this.relsList = newValue.relations_section.items
-        this.relsListItem = this.relsList[0]
+        if (this.relsList.length > 0) {
+          this.relsListItem = this.relsList[0]
+        }
       }
       if (newValue && newValue.subjects_section && newValue.subjects_section.items) {
         this.subsList = newValue.subjects_section.items
-        this.subsListItem = this.subsList[0]
+        if (this.subsList.length > 0) {
+          this.subsListItem = this.subsList[0]
+        }
       }
     }
   },
@@ -91,8 +124,8 @@ export default {
       let modalConfig = {
         size: 'md',
         data: {
-          message: 'Вы действительно хотите удалить проект?',
-          title: 'Удаление проекта',
+          message: 'Вы действительно хотите удалить объект?',
+          title: 'Удаление объекта',
           isClosable: true
         }
       }
@@ -131,8 +164,12 @@ export default {
     goToFinAnalysis () {
       this.$router.push({name: 'FinAnalysis', params: {id: this.entity.id}})
     },
-    getEntities () {
-      this.$store.dispatch('getAllEntities', {http: this.$http, id: this.currentSchema.id})
+    getEntities (id) {
+      return new Promise((resolve, reject) => {
+        this.$store.dispatch('getEntityTable', {http: this.$http, item: {schema_id: id, parent_id: this.$route.params.id}})
+      .then(response => { resolve(response) })
+      .catch(reject => { reject({headers: [], items: []}) })
+      })
     }
   },
   created () {

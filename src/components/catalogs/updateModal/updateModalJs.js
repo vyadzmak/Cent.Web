@@ -23,7 +23,7 @@ export default {
       isUpdate: !!this.data.item.id,
       valid: false,
       sNameRules: [
-        (v) => !!v || 'Наименование проекта должно быть заполнено',
+        (v) => !!v || 'Наименование должно быть заполнено',
         (v) => v && v.length <= 270 || 'Не более 270 символов'
       ],
 
