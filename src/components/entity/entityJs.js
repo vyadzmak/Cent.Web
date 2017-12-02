@@ -17,6 +17,7 @@ export default {
        {id: 'tab-5', name: 'Связи', hidden: true},
        {id: 'tab-6', name: 'История'},
        {id: 'tab-7', name: 'Отчеты'}],
+      currentTab: 'tab-1',
       headers: [
         { text: 'ID', align: 'left', value: 'id' },
         { text: 'Имя файла', align: 'left', value: 'file_name' },
@@ -254,6 +255,7 @@ export default {
       })
     },
     goToEntity (itemId) {
+      this.currentTab = 'tab-1'
       this.$router.push({name: 'Entity', params: {id: itemId}})
     }
   },

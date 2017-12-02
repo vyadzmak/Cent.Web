@@ -12,6 +12,7 @@ import VueFormGenerator from 'vue-form-generator'
 import YmapPlugin from 'vue-yandex-maps'
 
 import 'vuetify/dist/vuetify.css'
+import './stylus/roboto/roboto.scss'
 import './stylus/main.styl'
 import './stylus/material-design-icons/scss/materialdesignicons.scss'
 import './stylus/font-awesome/scss/font-awesome.scss'

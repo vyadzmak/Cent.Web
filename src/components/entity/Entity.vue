@@ -1,5 +1,5 @@
 <template>
-<v-tabs dark grow>
+<v-tabs dark grow v-model="currentTab">
     <v-toolbar color="success" dark>
       <v-toolbar-title>{{msg}}
       </v-toolbar-title>
