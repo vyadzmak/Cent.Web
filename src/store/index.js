@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import VuexPersist from 'vuex-persist'
+import VuexPersistedState from 'vuex-persistedstate'
 import * as mutations from './mutations'
 import entities from './modules/entities/entities'
 import factories from './modules/factories/factories'
@@ -8,21 +8,19 @@ import catalogs from './modules/catalogs/catalogs'
 
 Vue.use(Vuex)
 
-const sessionStorage = new VuexPersist({
-  key: 'vuex',
+const sessionStorage = VuexPersistedState({
   storage: window.sessionStorage
-}).plugin
+})
 
 const localStorageMutations = ['addRUserData', 'deleteUserData']
 
-const localStorage = new VuexPersist({
-  key: 'vuexLocal',
+const localStorage = VuexPersistedState({
   storage: window.localStorage,
   reducer: state => ({
     userData: state.userData
   }),
   filter: mutation => (localStorageMutations.indexOf(mutation.type) !== -1)
-}).plugin
+})
 
 const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production', // check if something updates our model not through mutation

@@ -14,7 +14,7 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
-    "axios": "^0.16.2",
+    "axios": "^0.17.1",
     "exports-loader": "^0.6.4",
     "expose-loader": "^0.7.3",
     "lodash": "^4.17.4",
@@ -22,14 +22,14 @@
     "vue-form-generator": "^2.1.1",
     "vue-lodash": "^1.0.4",
     "vue-modal-dialog": "^0.2.2",
-    "vue-moment": "^2.0.2",
-    "vue-router": "^2.7.0",
-    "vue-transmit": "^6.0.1",
+    "vue-moment": "^3.1",
+    "vue-router": "^3.0.1",
+    "vue-transmit": "^7.1",
     "vue-yandex-maps": "^0.5.7",
-    "vue2-filters": "^0.2.1",
+    "vue2-filters": "^0.2",
     "vuetify": "^0.17",
-    "vuex": "^2.4.0",
-    "vuex-persist": "^0.1.8"
+    "vuex": "^3.0",
+    "vuex-persistedstate": "^2.4"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
@@ -83,7 +83,6 @@
     "lodash-webpack-plugin": "^0.11.4",
     "mocha": "^3.2.0",
     "nightwatch": "^0.9.12",
-    "node-sass-loader":"^0.1.7",
     "opn": "^5.1.0",
     "optimize-css-assets-webpack-plugin": "^2.0.0",
     "ora": "^1.2.0",
@@ -101,7 +100,6 @@
     "url-loader": "^0.5.8",
     "vue-charts": "^0.2.1",
     "vue-loader": "^13.0.4",
-    "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.5",
     "webpack": "^2.6.1",
     "webpack-bundle-analyzer": "^2.2.1",
