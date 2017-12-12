@@ -13,6 +13,7 @@ import YmapPlugin from 'vue-yandex-maps'
 
 import 'vuetify/dist/vuetify.min.css'
 import './scss/main.scss'
+import 'vue-form-generator/dist/vfg.css'
 
 import App from './App'
 import router from './router'
