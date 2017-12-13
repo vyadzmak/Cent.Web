@@ -109,7 +109,9 @@ export default {
       this.$router.push({name: 'Entity', params: {id: itemId}})
     },
     getEntities () {
-      this.$store.dispatch('getAllEntities', {http: this.$http, id: this.currentSchema.id})
+      if (this.currentSchema && this.currentSchema.id) {
+        this.$store.dispatch('getAllEntities', {http: this.$http, id: this.currentSchema.id})
+      }
     },
     getEntitySchemas () {
       this.$store.dispatch('getEntitySchemas', {http: this.$http, id: this.userData.client_id})

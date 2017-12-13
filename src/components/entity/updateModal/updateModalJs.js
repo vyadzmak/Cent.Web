@@ -63,7 +63,9 @@ export default {
             }
           })
         }
-        vm.formSchema.fields.push(vm.generateField(value, key))
+        if (value.field_type !== 5) {
+          vm.formSchema.fields.push(vm.generateField(value, key))
+        }
       })
     },
     generateField (value, key) {

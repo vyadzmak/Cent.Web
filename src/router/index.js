@@ -16,23 +16,6 @@ import store from '../store/index'
 
 Vue.use(Router)
 
-function requireAuth (to, from, next) {
-  let found = false
-  if (store.state.userData) {
-    let userRoutes = []
-    switch (store.state.userData.user_role_id) {
-      case 1: userRoutes = ['Dashboard', 'Users', 'Companies', 'Factories', 'Factory', 'Entities', 'Settings', 'DataSettings', 'Catalogs', 'Log', 'Entity']
-        break
-      case 2:
-      case 3: userRoutes = ['Dashboard', 'Users', 'Companies', 'Factories', 'Factory', 'Entities', 'Entity', 'DataSettings', 'Catalogs']
-        break
-      default: break
-    }
-    found = userRoutes.indexOf(to.name) !== -1
-  }
-  return found
-}
-
 const router = new Router({
   // mode: 'history',
   routes: [{
@@ -117,8 +100,28 @@ const router = new Router({
   }]
 })
 
+router.requireAuth = function (to, from, next) {
+  let found = false
+  if (store.state.userData) {
+    let userRoutes = []
+    switch (store.state.userData.user_role_id) {
+      case 1: userRoutes = ['Dashboard', 'Users', 'Companies', 'Factories', 'Factory', 'Entities', 'Entity', 'Settings', 'DataSettings', 'Catalogs', 'Log']
+        break
+      case 2:userRoutes = ['Dashboard', 'Users', 'Factories', 'Factory', 'Entities', 'Entity', 'DataSettings', 'Catalogs']
+        break
+      case 3: userRoutes = ['Dashboard', 'Entities', 'Entity']
+        break
+      case 7: userRoutes = ['Dashboard']
+        break
+      default: break
+    }
+    found = userRoutes.indexOf(to.name) !== -1
+  }
+  return found
+}
+
 router.beforeEach((to, from, next) => {
-  if (requireAuth(to, from, next) || to.name === 'Login') {
+  if (router.requireAuth(to, from, next) || to.name === 'Login') {
     next()
   } else {
     next({ path: '/login' })

@@ -93,7 +93,7 @@ export default {
       this.$store.dispatch('updateFactory', {http: this.$http, isUpdate: isUpdate, item: item})
     },
     getAllFactories () {
-      this.$store.dispatch('getAllFactories', this.$http)
+      this.$store.dispatch('getAllFactories', {http: this.$http, id: this.userData.client_id})
     },
     goToFactory (item) {
       let clonedItem = _.cloneDeep(item)

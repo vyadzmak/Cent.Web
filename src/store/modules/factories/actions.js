@@ -1,8 +1,8 @@
 import types from '../../mutation-types'
 
-export const getAllFactories = ({ commit, getters }, http) => {
+export const getAllFactories = ({ commit, getters }, {http, id}) => {
   commit('showSpinner', true)
-  http.get(`schemas`)
+  http.get(`fullSchemaClients/` + id)
     .then(response => {
       let factories = response.data
       commit(types.UPDATE_FACTORIES, factories)

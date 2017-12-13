@@ -28,6 +28,7 @@ export const getEntitySchemas = ({ commit, getters }, {http, id}) => {
       commit('showSpinner', false)
     })
     .catch(e => {
+      commit(types.UPDATE_ENTITY_SCHEMAS, [])
       commit('showSnackbar', {text: 'Не удалось загрузить данные. Обратитесь к администратору', snackbar: true, context: 'error'})
       commit('showSpinner', false)
     })

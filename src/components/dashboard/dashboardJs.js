@@ -5,6 +5,8 @@ import { ModalService } from 'vue-modal-dialog'
 export default {
   name: 'dashboard',
   data () {
+    console.log(this.$router)
+    console.log(this.$route)
     return {
       msg: 'this is dashboard',
       clipped: true,
@@ -34,11 +36,12 @@ export default {
     },
     items: function () {
       return [
-        { icon: 'dashboard', title: 'Объекты', path: '/entities', visible: this.userData.user_role_id !== 4 },
-        { icon: 'web', title: 'Настройки данных', path: '/dataSettings', visible: this.userData.user_role_id === 1 || this.userData.user_role_id === 2 },
-        { icon: 'mdi-domain', title: 'Компании', path: '/companies', visible: this.userData.user_role_id !== 4 },
-        { icon: 'settings', title: 'Системные настройки', path: '/settings', visible: this.userData.user_role_id === 1 },
-        { icon: 'mdi-information-outline', title: 'Лог', path: '/log', visible: this.userData.user_role_id === 1 }
+        { icon: 'dashboard', title: 'Объекты', path: '/entities', visible: this.$router.requireAuth({name: 'Entities'}) },
+        { icon: 'web', title: 'Настройки данных', path: '/dataSettings', visible: this.$router.requireAuth({name: 'DataSettings'}) },
+        { icon: 'mdi-domain', title: 'Компании', path: '/companies', visible: this.$router.requireAuth({name: 'Companies'}) },
+        { icon: 'supervisor_account', title: 'Пользователи', path: '/users/'+this.userData.client_id, visible: this.$router.requireAuth({name: 'Users'}) && this.userData.user_role_id === 2 },
+        { icon: 'settings', title: 'Системные настройки', path: '/settings', visible: this.$router.requireAuth({name: 'Settings'}) },
+        { icon: 'mdi-information-outline', title: 'Лог', path: '/log', visible: this.$router.requireAuth({name: 'Log'}) }
       ]
     }
   },
