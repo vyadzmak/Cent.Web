@@ -39,7 +39,7 @@ export default {
         { icon: 'dashboard', title: 'Объекты', path: '/entities', visible: this.$router.requireAuth({name: 'Entities'}) },
         { icon: 'web', title: 'Настройки данных', path: '/dataSettings', visible: this.$router.requireAuth({name: 'DataSettings'}) },
         { icon: 'mdi-domain', title: 'Компании', path: '/companies', visible: this.$router.requireAuth({name: 'Companies'}) },
-        { icon: 'supervisor_account', title: 'Пользователи', path: '/users/'+this.userData.client_id, visible: this.$router.requireAuth({name: 'Users'}) && this.userData.user_role_id === 2 },
+        { icon: 'supervisor_account', title: 'Пользователи', path: '/users/' + this.userData.client_id, visible: this.$router.requireAuth({name: 'Users'}) && this.userData.user_role_id === 2 },
         { icon: 'settings', title: 'Системные настройки', path: '/settings', visible: this.$router.requireAuth({name: 'Settings'}) },
         { icon: 'mdi-information-outline', title: 'Лог', path: '/log', visible: this.$router.requireAuth({name: 'Log'}) }
       ]
