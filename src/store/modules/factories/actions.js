@@ -5,7 +5,9 @@ export const getAllFactories = ({ commit, getters }, {http, id}) => {
   http.get(`fullSchemaClients/` + id)
     .then(response => {
       let factories = response.data
-      commit(types.UPDATE_FACTORIES, factories)
+      if (factories.length && factories.length > 0) {
+        commit(types.UPDATE_FACTORIES, factories)
+      }
       commit('showSpinner', false)
     })
     .catch(e => {
