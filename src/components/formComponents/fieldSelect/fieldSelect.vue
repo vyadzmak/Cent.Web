@@ -2,15 +2,15 @@
 <template>
     <v-select
       v-model="value"
-      :item-text="schema.vName"
-      :item-value="schema.vId"
+      item-text="name"
+      item-value="id"
       :items="schema.items"
-      :label="schema.label"
       :disabled="disabled"
       :placeholder="schema.placeholder"
       :readonly="schema.readonly"
       :rules="schema.rules"
       :required="schema.required"
+      single-line
     ></v-select>
 </template>
 

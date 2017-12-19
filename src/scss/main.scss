@@ -25,3 +25,14 @@
 	  border: none;
     }
   }
+
+.field-wrap>.input-group {
+      padding-top: 0;
+    }
+
+.vue-form-generator .form-group {
+  &.field-vselect,
+  &.field-vtext{
+    margin-bottom: 0;
+  }
+}

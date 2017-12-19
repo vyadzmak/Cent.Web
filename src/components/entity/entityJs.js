@@ -1,7 +1,6 @@
 import questionDialog from '../questionDialog/questionDialog'
 import updateModal from './updateModal/updateModal.vue'
 import { ModalService } from 'vue-modal-dialog'
-import validators from 'vue-form-generator'
 
 export default {
   name: 'entity',

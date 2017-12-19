@@ -5,8 +5,6 @@ import { ModalService } from 'vue-modal-dialog'
 export default {
   name: 'dashboard',
   data () {
-    console.log(this.$router)
-    console.log(this.$route)
     return {
       msg: 'this is dashboard',
       clipped: true,

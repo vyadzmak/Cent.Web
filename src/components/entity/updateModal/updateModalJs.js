@@ -1,5 +1,5 @@
 import { ModalService } from 'vue-modal-dialog'
-import validators from 'vue-form-generator'
+import formGenerator from '../../../formGenerator/formGenerator'
 
 export default {
   name: 'dialogHeader',
@@ -26,9 +26,7 @@ export default {
       updateItem: this.data.item,
       formSchema: {},
       formOptions: {
-        validateAfterLoad: true,
-        validateAfterChanged: true,
-        fieldIdPrefix: 'prefix-'
+        fieldIdPrefix: 'entity-'
       }
     }
   },
@@ -39,7 +37,9 @@ export default {
   },
   methods: {
     submit: function () {
-      ModalService.submit(this.updateItem)
+      if (this.$refs.form.validate()) {
+        ModalService.submit(this.updateItem)
+      }
     },
     cancel: function () {
       this.$store.commit('showSpinner', false)
@@ -47,87 +47,9 @@ export default {
     },
     clear: function () {
       this.$refs.form.reset()
-    },
-    generateSchema () {
-      let vm = this
-      this.formSchema.fields = []
-      _.forEach(this.updateItem.fields, function (value, key) {
-        if (!vm.isUpdate) {
-          if (value.field_type === 9) { // value.field_type === 5 ||
-            let listItems = JSON.parse(value.items)
-            value.value = listItems && listItems.length > 0 ? listItems[0].id : null
-          }
-          _.forEach(value.var, function (vValue, vKey) {
-            if (vKey.indexOf('default_value') === 0) {
-              vm.updateItem.fields[key].value = vValue
-            }
-          })
-        }
-        if (value.field_type !== 5) {
-          vm.formSchema.fields.push(vm.generateField(value, key))
-        }
-      })
-    },
-    generateField (value, key) {
-      let field = {
-        label: value.title,
-        model: 'fields[' + key + '].value'
-      }
-      this.getFieldType(field, value)
-      return field
-    },
-    getFieldType (field, value) {
-      switch (value.field_type) {
-        case 0: field.type = 'input'
-          field.inputType = 'text'
-          field.required = value.var.not_null
-          field.maxlength = value.max_length
-          field.max = value.max_length
-          field.min = value.min_length
-          field.validator = validators.string
-          break
-        case 1: field.type = 'input'
-          field.inputType = 'number'
-          field.required = value.var.not_null
-          field.max = value.max_length
-          field.min = value.min_length
-          field.step = 0
-          field.validator = validators.integer
-          break
-        case 2: field.type = 'input'
-          field.inputType = 'number'
-          field.required = value.var.not_null
-          field.max = value.max_length
-          field.min = value.min_length
-          field.step = value.round_count
-          field.validator = validators.double
-          break
-        case 3: field.type = 'vdatepicker'
-          field.inputType = 'text'
-          field.required = value.var.not_null
-          field.validator = validators.date
-          break
-        case 4: field.type = 'input'
-          field.inputType = 'text'
-          field.required = value.var.not_null
-          field.validator = validators.string
-          break
-        // case 5: field.type = 'select'
-        //   field.required = value.var.not_null
-        //   field.values = JSON.parse(value.items)
-        //   break
-        case 6: field.type = 'switch'
-          field.textOn = value.var.true_value ? value.var.true_value : 'да'
-          field.textOff = value.var.false_value ? value.var.false_value : 'нет'
-          break
-        case 9: field.type = 'select'
-          field.required = value.var.not_null
-          field.values = JSON.parse(value.items)
-          break
-      }
     }
   },
   created () {
-    this.generateSchema()
+    this.formSchema.fields = formGenerator.generateSchema(this.updateItem, this.isUpdate)
   }
 }

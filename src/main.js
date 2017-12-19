@@ -10,6 +10,7 @@ import Vue2Filters from 'vue2-filters'
 import VueMoment from 'vue-moment'
 import VueFormGenerator from 'vue-form-generator'
 import YmapPlugin from 'vue-yandex-maps'
+import VeeValidate from 'vee-validate'
 
 import 'vuetify/dist/vuetify.min.css'
 import './scss/main.scss'
@@ -36,6 +37,11 @@ import fieldDatepicker from './components/formComponents/fieldDatepicker/fieldDa
 Vue.component('fieldVdatepicker', fieldDatepicker)
 
 Vue.use(VueFormGenerator)
+const config = {
+  errorBagName: 'veeErrors',
+  fieldsBagName: 'veeFields'
+}
+Vue.use(VeeValidate, config)
 
 // create vue plugins to use them in our components without import
 Vue.use(Vuetify, {theme: {
