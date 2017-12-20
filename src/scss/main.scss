@@ -32,7 +32,8 @@
 
 .vue-form-generator .form-group {
   &.field-vselect,
-  &.field-vtext{
+  &.field-vtext,
+  &.field-vcheckbox{
     margin-bottom: 0;
   }
 }

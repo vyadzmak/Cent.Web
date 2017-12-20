@@ -54,13 +54,14 @@ export default {
           //   field.required = value.var.not_null
           //   field.values = JSON.parse(value.items)
           //   break
-        case 6: field.type = 'switch'
+        case 6: field.type = 'vswitch'
           field.textOn = value.var.true_value ? value.var.true_value : 'да'
           field.textOff = value.var.false_value ? value.var.false_value : 'нет'
           break
         case 9: field.type = 'vselect'
           field.required = value.var.not_null
           field.items = JSON.parse(value.items)
+          field.veePipe = field.required > 0 ? '|required' : ''
           break
       }
     }

@@ -2,6 +2,7 @@ import questionDialog from '../questionDialog/questionDialog'
 import { ModalService } from 'vue-modal-dialog'
 
 export default {
+  inject: ['$validator'],
   name: 'factory',
   data () {
     return {
@@ -72,14 +73,16 @@ export default {
     )
     },
     updateItem: function (item, isUpdate) {
-      item.data = JSON.stringify(item.data)
-      this.$store.dispatch('updateFactory', {http: this.$http, isUpdate: isUpdate, item: _.cloneDeep(item)})
-      .then(response => {
+      this.$validator.validateAll().then((result) => {
+        if (result) {
+          item.data = JSON.stringify(item.data)
+          this.$store.dispatch('updateFactory', {http: this.$http, isUpdate: isUpdate, item: _.cloneDeep(item)})
+      .then(response => {})
+      .catch(e => {})
+          item.data = JSON.parse(item.data)
+          item.data.fields[item.data.fields.length - 1].index = null
+        }
       })
-      .catch(e => {
-      })
-      item.data = JSON.parse(item.data)
-      item.data.fields[item.data.fields.length - 1].index = null
     },
     addField () {
       if (this.currentType) {
@@ -105,51 +108,65 @@ export default {
       }
       var schema = {}
       schema.fields = [{
-        type: 'input',
+        type: 'vtext',
         inputType: 'text',
         label: 'Наименование переменной',
         model: 'name',
-        id: 'name',
-        required: true
+        id: 1,
+        name: 'name',
+        required: true,
+        veePipe: 'required|min:2|max:20|alpha_dash'
       }, {
-        type: 'input',
+        type: 'vtext',
         inputType: 'text',
         label: 'Заголовок переменной',
         model: 'title',
-        id: 'title',
-        required: true
+        id: 2,
+        name: 'title',
+        required: true,
+        veePipe: 'required|max:40|alpha_spaces'
       }, {
-        type: 'checkbox',
+        type: 'vcheckbox',
         label: 'Индекс',
-        model: 'is_index'
+        model: 'is_index',
+        id: 3,
+        name: 'is_index',
+        veePipe: ''
       }, {
-        type: 'checkbox',
+        type: 'vcheckbox',
         label: 'Значение',
-        model: 'is_value'
+        model: 'is_value',
+        id: 4,
+        name: 'is_value',
+        veePipe: ''
       }, {
-        type: 'checkbox',
+        type: 'vcheckbox',
         label: 'Видимость',
-        model: 'is_visible'
+        model: 'is_visible',
+        id: 5,
+        name: 'is_visible',
+        veePipe: ''
       }]
 
       _.forEach(factory.var, function (value, key) {
         var schemaItem = {
-          type: 'input',
+          type: 'vtext',
           inputType: 'text',
           label: key,
           model: 'var.' + key,
-          id: key,
-          required: true
+          id: key + 6,
+          name: 'var.' + key
         }
         if (key.indexOf('schema_id') === 0) {
-          schemaItem.type = 'select'
-          schemaItem.values = updateProperty
-          schemaItem.required = true
+          schemaItem.type = 'vselect'
+          schemaItem.items = updateProperty
         } else if (_.isBoolean(value)) {
-          schemaItem.type = 'checkbox'
+          schemaItem.type = 'vcheckbox'
           schemaItem.required = false
+          schemaItem.veePipe = ''
         } else if (_.isFinite(value)) {
           schemaItem.inputType = 'number'
+          schemaItem.veePipe = '|decimal:0'
         }
         schema.fields.push(schemaItem)
       })

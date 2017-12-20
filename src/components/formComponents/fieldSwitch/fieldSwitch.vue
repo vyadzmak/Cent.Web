@@ -1,6 +1,6 @@
 
 <template>
-    <v-switch :label="`${schema.label}: ${value?schema.items[1]:schema.items[0]}`"
+    <v-switch :label="`${schema.label}: ${value?schema.textOn[1]:schema.textOff}`"
                         v-model="value"
                         color="error"></v-switch>
 </template>

@@ -51,7 +51,7 @@ export default {
       ModalService.cancel(this.updateItem) // reject .open() promise
     },
     clear: function () {
-      this.$refs.form.reset()
+      this.$validator.reset()
     }
   },
   created () {
