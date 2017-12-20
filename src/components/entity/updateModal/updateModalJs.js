@@ -37,9 +37,15 @@ export default {
   },
   methods: {
     submit: function () {
-      if (this.$refs.form.validate()) {
-        ModalService.submit(this.updateItem)
-      }
+      console.log(this.$validator)
+      this.$validator.validateAll()
+      .then((result) => {
+        if (result) {
+          // ModalService.submit(this.updateItem)
+          return
+        }
+        alert('false')
+      })
     },
     cancel: function () {
       this.$store.commit('showSpinner', false)

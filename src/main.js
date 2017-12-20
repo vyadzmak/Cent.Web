@@ -10,7 +10,8 @@ import Vue2Filters from 'vue2-filters'
 import VueMoment from 'vue-moment'
 import VueFormGenerator from 'vue-form-generator'
 import YmapPlugin from 'vue-yandex-maps'
-import VeeValidate from 'vee-validate'
+import VeeValidate, { Validator } from 'vee-validate'
+import ruVeeValidate from 'vee-validate/dist/locale/ru'
 
 import 'vuetify/dist/vuetify.min.css'
 import './scss/main.scss'
@@ -37,9 +38,11 @@ import fieldDatepicker from './components/formComponents/fieldDatepicker/fieldDa
 Vue.component('fieldVdatepicker', fieldDatepicker)
 
 Vue.use(VueFormGenerator)
+Validator.localize('ru', ruVeeValidate)
 const config = {
   errorBagName: 'veeErrors',
-  fieldsBagName: 'veeFields'
+  fieldsBagName: 'veeFields',
+  locale: 'ru'
 }
 Vue.use(VeeValidate, config)
 

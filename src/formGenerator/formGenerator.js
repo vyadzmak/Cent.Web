@@ -15,15 +15,21 @@ export default {
           field.inputType = 'text'
           field.required = value.var.not_null
           field.maxlength = value.max_length
-          field.max = value.max_length
           field.min = value.min_length
+          field.veePipe = value.var.not_null ? '|required' : ''
+          field.veePipe += (field.maxlength > 0 ? '|max:' + field.maxlength : '')
+          field.veePipe += (field.min > 0 ? '|min:' + field.min : '')
           break
         case 1: field.type = 'vtext'
           field.inputType = 'number'
           field.required = value.var.not_null
-          field.max = 2020
-          field.min = 1980
+          field.max = value.max_length
+          field.min = value.min_length
           field.step = 0
+          field.veePipe = 'numeric'
+          field.veePipe += field.required > 0 ? '|required' : ''
+          field.veePipe += field.min > 0 ? '|min_value:' + field.min : ''
+          field.veePipe += field.max > 0 ? '|max_value:' + field.max : ''
           break
         case 2: field.type = 'vtext'
           field.inputType = 'number'
@@ -31,6 +37,10 @@ export default {
           field.max = value.max_length
           field.min = value.min_length
           field.step = value.round_count
+          field.veePipe = 'decimal:' + (value.round_count > 0 ? value.round_count : 0)
+          field.veePipe += field.required > 0 ? '|required' : ''
+          field.veePipe += field.min > 0 ? '|min_value:' + field.min : ''
+          field.veePipe += field.max > 0 ? '|max_value:' + field.max : ''
           break
         case 3: field.type = 'vdatepicker'
           field.inputType = 'text'
