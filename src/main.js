@@ -42,7 +42,8 @@ Validator.localize('ru', ruVeeValidate)
 const config = {
   errorBagName: 'veeErrors',
   fieldsBagName: 'veeFields',
-  locale: 'ru'
+  locale: 'ru',
+  inject: false
 }
 Vue.use(VeeValidate, config)
 

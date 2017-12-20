@@ -2,6 +2,7 @@ import { ModalService } from 'vue-modal-dialog'
 import formGenerator from '../../../formGenerator/formGenerator'
 
 export default {
+  inject: ['$validator'],
   name: 'dialogHeader',
   props: ['data'],
   data () {
@@ -37,14 +38,12 @@ export default {
   },
   methods: {
     submit: function () {
-      console.log(this.$validator)
       this.$validator.validateAll()
       .then((result) => {
         if (result) {
-          // ModalService.submit(this.updateItem)
+          ModalService.submit(this.updateItem)
           return
         }
-        alert('false')
       })
     },
     cancel: function () {

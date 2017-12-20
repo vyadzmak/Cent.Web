@@ -6,6 +6,7 @@ export default {
   name: 'entity',
   data () {
     return {
+      msg: '',
       search: '',
       errors: [],
       activeTab: null,
@@ -70,8 +71,7 @@ export default {
     },
     generalFields () {
       return this.entity && this.entity.general_section ? this.entity.general_section.data.fields : []
-    },
-    msg () { return 'Детали ' + (this.entity && this.entity.general_section ? this.entity.general_section.data.fields[0].output_value : '') }
+    }
   },
   watch: {
     objsListItem: function (newValue) {
@@ -142,6 +142,11 @@ export default {
         if (this.subsList.length > 0) {
           this.subsListItem = this.subsList[0]
         }
+      }
+      if (newValue && newValue.general_section && newValue.general_section.data) {
+        this.msg = 'Детали ' + this.getDetailObjectName(newValue.general_section.data.fields)
+      } else {
+        this.msg = 'Детали'
       }
     }
   },
@@ -256,6 +261,16 @@ export default {
     goToEntity (itemId) {
       this.currentTab = 'tab-1'
       this.$router.push({name: 'Entity', params: {id: itemId}})
+    },
+    getDetailObjectName (fields) {
+      let result = ''
+      _.forEach(fields, (value, key) => {
+        if (_.includes(_.toLower(value.name), 'name')) {
+          result = value.output_value
+          return
+        }
+      })
+      return result
     }
   },
   created () {
