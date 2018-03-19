@@ -16,7 +16,9 @@ export default {
         { text: 'Имя', align: 'left', value: 'first_name' },
         { text: 'Email', align: 'left', value: 'login_data[0].login' },
         { text: 'Дата регистрации', align: 'left', value: 'login_data[0].registration_date' },
-        { text: 'Последняя авторизация', align: 'left', value: 'login_data[0].lastLogin_date' }
+        { text: 'Последняя авторизация', align: 'left', value: 'login_data[0].lastLogin_date' },
+        {sortable: false},
+        {sortable: false}
       ],
       tableRowsShown: [10, 20, 50, 100, {text: 'Все', value: -1}],
       rowsPerPageText: 'Строк на странице',
@@ -42,11 +44,11 @@ export default {
       ModalService.open(questionDialog, modalConfig).then(
         modalSubmit => { this.deleteItem(itemId) },
         modalCancel => {}
-    ).catch(
-      err => {
-        console.log(err)
-      }
-    )
+      ).catch(
+        err => {
+          console.log(err)
+        }
+      )
     },
     showUpdateModal: function (item) {
       let isUpdate = false
@@ -79,7 +81,7 @@ export default {
             this.updateItem(modalSubmit, isUpdate)
           },
           modalCancel => { console.log(modalCancel) }
-      ).catch(err => { console.log(err) })
+        ).catch(err => { console.log(err) })
       }).catch(err => {
         console.log(err)
         this.$store.commit('showSnackbar', {text: 'Не удалось загрузить нового пользователя', snackbar: true, context: 'error'})
@@ -88,24 +90,24 @@ export default {
     deleteItem: function (itemId) {
       this.$store.commit('showSpinner', true)
       this.$http.delete('users', {params: {id: itemId}})
-      .then(response => {
-        if (response.data && response.data !== 'Error') {
-          this.users.splice(this.users.findIndex((element, index, array) => {
-            if (element.Id === itemId) {
-              return true
-            }
-          }), 1)
-          this.$store.commit('showSnackbar', {text: 'Удаление пользователя прошло успешно', snackbar: true, context: 'success'})
-        } else {
+        .then(response => {
+          if (response.data && response.data !== 'Error') {
+            this.users.splice(this.users.findIndex((element, index, array) => {
+              if (element.Id === itemId) {
+                return true
+              }
+            }), 1)
+            this.$store.commit('showSnackbar', {text: 'Удаление пользователя прошло успешно', snackbar: true, context: 'success'})
+          } else {
+            this.$store.commit('showSnackbar', {text: 'Удаление пользователя не удалось. Обратитесь к администратору', snackbar: true, context: 'error'})
+          }
+          this.$store.commit('showSpinner', false)
+        })
+        .catch(e => {
+          this.errors.push(e)
+          this.$store.commit('showSpinner', false)
           this.$store.commit('showSnackbar', {text: 'Удаление пользователя не удалось. Обратитесь к администратору', snackbar: true, context: 'error'})
-        }
-        this.$store.commit('showSpinner', false)
-      })
-      .catch(e => {
-        this.errors.push(e)
-        this.$store.commit('showSpinner', false)
-        this.$store.commit('showSnackbar', {text: 'Удаление пользователя не удалось. Обратитесь к администратору', snackbar: true, context: 'error'})
-      })
+        })
     },
     updateItem: function (item, isUpdate) {
       this.$store.commit('showSpinner', true)
@@ -114,28 +116,28 @@ export default {
         data: item,
         config: { contentType: 'application/json' }
       })
-      .then(response => {
-        let responseData = response.data && response.data !== 'Error' ? response.data : null
-        if (responseData) {
-          if (isUpdate) {
-            this.users.splice(this.users.findIndex((element, index, array) => {
-              if (element.Id === item.Id) {
-                return true
-              }
-            }), 1)
+        .then(response => {
+          let responseData = response.data && response.data !== 'Error' ? response.data : null
+          if (responseData) {
+            if (isUpdate) {
+              this.users.splice(this.users.findIndex((element, index, array) => {
+                if (element.Id === item.Id) {
+                  return true
+                }
+              }), 1)
+            }
+            this.users.push(responseData)
+            this.$store.commit('showSnackbar', {text: (isUpdate ? 'Обновление' : 'Добавление') + ' пользователя прошло успешно', snackbar: true, context: 'success'})
+          } else {
+            this.$store.commit('showSnackbar', {text: (isUpdate ? 'Обновление' : 'Добавление') + ' пользователя не удалось', snackbar: true, context: 'error'})
           }
-          this.users.push(responseData)
-          this.$store.commit('showSnackbar', {text: (isUpdate ? 'Обновление' : 'Добавление') + ' пользователя прошло успешно', snackbar: true, context: 'success'})
-        } else {
-          this.$store.commit('showSnackbar', {text: (isUpdate ? 'Обновление' : 'Добавление') + ' пользователя не удалось', snackbar: true, context: 'error'})
-        }
-        this.$store.commit('showSpinner', false)
-      })
-      .catch(e => {
-        this.errors.push(e)
-        this.$store.commit('showSpinner', false)
-        this.$store.commit('showSnackbar', {text: (isUpdate ? 'Обновление' : 'Добавление') + ' пользователя не удалось. Обратитесь к администратору', snackbar: true, context: 'error'})
-      })
+          this.$store.commit('showSpinner', false)
+        })
+        .catch(e => {
+          this.errors.push(e)
+          this.$store.commit('showSpinner', false)
+          this.$store.commit('showSnackbar', {text: (isUpdate ? 'Обновление' : 'Добавление') + ' пользователя не удалось. Обратитесь к администратору', snackbar: true, context: 'error'})
+        })
     },
     getUserRoles (isUpdate) {
       this.$store.commit('showSpinner', true)
@@ -151,7 +153,7 @@ export default {
           .catch(e => {
             this.$store.commit('showSpinner', false)
             this.errors.push(e)
-            reject()
+            reject(e)
           })
       })
     }
@@ -159,14 +161,14 @@ export default {
   created () {
     this.$store.commit('showSpinner', true)
     this.$http.get(`clientUsers/` + this.$route.params.id)
-    .then(response => {
-      this.$store.commit('showSpinner', false)
-      this.users = response.data
-    })
-    .catch(e => {
-      this.errors.push(e)
-      this.$store.commit('showSpinner', false)
-    })
+      .then(response => {
+        this.$store.commit('showSpinner', false)
+        this.users = response.data
+      })
+      .catch(e => {
+        this.errors.push(e)
+        this.$store.commit('showSpinner', false)
+      })
   },
   mounted () {
     this.$refs.usersDataTable.defaultPagination.descending = true

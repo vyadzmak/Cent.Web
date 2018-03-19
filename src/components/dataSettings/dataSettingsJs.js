@@ -5,9 +5,9 @@ export default {
     return {
       msg: 'Настройки данных',
       items: [{id: 1, icon: 'mdi-source-merge', name: 'Схемы объектов'},
-      {id: 2, icon: 'mdi-format-list-numbers', name: 'Справочники'},
-      {id: 3, icon: 'mdi-lock-open-outline', name: 'Настройка доступа'},
-      {id: 4, icon: 'mdi-eye', name: 'Настройка Видимости'}]
+        {id: 2, icon: 'mdi-format-list-numbers', name: 'Справочники'},
+        {id: 3, icon: 'mdi-lock-open-outline', name: 'Настройка доступа'},
+        {id: 4, icon: 'mdi-eye', name: 'Настройка Видимости'}]
     }
   },
   computed: {

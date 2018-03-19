@@ -24,7 +24,7 @@ export default {
       valid: false,
       sNameRules: [
         (v) => !!v || 'Наименование должно быть заполнено',
-        (v) => v && v.length <= 270 || 'Не более 270 символов'
+        (v) => (v && v.length <= 270) || 'Не более 270 символов'
       ],
 
       updateItem: this.data.item,

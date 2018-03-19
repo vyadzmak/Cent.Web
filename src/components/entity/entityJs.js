@@ -11,12 +11,12 @@ export default {
       errors: [],
       activeTab: null,
       tabs: [{id: 'tab-1', name: 'Общая информация'},
-       {id: 'tab-2', name: 'Объекты', hidden: true},
-       {id: 'tab-3', name: 'Субъекты', hidden: true},
-       {id: 'tab-4', name: 'Документы', hidden: true},
-       {id: 'tab-5', name: 'Связи', hidden: true},
-       {id: 'tab-6', name: 'История'},
-       {id: 'tab-7', name: 'Отчеты'}],
+        {id: 'tab-2', name: 'Объекты', hidden: true},
+        {id: 'tab-3', name: 'Субъекты', hidden: true},
+        {id: 'tab-4', name: 'Документы', hidden: true},
+        {id: 'tab-5', name: 'Связи', hidden: true},
+        {id: 'tab-6', name: 'История'},
+        {id: 'tab-7', name: 'Отчеты'}],
       currentTab: 'tab-1',
       headers: [
         { text: 'ID', align: 'left', value: 'id' },
@@ -24,7 +24,9 @@ export default {
         { text: 'Размер, MB', align: 'left', value: 'file_size' },
         { text: 'Время загрузки', align: 'left', value: 'created_date' },
         { text: 'Пользователь', align: 'left', value: 'user_data.last_name' },
-        { text: 'Состояние', align: 'left', value: 'document_state.name' }
+        { text: 'Состояние', align: 'left', value: 'document_state.name' },
+        {sortable: false},
+        {sortable: false}
       ],
       tableRowsShown: [10, 20, 50, 100, {text: 'Все', value: -1}],
       rowsPerPageText: 'Строк на странице',
@@ -78,8 +80,8 @@ export default {
       if (newValue && newValue.id) {
         this.tabs[1].hidden = false
         this.getEntities(newValue.id)
-        .then(resp => { this.objsTable = resp })
-        .catch(resp => { this.objsTable = resp })
+          .then(resp => { this.objsTable = resp })
+          .catch(resp => { this.objsTable = resp })
       } else {
         this.tabs[1].hidden = true
         this.objsTable = {headers: [], items: []}
@@ -89,8 +91,8 @@ export default {
       if (newValue && newValue.id) {
         this.tabs[3].hidden = false
         this.getEntities(newValue.id)
-        .then(resp => { this.docsTable = resp })
-        .catch(resp => { this.docsTable = resp })
+          .then(resp => { this.docsTable = resp })
+          .catch(resp => { this.docsTable = resp })
       } else {
         this.tabs[3].hidden = true
         this.docsTable = {headers: [], items: []}
@@ -100,8 +102,8 @@ export default {
       if (newValue && newValue.id) {
         this.tabs[4].hidden = false
         this.getEntities(newValue.id)
-        .then(resp => { this.relsTable = resp })
-        .catch(resp => { this.relsTable = resp })
+          .then(resp => { this.relsTable = resp })
+          .catch(resp => { this.relsTable = resp })
       } else {
         this.tabs[4].hidden = true
         this.relsTable = {headers: [], items: []}
@@ -111,8 +113,8 @@ export default {
       if (newValue && newValue.id) {
         this.tabs[2].hidden = false
         this.getEntities(newValue.id)
-        .then(resp => { this.subsTable = resp })
-        .catch(resp => { this.subsTable = resp })
+          .then(resp => { this.subsTable = resp })
+          .catch(resp => { this.subsTable = resp })
       } else {
         this.tabs[2].hidden = true
         this.subsTable = {headers: [], items: []}
@@ -167,11 +169,11 @@ export default {
           }
         },
         modalCancel => {}
-    ).catch(
-      err => {
-        console.log(err)
-      }
-    )
+      ).catch(
+        err => {
+          console.log(err)
+        }
+      )
     },
     showUpdateModal: function (varName, schema, item) {
       let vum = this
@@ -191,23 +193,23 @@ export default {
           .then(response => {
             if (isUpdate) {
               vum.$store.dispatch('getUpdateEntity', {http: vum.$http, id: item.g_id})
-              .then(response => {
-                updateItem = _.cloneDeep(vum.$store.getters.updateEntity)
-                updateItem.fields = updateItem.data.fields
-                updateItem.data = undefined
-                updateItem.parent_id = this.$route.params.id
-                let modalConfig = {
-                  size: 'lg',
-                  data: {
-                    title: (isUpdate ? 'Обновление' : 'Добавление') + ' объекта',
-                    isClosable: true,
-                    item: updateItem
+                .then(response => {
+                  updateItem = _.cloneDeep(vum.$store.getters.updateEntity)
+                  updateItem.fields = updateItem.data.fields
+                  updateItem.data = undefined
+                  updateItem.parent_id = this.$route.params.id
+                  let modalConfig = {
+                    size: 'lg',
+                    data: {
+                      title: (isUpdate ? 'Обновление' : 'Добавление') + ' объекта',
+                      isClosable: true,
+                      item: updateItem
+                    }
                   }
-                }
-                ModalService.open(updateModal, modalConfig)
-                .then(modalSubmit => { vum.updateItem(schema.id, varName, modalSubmit, isUpdate) }, modalCancel => { console.log(modalCancel) })
-                .catch(err => { console.log(err) })
-              })
+                  ModalService.open(updateModal, modalConfig)
+                    .then(modalSubmit => { vum.updateItem(schema.id, varName, modalSubmit, isUpdate) }, modalCancel => { console.log(modalCancel) })
+                    .catch(err => { console.log(err) })
+                })
             } else {
               let modalConfig = {
                 size: 'lg',
@@ -218,8 +220,8 @@ export default {
                 }
               }
               ModalService.open(updateModal, modalConfig)
-              .then(modalSubmit => { vum.updateItem(schema.id, varName, modalSubmit, isUpdate) }, modalCancel => { console.log(modalCancel) })
-              .catch(err => { console.log(err) })
+                .then(modalSubmit => { vum.updateItem(schema.id, varName, modalSubmit, isUpdate) }, modalCancel => { console.log(modalCancel) })
+                .catch(err => { console.log(err) })
             }
           })
       }
@@ -227,18 +229,18 @@ export default {
     deleteItem: function (varName, schemaId, itemId) {
       this.$store.commit('showSpinner', true)
       this.$http.delete('object/' + itemId)
-          .then(response => {
-            this.getEntities(schemaId)
+        .then(response => {
+          this.getEntities(schemaId)
             .then(resp => { this[varName + 'Table'] = resp })
             .catch(resp => { this[varName + 'Table'] = resp })
-            this.$store.commit('showSnackbar', {text: 'Удаление объекта прошло успешно', snackbar: true, context: 'success'})
-            this.$store.commit('showSpinner', false)
-          })
-          .catch(e => {
-            this.errors.push(e)
-            this.$store.commit('showSpinner', false)
-            this.$store.commit('showSnackbar', {text: 'Удаление объекта не удалось. Обратитесь к администратору', snackbar: true, context: 'error'})
-          })
+          this.$store.commit('showSnackbar', {text: 'Удаление объекта прошло успешно', snackbar: true, context: 'success'})
+          this.$store.commit('showSpinner', false)
+        })
+        .catch(e => {
+          this.errors.push(e)
+          this.$store.commit('showSpinner', false)
+          this.$store.commit('showSnackbar', {text: 'Удаление объекта не удалось. Обратитесь к администратору', snackbar: true, context: 'error'})
+        })
     },
     goToFinAnalysis () {
       this.$router.replace({name: 'FinAnalysis', params: {id: this.entity.id}})
@@ -246,17 +248,17 @@ export default {
     getEntities (id) {
       return new Promise((resolve, reject) => {
         this.$store.dispatch('getEntityTable', {http: this.$http, item: {schema_id: id, parent_id: this.$route.params.id}})
-      .then(response => { resolve(response) })
-      .catch(response => { reject({headers: [], items: []}) })
+          .then(response => { resolve(response) })
+          .catch(response => { reject(new Error()) })
       })
     },
     updateItem: function (schemaId, varName, item, isUpdate) {
       this.$store.dispatch('updateEntity', {http: this.$http, isUpdate: isUpdate, item: item})
-      .then(response => {
-        this.getEntities(schemaId)
-        .then(resp => { this[varName + 'Table'] = resp })
-        .catch(resp => { this[varName + 'Table'] = resp })
-      })
+        .then(response => {
+          this.getEntities(schemaId)
+            .then(resp => { this[varName + 'Table'] = resp })
+            .catch(resp => { this[varName + 'Table'] = {headers: [], items: []} })
+        })
     },
     goToEntity (itemId) {
       this.currentTab = 'tab-1'
@@ -267,10 +269,13 @@ export default {
       _.forEach(fields, (value, key) => {
         if (_.includes(_.toLower(value.name), 'name')) {
           result = value.output_value
-          return
         }
       })
       return result
+    },
+    addHeaders (headers) {
+      headers = headers.concat([{sortable: false}, {sortable: false}])
+      return headers
     }
   },
   created () {

@@ -29,11 +29,11 @@ export default {
       ModalService.open(questionDialog, modalConfig).then(
         modalSubmit => { this.deleteItem(itemId) },
         modalCancel => {}
-    ).catch(
-      err => {
-        console.log(err)
-      }
-    )
+      ).catch(
+        err => {
+          console.log(err)
+        }
+      )
     },
 
     showUpdateModal: function (item) {
@@ -51,59 +51,59 @@ export default {
 
       if (this.currentSchema.id) {
         vum.$store.dispatch('getEntitySchema', {http: vum.$http, id: vum.currentSchema.id})
-      .then(response => {
-        if (isUpdate) {
-          vum.$store.dispatch('getUpdateEntity', {http: vum.$http, id: item.g_id})
           .then(response => {
-            updateItem = _.cloneDeep(vum.$store.getters.updateEntity)
-            updateItem.fields = updateItem.data.fields
-            updateItem.data = undefined
-            updateItem.parent_id = -1
-            let modalConfig = {
-              size: 'lg',
-              data: {
-                title: (isUpdate ? 'Обновление' : 'Добавление') + ' объекта',
-                isClosable: true,
-                item: updateItem
+            if (isUpdate) {
+              vum.$store.dispatch('getUpdateEntity', {http: vum.$http, id: item.g_id})
+                .then(response => {
+                  updateItem = _.cloneDeep(vum.$store.getters.updateEntity)
+                  updateItem.fields = updateItem.data.fields
+                  updateItem.data = undefined
+                  updateItem.parent_id = -1
+                  let modalConfig = {
+                    size: 'lg',
+                    data: {
+                      title: (isUpdate ? 'Обновление' : 'Добавление') + ' объекта',
+                      isClosable: true,
+                      item: updateItem
+                    }
+                  }
+                  ModalService.open(updateModal, modalConfig)
+                    .then(modalSubmit => { vum.updateItem(modalSubmit, isUpdate) }, modalCancel => { console.log(modalCancel) })
+                    .catch(err => { console.log(err) })
+                })
+            } else {
+              let modalConfig = {
+                size: 'lg',
+                data: {
+                  title: (isUpdate ? 'Обновление' : 'Добавление') + ' объекта',
+                  isClosable: true,
+                  item: updateItem
+                }
               }
+              ModalService.open(updateModal, modalConfig)
+                .then(modalSubmit => { vum.updateItem(modalSubmit, isUpdate) }, modalCancel => { console.log(modalCancel) })
+                .catch(err => { console.log(err) })
             }
-            ModalService.open(updateModal, modalConfig)
-            .then(modalSubmit => { vum.updateItem(modalSubmit, isUpdate) }, modalCancel => { console.log(modalCancel) })
-            .catch(err => { console.log(err) })
           })
-        } else {
-          let modalConfig = {
-            size: 'lg',
-            data: {
-              title: (isUpdate ? 'Обновление' : 'Добавление') + ' объекта',
-              isClosable: true,
-              item: updateItem
-            }
-          }
-          ModalService.open(updateModal, modalConfig)
-          .then(modalSubmit => { vum.updateItem(modalSubmit, isUpdate) }, modalCancel => { console.log(modalCancel) })
-          .catch(err => { console.log(err) })
-        }
-      })
       }
     },
     deleteItem: function (itemId) {
       this.$store.commit('showSpinner', true)
       this.$http.delete('object/' + itemId)
-      .then(response => {
-        this.getEntities()
-        this.$store.commit('showSnackbar', {text: 'Удаление объекта прошло успешно', snackbar: true, context: 'success'})
-        this.$store.commit('showSpinner', false)
-      })
-      .catch(e => {
-        this.errors.push(e)
-        this.$store.commit('showSpinner', false)
-        this.$store.commit('showSnackbar', {text: 'Удаление объекта не удалось. Обратитесь к администратору', snackbar: true, context: 'error'})
-      })
+        .then(response => {
+          this.getEntities()
+          this.$store.commit('showSnackbar', {text: 'Удаление объекта прошло успешно', snackbar: true, context: 'success'})
+          this.$store.commit('showSpinner', false)
+        })
+        .catch(e => {
+          this.errors.push(e)
+          this.$store.commit('showSpinner', false)
+          this.$store.commit('showSnackbar', {text: 'Удаление объекта не удалось. Обратитесь к администратору', snackbar: true, context: 'error'})
+        })
     },
     updateItem: function (item, isUpdate) {
       this.$store.dispatch('updateEntity', {http: this.$http, isUpdate: isUpdate, item: item})
-      .then(response => this.getEntities())
+        .then(response => this.getEntities())
     },
     goToEntity (itemId) {
       this.$router.push({name: 'Entity', params: {id: itemId}})
@@ -126,6 +126,9 @@ export default {
     },
     entitySchemas: function () {
       return this.$store.getters.entitySchemas
+    },
+    headers () {
+      return this.entities.headers.concat([{sortable: false}, {sortable: false}])
     }
   },
   watch: {

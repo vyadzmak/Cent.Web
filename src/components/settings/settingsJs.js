@@ -13,7 +13,9 @@ export default {
       headers: [
         { text: 'ID', align: 'left', value: 'Id' },
         { text: 'Фамилия', align: 'left', value: 'SettingName' },
-        { text: 'Имя', align: 'left', value: 'SettingValue' }
+        { text: 'Имя', align: 'left', value: 'SettingValue' },
+        {sortable: false},
+        {sortable: false}
       ],
       tableRowsShown: [10, 20, 50, 100, {text: 'Все', value: -1}],
       rowsPerPageText: 'Строк на странице',
@@ -39,11 +41,11 @@ export default {
       ModalService.open(questionDialog, modalConfig).then(
         modalSubmit => { this.deleteItem(itemId) },
         modalCancel => {}
-    ).catch(
-      err => {
-        console.log(err)
-      }
-    )
+      ).catch(
+        err => {
+          console.log(err)
+        }
+      )
     },
     showUpdateModal: function (item) {
       let isUpdate = true
@@ -71,24 +73,24 @@ export default {
     deleteItem: function (itemId) {
       this.$store.commit('showSpinner', true)
       this.$http.delete('settings', {params: {id: itemId}})
-      .then(response => {
-        if (response.data && response.data !== 'Error') {
-          this.settings.splice(this.settings.findIndex((element, index, array) => {
-            if (element.Id === itemId) {
-              return true
-            }
-          }), 1)
-          this.$store.commit('showSnackbar', {text: 'Удаление настройки прошло успешно', snackbar: true, context: 'success'})
-        } else {
+        .then(response => {
+          if (response.data && response.data !== 'Error') {
+            this.settings.splice(this.settings.findIndex((element, index, array) => {
+              if (element.Id === itemId) {
+                return true
+              }
+            }), 1)
+            this.$store.commit('showSnackbar', {text: 'Удаление настройки прошло успешно', snackbar: true, context: 'success'})
+          } else {
+            this.$store.commit('showSnackbar', {text: 'Удаление настройки не удалось. Обратитесь к администратору', snackbar: true, context: 'error'})
+          }
+          this.$store.commit('showSpinner', false)
+        })
+        .catch(e => {
+          this.errors.push(e)
+          this.$store.commit('showSpinner', false)
           this.$store.commit('showSnackbar', {text: 'Удаление настройки не удалось. Обратитесь к администратору', snackbar: true, context: 'error'})
-        }
-        this.$store.commit('showSpinner', false)
-      })
-      .catch(e => {
-        this.errors.push(e)
-        this.$store.commit('showSpinner', false)
-        this.$store.commit('showSnackbar', {text: 'Удаление настройки не удалось. Обратитесь к администратору', snackbar: true, context: 'error'})
-      })
+        })
     },
     updateItem: function (item, isUpdate) {
       this.$store.commit('showSpinner', true)
@@ -97,41 +99,41 @@ export default {
         data: item,
         config: { contentType: 'application/json' }
       })
-      .then(response => {
-        let responseData = response.data ? (response.data !== 'Error' ? JSON.parse(response.data) : null) : null
-        if (responseData) {
-          if (isUpdate) {
-            this.settings.splice(this.settings.findIndex((element, index, array) => {
-              if (element.Id === item.Id) {
-                return true
-              }
-            }), 1)
+        .then(response => {
+          let responseData = response.data ? (response.data !== 'Error' ? JSON.parse(response.data) : null) : null
+          if (responseData) {
+            if (isUpdate) {
+              this.settings.splice(this.settings.findIndex((element, index, array) => {
+                if (element.Id === item.Id) {
+                  return true
+                }
+              }), 1)
+            }
+            this.settings.push(responseData)
+            this.$store.commit('showSnackbar', {text: (isUpdate ? 'Обновление' : 'Добавление') + ' настройки прошло успешно', snackbar: true, context: 'success'})
+          } else {
+            this.$store.commit('showSnackbar', {text: (isUpdate ? 'Обновление' : 'Добавление') + ' настройки не удалось', snackbar: true, context: 'error'})
           }
-          this.settings.push(responseData)
-          this.$store.commit('showSnackbar', {text: (isUpdate ? 'Обновление' : 'Добавление') + ' настройки прошло успешно', snackbar: true, context: 'success'})
-        } else {
-          this.$store.commit('showSnackbar', {text: (isUpdate ? 'Обновление' : 'Добавление') + ' настройки не удалось', snackbar: true, context: 'error'})
-        }
-        this.$store.commit('showSpinner', false)
-      })
-      .catch(e => {
-        this.errors.push(e)
-        this.$store.commit('showSpinner', false)
-        this.$store.commit('showSnackbar', {text: (isUpdate ? 'Обновление' : 'Добавление') + ' настройки не удалось. Обратитесь к администратору', snackbar: true, context: 'error'})
-      })
+          this.$store.commit('showSpinner', false)
+        })
+        .catch(e => {
+          this.errors.push(e)
+          this.$store.commit('showSpinner', false)
+          this.$store.commit('showSnackbar', {text: (isUpdate ? 'Обновление' : 'Добавление') + ' настройки не удалось. Обратитесь к администратору', snackbar: true, context: 'error'})
+        })
     }
   },
   created () {
     this.$store.commit('showSpinner', true)
     this.$http.get(`settings`)
-    .then(response => {
-      this.$store.commit('showSpinner', false)
-      this.settings = JSON.parse(response.data)
-    })
-    .catch(e => {
-      this.errors.push(e)
-      this.$store.commit('showSpinner', false)
-    })
+      .then(response => {
+        this.$store.commit('showSpinner', false)
+        this.settings = JSON.parse(response.data)
+      })
+      .catch(e => {
+        this.errors.push(e)
+        this.$store.commit('showSpinner', false)
+      })
   },
   mounted () {
     this.$refs.settingsDataTable.defaultPagination.descending = true

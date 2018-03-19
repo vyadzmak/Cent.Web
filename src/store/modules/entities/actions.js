@@ -53,16 +53,16 @@ export const getEntitySchema = ({ commit, getters }, {http, id}) => {
   return new Promise((resolve, reject) => {
     commit('showSpinner', true)
     http.get(`schema` + '/' + id)
-    .then(response => {
-      commit(types.UPDATE_ENTITY_SCHEMA, response.data)
-      commit('showSpinner', false)
-      resolve()
-    })
-    .catch(e => {
-      commit('showSnackbar', {text: 'Не удалось загрузить данные. Обратитесь к администратору', snackbar: true, context: 'error'})
-      commit('showSpinner', false)
-      reject()
-    })
+      .then(response => {
+        commit(types.UPDATE_ENTITY_SCHEMA, response.data)
+        commit('showSpinner', false)
+        resolve()
+      })
+      .catch(e => {
+        commit('showSnackbar', {text: 'Не удалось загрузить данные. Обратитесь к администратору', snackbar: true, context: 'error'})
+        commit('showSpinner', false)
+        reject(e)
+      })
   })
 }
 
@@ -70,18 +70,18 @@ export const getUpdateEntity = ({ commit, getters }, {http, id}) => {
   return new Promise((resolve, reject) => {
     commit('showSpinner', true)
     http.get(`object` + '/' + id)
-    .then(response => {
-      let responseData = response.data
-      responseData.data = JSON.parse(responseData.data)
-      commit(types.UPDATE_UPDATE_ENTITY, responseData)
-      commit('showSpinner', false)
-      resolve()
-    })
-    .catch(e => {
-      commit('showSnackbar', {text: 'Не удалось загрузить данные. Обратитесь к администратору', snackbar: true, context: 'error'})
-      commit('showSpinner', false)
-      reject()
-    })
+      .then(response => {
+        let responseData = response.data
+        responseData.data = JSON.parse(responseData.data)
+        commit(types.UPDATE_UPDATE_ENTITY, responseData)
+        commit('showSpinner', false)
+        resolve()
+      })
+      .catch(e => {
+        commit('showSnackbar', {text: 'Не удалось загрузить данные. Обратитесь к администратору', snackbar: true, context: 'error'})
+        commit('showSpinner', false)
+        reject(e)
+      })
   })
 }
 
@@ -94,17 +94,17 @@ export const updateEntity = ({ commit, getters }, {http, isUpdate, item}) => {
       data: item,
       config: { contentType: 'application/json' }
     })
-.then(response => {
-  let responseData = response.data && response.data !== 'Error' ? response.data : null
-  commit('showSnackbar', {text: (isUpdate ? 'Обновление' : 'Добавление') + ' объекта прошло успешно', snackbar: true, context: 'success'})
-  commit('showSpinner', false)
-  resolve(responseData)
-})
-    .catch(e => {
-      commit('showSnackbar', {text: (isUpdate ? 'Обновление' : 'Добавление') + ' объекта не удалось. Обратитесь к администратору', snackbar: true, context: 'error'})
-      commit('showSpinner', false)
-      reject()
-    })
+      .then(response => {
+        let responseData = response.data && response.data !== 'Error' ? response.data : null
+        commit('showSnackbar', {text: (isUpdate ? 'Обновление' : 'Добавление') + ' объекта прошло успешно', snackbar: true, context: 'success'})
+        commit('showSpinner', false)
+        resolve(responseData)
+      })
+      .catch(e => {
+        commit('showSnackbar', {text: (isUpdate ? 'Обновление' : 'Добавление') + ' объекта не удалось. Обратитесь к администратору', snackbar: true, context: 'error'})
+        commit('showSpinner', false)
+        reject(e)
+      })
   })
 }
 
@@ -115,14 +115,14 @@ export const getEntityTable = ({ commit, getters }, {http, item}) => {
       data: item,
       config: { contentType: 'application/json' }
     })
-    .then(response => {
-      if (response.data) {
-        resolve(JSON.parse(response.data))
-      } else { reject() }
-    })
-    .catch(e => {
-      commit('showSnackbar', {text: 'Не удалось загрузить данные. Обратитесь к администратору', snackbar: true, context: 'error'})
-      reject()
-    })
+      .then(response => {
+        if (response.data) {
+          resolve(JSON.parse(response.data))
+        } else { reject(new Error()) }
+      })
+      .catch(e => {
+        commit('showSnackbar', {text: 'Не удалось загрузить данные. Обратитесь к администратору', snackbar: true, context: 'error'})
+        reject(e)
+      })
   })
 }

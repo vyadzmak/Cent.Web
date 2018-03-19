@@ -1,7 +1,13 @@
 <template>
   <v-app>
-    <div class="spinner-position" v-show="loading!==0">
-    <v-progress-circular indeterminate v-bind:size="120" v-bind:width="5" class="blue--text"></v-progress-circular>
+    <div
+      v-show="loading!==0"
+      class="spinner-position">
+      <v-progress-circular
+        :size="120"
+        :width="5"
+        indeterminate
+        class="blue--text"/>
     </div>
     <v-snackbar
       :timeout="snackbarOptions.timeout"
@@ -16,10 +22,13 @@
       v-model="snackbarOptions.snackbar"
     >
       {{ snackbarOptions.text }}
-      <v-btn dark flat @click.native="closeSnackbar">Закрыть</v-btn>
+      <v-btn
+        dark
+        flat
+        @click.native="closeSnackbar">Закрыть</v-btn>
     </v-snackbar>
-    <modal-dialog></modal-dialog>
-    <router-view></router-view>
+    <modal-dialog/>
+    <router-view/>
   </v-app>
 </template>
 
@@ -45,22 +54,4 @@ export default {
 }
 </script>
 
-<style lang="scss">
-@import "~vue-modal-dialog/src/modal";
-
-@mixin centerer() {
-  position: absolute !important;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.spinner-position {
-  z-index:1900;
-  @include centerer;
-}
-
-.overlay {
-  z-index: 2 !important
-}
-</style>
+<style lang="scss"></style>

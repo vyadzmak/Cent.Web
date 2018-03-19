@@ -17,7 +17,6 @@ export default {
       fabSettings: {
         direction: 'bottom',
         fab: false,
-        fling: false,
         hover: false,
         tabs: null,
         top: false,
@@ -41,6 +40,13 @@ export default {
         { icon: 'settings', title: 'Системные настройки', path: '/settings', visible: this.$router.requireAuth({name: 'Settings'}) },
         { icon: 'mdi-information-outline', title: 'Лог', path: '/log', visible: this.$router.requireAuth({name: 'Log'}) }
       ]
+    },
+    appliedMiniVariant () {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'lg': return this.miniVariant
+        case 'xl': return this.miniVariant
+        default: return false
+      }
     }
   },
   methods: {
@@ -59,11 +65,11 @@ export default {
           this.$router.push({path: '/login'})
         },
         modalCancel => {}
-    ).catch(
-      err => {
-        console.log(err)
-      }
-    )
+      ).catch(
+        err => {
+          console.log(err)
+        }
+      )
     },
     showUpdateModal: function () {
       let item = _.cloneDeep(this.userData)
@@ -77,10 +83,10 @@ export default {
         }
       }
       ModalService.open(updateModal, modalConfig).then(
-          modalSubmit => {
-            // this.updateItem(modalSubmit, isUpdate)
-          },
-          modalCancel => { console.log(modalCancel) }
+        modalSubmit => {
+          // this.updateItem(modalSubmit, isUpdate)
+        },
+        modalCancel => { console.log(modalCancel) }
       ).catch(err => { console.log(err) })
     }
   }

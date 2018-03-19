@@ -16,7 +16,9 @@ export default {
         { text: 'Описание', align: 'left', value: 'description' },
         { text: 'Дата создания', align: 'left', value: 'creation_date' },
         { text: 'Тип', align: 'left', value: 'is_catalog' },
-        { text: 'Id польз.', align: 'left', value: 'user_id' }
+        { text: 'Id польз.', align: 'left', value: 'user_id' },
+        {sortable: false},
+        {sortable: false}
       ],
       tableRowsShown: [10, 20, 50, 100, {text: 'Все', value: -1}],
       rowsPerPageText: 'Строк на странице',
@@ -45,11 +47,11 @@ export default {
       ModalService.open(questionDialog, modalConfig).then(
         modalSubmit => { this.deleteItem(itemId) },
         modalCancel => {}
-    ).catch(
-      err => {
-        console.log(err)
-      }
-    )
+      ).catch(
+        err => {
+          console.log(err)
+        }
+      )
     },
     showUpdateModal: function (item) {
       this.$store.dispatch('getSchemaUpdateProperty', {http: this.$http, link: 'schemaTypes', id: null})
@@ -77,14 +79,14 @@ export default {
         }
       }
       this.$store.dispatch('getSchemaUpdateProperty', {http: this.$http, link: 'schemaTypes', id: null})
-      .then(response => {
-        ModalService.open(updateModal, modalConfig).then(
-          modalSubmit => {
-            this.updateItem(modalSubmit, isUpdate)
-          },
-          modalCancel => { console.log(modalCancel) }
-      ).catch(err => { console.log(err) })
-      })
+        .then(response => {
+          ModalService.open(updateModal, modalConfig).then(
+            modalSubmit => {
+              this.updateItem(modalSubmit, isUpdate)
+            },
+            modalCancel => { console.log(modalCancel) }
+          ).catch(err => { console.log(err) })
+        })
     },
     deleteItem: function (itemId) {
       this.$store.dispatch('deleteFactory', {id: itemId, http: this.$http})

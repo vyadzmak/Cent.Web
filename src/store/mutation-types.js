@@ -17,7 +17,7 @@ let types = {
   UPDATE_ENTITY_SCHEMA: 'UPDATE_ENTITY_SCHEMA',
   UPDATE_UPDATE_ENTITY: 'UPDATE_UPDATE_ENTITY',
 
-   // CATALOG and currentCATALOG mutations
+  // CATALOG and currentCATALOG mutations
   UPDATE_CATALOGS: 'UPDATE_CATALOGS',
   ADD_CATALOG: 'ADD_CATALOG',
   UPDATE_CATALOG: 'UPDATE_CATALOG',
@@ -36,4 +36,3 @@ let types = {
 }
 
 export default types
-

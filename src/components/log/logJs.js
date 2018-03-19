@@ -38,42 +38,42 @@ export default {
       ModalService.open(questionDialog, modalConfig).then(
         modalSubmit => { this.deleteItems() },
         modalCancel => {}
-    ).catch(
-      err => {
-        console.log(err)
-      }
-    )
+      ).catch(
+        err => {
+          console.log(err)
+        }
+      )
     },
     deleteItems: function () {
       this.$store.commit('showSpinner', true)
       this.$http.delete('log', {params: {id: -1}})
-      .then(response => {
-        if (response.data && response.data !== 'Error') {
-          this.logs.splice(0, this.logs.length)
-          this.$store.commit('showSnackbar', {text: 'Очистка лога прошла успешно', snackbar: true, context: 'success'})
-        } else {
+        .then(response => {
+          if (response.data && response.data !== 'Error') {
+            this.logs.splice(0, this.logs.length)
+            this.$store.commit('showSnackbar', {text: 'Очистка лога прошла успешно', snackbar: true, context: 'success'})
+          } else {
+            this.$store.commit('showSnackbar', {text: 'Очистка лога не удалась. Обратитесь к администратору', snackbar: true, context: 'error'})
+          }
+          this.$store.commit('showSpinner', false)
+        })
+        .catch(e => {
+          this.errors.push(e)
+          this.$store.commit('showSpinner', false)
           this.$store.commit('showSnackbar', {text: 'Очистка лога не удалась. Обратитесь к администратору', snackbar: true, context: 'error'})
-        }
-        this.$store.commit('showSpinner', false)
-      })
-      .catch(e => {
-        this.errors.push(e)
-        this.$store.commit('showSpinner', false)
-        this.$store.commit('showSnackbar', {text: 'Очистка лога не удалась. Обратитесь к администратору', snackbar: true, context: 'error'})
-      })
+        })
     }
   },
   created () {
     this.$store.commit('showSpinner', true)
     this.$http.get(`log`)
-    .then(response => {
-      this.$store.commit('showSpinner', false)
-      this.logs = response.data
-    })
-    .catch(e => {
-      this.errors.push(e)
-      this.$store.commit('showSpinner', false)
-    })
+      .then(response => {
+        this.$store.commit('showSpinner', false)
+        this.logs = response.data
+      })
+      .catch(e => {
+        this.errors.push(e)
+        this.$store.commit('showSpinner', false)
+      })
   },
   mounted () {
     this.$refs.logDataTable.defaultPagination.descending = true

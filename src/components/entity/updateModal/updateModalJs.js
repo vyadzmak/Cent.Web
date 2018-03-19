@@ -39,12 +39,11 @@ export default {
   methods: {
     submit: function () {
       this.$validator.validateAll()
-      .then((result) => {
-        if (result) {
-          ModalService.submit(this.updateItem)
-          return
-        }
-      })
+        .then((result) => {
+          if (result) {
+            ModalService.submit(this.updateItem)
+          }
+        })
     },
     cancel: function () {
       this.$store.commit('showSpinner', false)

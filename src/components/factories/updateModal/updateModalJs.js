@@ -9,10 +9,10 @@ export default {
       valid: false,
       schemaTypes: this.$store.getters.updateProperty &&
         this.$store.getters.updateProperty.length > 0
-       ? this.$store.getters.updateProperty : [],
+        ? this.$store.getters.updateProperty : [],
       nameRules: [
         (v) => !!v || 'Поле должно быть заполнено',
-        (v) => v && v.length <= 270 || 'Не более 270 символов'
+        (v) => (v && v.length <= 270) || 'Не более 270 символов'
       ]
     }
   },

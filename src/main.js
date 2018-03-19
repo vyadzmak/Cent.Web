@@ -25,16 +25,16 @@ import { VueModalDialog } from 'vue-modal-dialog'
 
 // form components
 import fieldText from './components/formComponents/fieldText/fieldText.vue'
-Vue.component('fieldVtext', fieldText)
 import fieldSelect from './components/formComponents/fieldSelect/fieldSelect.vue'
-Vue.component('fieldVselect', fieldSelect)
 import fieldSwitch from './components/formComponents/fieldSwitch/fieldSwitch.vue'
-Vue.component('fieldVswitch', fieldSwitch)
 import fieldCheckbox from './components/formComponents/fieldCheckbox/fieldCheckbox.vue'
-Vue.component('fieldVcheckbox', fieldCheckbox)
 import fieldRadio from './components/formComponents/fieldRadio/fieldRadio.vue'
-Vue.component('fieldVradio', fieldRadio)
 import fieldDatepicker from './components/formComponents/fieldDatepicker/fieldDatepicker.vue'
+Vue.component('fieldVtext', fieldText)
+Vue.component('fieldVselect', fieldSelect)
+Vue.component('fieldVswitch', fieldSwitch)
+Vue.component('fieldVcheckbox', fieldCheckbox)
+Vue.component('fieldVradio', fieldRadio)
 Vue.component('fieldVdatepicker', fieldDatepicker)
 
 Vue.use(VueFormGenerator)
@@ -75,6 +75,6 @@ window.App = new Vue({
   router,
   store,
   http,
-  template: '<App/>',
-  components: { App }
+  components: { App },
+  template: '<App/>'
 })

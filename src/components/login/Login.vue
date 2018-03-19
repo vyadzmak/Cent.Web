@@ -1,61 +1,74 @@
 <template>
-  <div class="login">
-    <v-container fluid>       
-      <v-layout column class="pa-5">
-    <v-flex xs12 sm8 offset-sm2 md6 offset-md3 lg4 offset-lg4>
-      <v-toolbar class="primary" dark>
-        <v-toolbar-title>{{ msg }}</v-toolbar-title>
-      </v-toolbar>
-      <v-container fluid grid-list-md class="grey lighten-4">
-        <v-layout row wrap>
-          <v-flex>
-            <v-card class="elevation-18">
-              <v-form v-model="valid"  @submit.prevent="loginUser">
+  <v-content>
+    <v-container
+      fluid
+      fill-height>
+      <v-layout
+        align-center
+        justify-center>
+        <v-flex
+          xs12
+          sm8
+          md4>
+          <v-card class="elevation-12">
+            <v-toolbar
+              dark
+              color="primary">
+              <v-toolbar-title>{{ msg }}</v-toolbar-title>
+            </v-toolbar>
+            <v-card-text>
+              <v-form
+                v-model="valid"
+                @submit.prevent="loginUser">
                 <v-card-text primary-title>
-    <v-text-field
-      label="Логин"
-      v-model="loginData.Login"
-      :rules="emailRules"
-      :disabled="controlsDisabled"
-      required
-    >
-    </v-text-field>
-              </v-card-text>
-              <v-card-text primary-title>
-                <v-text-field
-      label="Пароль"
-      v-model="loginData.Password"
-      :rules="passwordRules"
-      type="password"
-      :counter="10"
-      :disabled="controlsDisabled"
-      required
-    ></v-text-field>
-    </v-card-text>
-    
-              <v-card-actions class="white">
-                <v-checkbox label="Запомнить меня"
-                        v-model="rememberMe"
-                        color="indigo"
-                        hide-details
-                        :disabled="controlsDisabled"></v-checkbox>
-                <v-btn type="submit" color="error" dark large :disabled="controlsDisabled">Вход</v-btn>
-              </v-card-actions>
-  </v-form>
-            </v-card>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </v-flex>
-  </v-layout>   
-      </v-container>
-    <v-footer app :fixed="fixed">
-      <span>&copy; 2017</span>
-    </v-footer>
-  </div>
+                  <v-text-field
+                    v-model="loginData.Login"
+                    :rules="emailRules"
+                    :disabled="controlsDisabled"
+                    prepend-icon="person"
+                    label="Логин"
+                    class="input-group--focused"
+                    autofocus
+                    required
+                  />
+                </v-card-text>
+                <v-card-text primary-title>
+                  <v-text-field
+                    v-model="loginData.Password"
+                    :counter="10"
+                    :disabled="controlsDisabled"
+                    :rules="passwordRules"
+                    prepend-icon="lock"
+                    label="Пароль"
+                    type="password"
+                    class="input-group--focused"
+                    required
+                  />
+                </v-card-text>
+
+                <v-card-actions class="white">
+                  <v-checkbox
+                    v-model="rememberMe"
+                    :disabled="controlsDisabled"
+                    label="Запомнить меня"
+                    color="indigo"
+                    hide-details/>
+                  <v-btn
+                    :disabled="controlsDisabled"
+                    type="submit"
+                    color="error"
+                    dark
+                    large>Вход</v-btn>
+                </v-card-actions>
+              </v-form>
+            </v-card-text>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </v-content>
 </template>
 
 <script src="./loginJs.js"></script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped src="./login.css"></style>
+<style scoped></style>

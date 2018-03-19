@@ -37,16 +37,16 @@ export const getCatalogSchema = ({ commit, getters }, {http, id}) => {
   return new Promise((resolve, reject) => {
     commit('showSpinner', true)
     http.get(`schema` + '/' + id)
-    .then(response => {
-      commit(types.UPDATE_CATALOG_SCHEMA, response.data)
-      commit('showSpinner', false)
-      resolve()
-    })
-    .catch(e => {
-      commit('showSnackbar', {text: 'Не удалось загрузить данные. Обратитесь к администратору', snackbar: true, context: 'error'})
-      commit('showSpinner', false)
-      reject()
-    })
+      .then(response => {
+        commit(types.UPDATE_CATALOG_SCHEMA, response.data)
+        commit('showSpinner', false)
+        resolve()
+      })
+      .catch(e => {
+        commit('showSnackbar', {text: 'Не удалось загрузить данные. Обратитесь к администратору', snackbar: true, context: 'error'})
+        commit('showSpinner', false)
+        reject(e)
+      })
   })
 }
 
@@ -54,18 +54,18 @@ export const getUpdateCatalog = ({ commit, getters }, {http, id}) => {
   return new Promise((resolve, reject) => {
     commit('showSpinner', true)
     http.get(`object` + '/' + id)
-    .then(response => {
-      let responseData = response.data
-      responseData.data = JSON.parse(responseData.data)
-      commit(types.UPDATE_UPDATE_CATALOG, responseData)
-      commit('showSpinner', false)
-      resolve()
-    })
-    .catch(e => {
-      commit('showSnackbar', {text: 'Не удалось загрузить данные. Обратитесь к администратору', snackbar: true, context: 'error'})
-      commit('showSpinner', false)
-      reject()
-    })
+      .then(response => {
+        let responseData = response.data
+        responseData.data = JSON.parse(responseData.data)
+        commit(types.UPDATE_UPDATE_CATALOG, responseData)
+        commit('showSpinner', false)
+        resolve()
+      })
+      .catch(e => {
+        commit('showSnackbar', {text: 'Не удалось загрузить данные. Обратитесь к администратору', snackbar: true, context: 'error'})
+        commit('showSpinner', false)
+        reject(e)
+      })
   })
 }
 
@@ -77,16 +77,16 @@ export const updateCatalog = ({ commit, getters }, {http, isUpdate, item}) => {
       data: item,
       config: { contentType: 'application/json' }
     })
-.then(response => {
-  let responseData = response.data && response.data !== 'Error' ? response.data : null
-  commit('showSnackbar', {text: (isUpdate ? 'Обновление' : 'Добавление') + ' каталога прошло успешно', snackbar: true, context: 'success'})
-  commit('showSpinner', false)
-  resolve(responseData)
-})
-    .catch(e => {
-      commit('showSnackbar', {text: (isUpdate ? 'Обновление' : 'Добавление') + ' каталога не удалось. Обратитесь к администратору', snackbar: true, context: 'error'})
-      commit('showSpinner', false)
-      reject()
-    })
+      .then(response => {
+        let responseData = response.data && response.data !== 'Error' ? response.data : null
+        commit('showSnackbar', {text: (isUpdate ? 'Обновление' : 'Добавление') + ' каталога прошло успешно', snackbar: true, context: 'success'})
+        commit('showSpinner', false)
+        resolve(responseData)
+      })
+      .catch(e => {
+        commit('showSnackbar', {text: (isUpdate ? 'Обновление' : 'Добавление') + ' каталога не удалось. Обратитесь к администратору', snackbar: true, context: 'error'})
+        commit('showSpinner', false)
+        reject(e)
+      })
   })
 }

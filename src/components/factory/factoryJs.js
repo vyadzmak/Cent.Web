@@ -66,19 +66,19 @@ export default {
       ModalService.open(questionDialog, modalConfig).then(
         modalSubmit => { this.deleteFieldItem(itemId) },
         modalCancel => {}
-    ).catch(
-      err => {
-        console.log(err)
-      }
-    )
+      ).catch(
+        err => {
+          console.log(err)
+        }
+      )
     },
     updateItem: function (item, isUpdate) {
       this.$validator.validateAll().then((result) => {
         if (result) {
           item.data = JSON.stringify(item.data)
           this.$store.dispatch('updateFactory', {http: this.$http, isUpdate: isUpdate, item: _.cloneDeep(item)})
-      .then(response => {})
-      .catch(e => {})
+            .then(response => {})
+            .catch(e => {})
           item.data = JSON.parse(item.data)
           item.data.fields[item.data.fields.length - 1].index = null
         }
