@@ -14,7 +14,11 @@
             <v-toolbar
               dark
               color="primary">
-              <v-toolbar-title>{{ msg }}</v-toolbar-title>
+              <img
+                width="50"
+                src="@/assets/img/share.svg">
+              <v-toolbar-title>{{ msg }}
+              </v-toolbar-title>
             </v-toolbar>
             <v-card-text>
               <v-form
