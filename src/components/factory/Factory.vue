@@ -57,7 +57,7 @@
                 <v-btn
                   slot="activator"
                   icon
-                  class="pink--text"
+                  class="error--text"
                   @click.stop="showDeleteModal(props.index)"><v-icon>mdi-delete-variant</v-icon></v-btn>
                 <span>Удалить</span>
               </v-tooltip>

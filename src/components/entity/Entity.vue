@@ -85,7 +85,7 @@
                   <v-btn
                     slot="activator"
                     icon
-                    class="indigo--text"
+                    class="info--text"
                     @click.stop="showUpdateModal('objs', objsListItem, props.item)"><v-icon>mdi-pen</v-icon></v-btn>
                   <span>Редактировать</span>
                 </v-tooltip>
@@ -95,7 +95,7 @@
                   <v-btn
                     slot="activator"
                     icon
-                    class="pink--text"
+                    class="error--text"
                     @click.stop="showDeleteModal('objs', objsListItem, props.item.g_id)"><v-icon>mdi-delete-variant</v-icon></v-btn>
                   <span>Удалить</span>
                 </v-tooltip>
@@ -150,7 +150,7 @@
                   <v-btn
                     slot="activator"
                     icon
-                    class="indigo--text"
+                    class="info--text"
                     @click.stop="showUpdateModal('subs', subsListItem, props.item)"><v-icon>mdi-pen</v-icon></v-btn>
                   <span>Редактировать</span>
                 </v-tooltip>
@@ -160,7 +160,7 @@
                   <v-btn
                     slot="activator"
                     icon
-                    class="pink--text"
+                    class="error--text"
                     @click.stop="showDeleteModal('subs', subsListItem, props.item.g_id)"><v-icon>mdi-delete-variant</v-icon></v-btn>
                   <span>Удалить</span>
                 </v-tooltip>
@@ -215,7 +215,7 @@
                   <v-btn
                     slot="activator"
                     icon
-                    class="indigo--text"
+                    class="info--text"
                     @click.stop="showUpdateModal('docs', docsListItem, props.item)"><v-icon>mdi-pen</v-icon></v-btn>
                   <span>Редактировать</span>
                 </v-tooltip>
@@ -225,7 +225,7 @@
                   <v-btn
                     slot="activator"
                     icon
-                    class="pink--text"
+                    class="error--text"
                     @click.stop="showDeleteModal('docs', docsListItem, props.item.g_id)"><v-icon>mdi-delete-variant</v-icon></v-btn>
                   <span>Удалить</span>
                 </v-tooltip>
@@ -280,7 +280,7 @@
                   <v-btn
                     slot="activator"
                     icon
-                    class="indigo--text"
+                    class="info--text"
                     @click.stop="showUpdateModal('rels', relsListItem, props.item)"><v-icon>mdi-pen</v-icon></v-btn>
                   <span>Редактировать</span>
                 </v-tooltip>
@@ -290,7 +290,7 @@
                   <v-btn
                     slot="activator"
                     icon
-                    class="pink--text"
+                    class="error--text"
                     @click.stop="showDeleteModal('rels', relsListItem, props.item.g_id)"><v-icon>mdi-delete-variant</v-icon></v-btn>
                   <span>Удалить</span>
                 </v-tooltip>
@@ -335,7 +335,7 @@
                   <v-btn
                     slot="activator"
                     icon
-                    class="indigo--text"
+                    class="info--text"
                     @click.stop="showUpdateModal(props.item)"><v-icon>mdi-pen</v-icon></v-btn>
                   <span>Редактировать</span>
                 </v-tooltip>
@@ -345,7 +345,7 @@
                   <v-btn
                     slot="activator"
                     icon
-                    class="pink--text"
+                    class="error--text"
                     @click.stop="showDeleteModal(props.item.g_id)"><v-icon>mdi-delete-variant</v-icon></v-btn>
                   <span>Удалить</span>
                 </v-tooltip>

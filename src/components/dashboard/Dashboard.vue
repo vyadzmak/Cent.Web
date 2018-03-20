@@ -4,13 +4,16 @@
       :mini-variant="appliedMiniVariant"
       :clipped="clipped"
       v-model="drawer"
+      class="aside-background"
       app>
       <v-list>
         <v-list-tile
           v-for="(item, i) in items"
           v-if="item.visible"
           :key="i"
-          :style="{'background-color':$route.path === item.path?'#edfbfa':''}"
+          :style="{'background-color':$route.path === item.path?'#718093':'',
+                   'color':$route.path === item.path?'#f5f6fa !important':'#576574 !important'}"
+          active-class = ""
           value="true"
           @click="$router.push({path: item.path})"
         >
@@ -34,13 +37,13 @@
       app
       fixed
       dark
-      class="primary">
+      color="primary">
       <v-toolbar-side-icon
         dark
         @click.stop="drawer = !drawer"/>
       <img
         width="50"
-        src="@/assets/img/networking.svg">
+        src="@/assets/img/share.svg">
       <v-toolbar-title
         @click="logOut()"
         v-html="title"/>
@@ -80,7 +83,7 @@
         <v-btn
           slot="activator"
           v-model="fabSettings.fab"
-          class="amber lighten-2"
+          color="warning"
           dark
           fab
           hover

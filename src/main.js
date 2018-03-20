@@ -49,13 +49,13 @@ Vue.use(VeeValidate, config)
 
 // create vue plugins to use them in our components without import
 Vue.use(Vuetify, {theme: {
-  primary: '#4d5468',
-  secondary: '#4d5468c4',
+  primary: '#40739e',
+  secondary: '#4d5468',
   accent: '#82B1FF',
-  error: '#FF5252',
-  info: '#2196F3',
-  success: '#4CAF50',
-  warning: '#FFC107'
+  error: '#c23616',
+  info: '#10ac84',
+  success: '#44bd32',
+  warning: '#ff793f'
 }})
 Vue.use(VueLodash, lodash)
 Vue.use(VueModalDialog)

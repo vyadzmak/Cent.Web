@@ -45,6 +45,6 @@
 
 <style scoped>
 a:active, a:hover {
-    background-color: #2E7D32;
+    background-color: #576574;
 }
 </style>
