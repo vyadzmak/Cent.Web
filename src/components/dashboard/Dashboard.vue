@@ -40,7 +40,7 @@
         @click.stop="drawer = !drawer"/>
       <img
         width="50"
-        src="@/assets/img/share.svg">
+        src="@/assets/img/networking.svg">
       <v-toolbar-title
         @click="logOut()"
         v-html="title"/>

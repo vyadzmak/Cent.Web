@@ -49,8 +49,8 @@ Vue.use(VeeValidate, config)
 
 // create vue plugins to use them in our components without import
 Vue.use(Vuetify, {theme: {
-  primary: '#2E7D32',
-  secondary: '#424242',
+  primary: '#4d5468',
+  secondary: '#4d5468c4',
   accent: '#82B1FF',
   error: '#FF5252',
   info: '#2196F3',
