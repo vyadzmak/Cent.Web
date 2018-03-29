@@ -128,7 +128,7 @@ export default {
       return this.$store.getters.entities && this.$store.getters.entities.headers ? this.$store.getters.entities : {headers: [], items: []}
     },
     entitySchemas: function () {
-      return [].concat(this.$store.getters.entitySchemas).concat(this.$store.getters.entitySchemas).concat(this.$store.getters.entitySchemas)
+      return _.get(this.$store, 'getters.entitySchemas', [])
     },
     headers () {
       return this.entities.headers.concat([{sortable: false}, {sortable: false}])

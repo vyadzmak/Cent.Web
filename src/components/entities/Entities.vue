@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card>
+    <!-- <v-card>
       <v-card-title>
         <v-select
           v-model="currentSchema"
@@ -61,8 +61,8 @@
           </tr>
         </template>
       </v-data-table>
-    </v-card>
-    <!-- <v-card>
+    </v-card> -->
+    <v-card>
       <v-toolbar flat>
         <v-toolbar-title>Главная</v-toolbar-title>
       </v-toolbar>
@@ -76,20 +76,75 @@
             v-for="(schema, index) in entitySchemas"
             :key="index"
             class="text-xs-center"
-            xs3>
+            xs2>
             <v-btn
               :color="entitySigns[index%3].color"
               dark
               icon
               raised
-              style="width:160px; height:160px;">
-              <v-icon style="font-size:140px;">{{ entitySigns[index%3].icon }}</v-icon>
+              style="width:40px; height:40px;"
+              @click.stop="currentSchema=schema">
+              <v-icon large>{{ entitySigns[index%3].icon }}</v-icon>
             </v-btn>
             <div v-html="schema.title"/>
           </v-flex>
         </v-layout>
       </v-container>
-    </v-card> -->
+      <v-card-title>
+        <v-btn
+          color="success"
+          dark
+          @click.stop="showUpdateModal()">Добавить объект</v-btn>
+        <v-spacer/>
+        <v-text-field
+          v-model="search"
+          append-icon="search"
+          label="Поиск"
+          single-line
+          hide-details
+        />
+      </v-card-title>
+      <v-data-table
+        ref = "entitiesDataTable"
+        :headers="headers"
+        :items="entities.items"
+        :search="search"
+        :rows-per-page-items="tableRowsShown"
+        :rows-per-page-text="rowsPerPageText"
+        :no-results-text="noResultsText"
+        :no-data-text="noDataText"
+      >
+        <template
+          slot="items"
+          slot-scope="props">
+          <tr @click="goToEntity(props.item.g_id)">
+            <td
+              v-for="h in entities.headers"
+              :key="h.value">{{ _.get(props.item, h.value) }}</td>
+            <td class="px-1">
+              <v-tooltip top>
+                <v-btn
+                  slot="activator"
+                  icon
+                  class="info--text"
+                  @click.stop="showUpdateModal(props.item)"><v-icon>mdi-pen</v-icon></v-btn>
+                <span>Редактировать</span>
+              </v-tooltip>
+            </td>
+            <td class="px-1">
+              <v-tooltip top>
+                <v-btn
+                  slot="activator"
+                  icon
+                  class="error--text"
+                  @click.stop="showDeleteModal(props.item.g_id)"><v-icon>mdi-delete-variant</v-icon></v-btn>
+                <span>Удалить</span>
+              </v-tooltip>
+            </td>
+          </tr>
+        </template>
+      </v-data-table>
+    </v-card>
     <!-- <v-card>
       <v-toolbar flat>
         <v-toolbar-title>Главная</v-toolbar-title>
