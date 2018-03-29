@@ -5,7 +5,7 @@
       class="spinner-position">
       <v-progress-circular
         :size="120"
-        :width="5"
+        :width="15"
         indeterminate
         class="blue--text"/>
     </div>

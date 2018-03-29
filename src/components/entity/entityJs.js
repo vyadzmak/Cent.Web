@@ -9,15 +9,14 @@ export default {
       msg: '',
       search: '',
       errors: [],
-      activeTab: null,
-      tabs: [{id: 'tab-1', name: 'Общая информация'},
-        {id: 'tab-2', name: 'Объекты', hidden: true},
-        {id: 'tab-3', name: 'Субъекты', hidden: true},
-        {id: 'tab-4', name: 'Документы', hidden: true},
-        {id: 'tab-5', name: 'Связи', hidden: true},
-        {id: 'tab-6', name: 'История'},
-        {id: 'tab-7', name: 'Отчеты'}],
-      currentTab: 'tab-1',
+      tabs: [{id: 'tab-1', name: 'Общая информация', icon: 'info'},
+        {id: 'tab-2', name: 'Объекты', hidden: true, icon: 'account_balance'},
+        {id: 'tab-3', name: 'Субъекты', hidden: true, icon: 'people'},
+        {id: 'tab-4', name: 'Документы', hidden: true, icon: 'library_books'},
+        {id: 'tab-5', name: 'Связи', hidden: true, icon: 'settings_input_component'},
+        {id: 'tab-6', name: 'История', icon: 'history'},
+        {id: 'tab-7', name: 'Отчеты', icon: 'assignment'}],
+      activeTab: 'tab-1',
       headers: [
         { text: 'ID', align: 'left', value: 'id' },
         { text: 'Имя файла', align: 'left', value: 'file_name' },
@@ -261,7 +260,7 @@ export default {
         })
     },
     goToEntity (itemId) {
-      this.currentTab = 'tab-1'
+      this.activeTab = 'tab-1'
       this.$router.push({name: 'Entity', params: {id: itemId}})
     },
     getDetailObjectName (fields) {
@@ -274,7 +273,9 @@ export default {
       return result
     },
     addHeaders (headers) {
-      headers = headers.concat([{sortable: false}, {sortable: false}])
+      if (headers) {
+        headers = headers.concat([{sortable: false}, {sortable: false}])
+      }
       return headers
     }
   },
@@ -282,11 +283,11 @@ export default {
     this.$store.dispatch('getCurrentEntity', {http: this.$http, id: this.$route.params.id})
   },
   mounted () {
-    this.$refs.objsTable.defaultPagination.descending = true
-    this.$refs.docsTable.defaultPagination.descending = true
-    this.$refs.relsTable.defaultPagination.descending = true
-    this.$refs.subsTable.defaultPagination.descending = true
-    this.$refs.entityDataTable.defaultPagination.descending = true
+    // this.$refs.objsTable.defaultPagination.descending = true
+    // this.$refs.docsTable.defaultPagination.descending = true
+    // this.$refs.relsTable.defaultPagination.descending = true
+    // this.$refs.subsTable.defaultPagination.descending = true
+    // this.$refs.entityDataTable.defaultPagination.descending = true
   },
   beforeRouteUpdate (to, from, next) {
     if (to.name === from.name) {

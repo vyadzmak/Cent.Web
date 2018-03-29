@@ -62,6 +62,58 @@
         </template>
       </v-data-table>
     </v-card>
+    <!-- <v-card>
+      <v-toolbar flat>
+        <v-toolbar-title>Главная</v-toolbar-title>
+      </v-toolbar>
+      <v-container
+        fluid
+        grid-list-sm>
+        <v-layout
+          row
+          wrap>
+          <v-flex
+            v-for="(schema, index) in entitySchemas"
+            :key="index"
+            class="text-xs-center"
+            xs3>
+            <v-btn
+              :color="entitySigns[index%3].color"
+              dark
+              icon
+              raised
+              style="width:160px; height:160px;">
+              <v-icon style="font-size:140px;">{{ entitySigns[index%3].icon }}</v-icon>
+            </v-btn>
+            <div v-html="schema.title"/>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-card> -->
+    <!-- <v-card>
+      <v-toolbar flat>
+        <v-toolbar-title>Главная</v-toolbar-title>
+      </v-toolbar>
+      <v-list>
+        <template v-for="(item, index) in entitySchemas">
+          <v-divider
+            v-if="index>0"
+            :key="index"/>
+          <v-list-tile
+            :key="item.title"
+            avatar>
+            <v-list-tile-avatar>
+              <v-icon
+                :color="entitySigns[index%3].color"
+                large>{{ entitySigns[index%3].icon }}</v-icon>
+            </v-list-tile-avatar>
+            <v-list-tile-content>
+              <v-list-tile-title v-html="item.title"/>
+            </v-list-tile-content>
+          </v-list-tile>
+        </template>
+      </v-list>
+    </v-card> -->
   </div>
 </template>
 

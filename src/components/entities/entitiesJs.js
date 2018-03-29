@@ -13,7 +13,10 @@ export default {
       rowsPerPageText: 'Строк на странице',
       noDataText: 'Нет данных',
       noResultsText: 'Поиск не дал результатов',
-      currentSchema: null
+      currentSchema: null,
+      entitySigns: [{color: 'deep-purple darken-2', icon: 'mdi-account-multiple'},
+        {color: 'cyan darken-3', icon: 'mdi-truck'},
+        {color: 'deep-orange darken-4', icon: 'mdi-home'}]
     }
   },
   methods: {
@@ -125,7 +128,7 @@ export default {
       return this.$store.getters.entities && this.$store.getters.entities.headers ? this.$store.getters.entities : {headers: [], items: []}
     },
     entitySchemas: function () {
-      return this.$store.getters.entitySchemas
+      return [].concat(this.$store.getters.entitySchemas).concat(this.$store.getters.entitySchemas).concat(this.$store.getters.entitySchemas)
     },
     headers () {
       return this.entities.headers.concat([{sortable: false}, {sortable: false}])
