@@ -1,6 +1,7 @@
-import questionDialog from '../questionDialog/questionDialog'
-import updateModal from './updateModal/updateModal.vue'
+import questionDialog from '../questionDialog/QuestionDialog.vue'
+import updateModal from './updateModal/UpdateModal.vue'
 import { ModalService } from 'vue-modal-dialog'
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'entities',
@@ -105,7 +106,7 @@ export default {
         })
     },
     updateItem: function (item, isUpdate) {
-      this.$store.dispatch('updateEntity', {http: this.$http, isUpdate: isUpdate, item: item})
+      this.$store.dispatch('updateEntity', {isUpdate: isUpdate, item: item})
         .then(response => this.getEntities())
     },
     goToEntity (itemId) {
@@ -113,22 +114,17 @@ export default {
     },
     getEntities () {
       if (this.currentSchema && this.currentSchema.id) {
-        this.$store.dispatch('getAllEntities', {http: this.$http, id: this.currentSchema.id})
+        this.$store.dispatch('getAllEntities', {id: this.currentSchema.id})
       }
     },
     getEntitySchemas () {
-      this.$store.dispatch('getEntitySchemas', {http: this.$http, id: this.userData.client_id})
+      this.$store.dispatch('getEntitySchemas', {id: this.userData.client_id})
     }
   },
   computed: {
-    userData: function () {
-      return this.$store.getters.userData
-    },
+    ...mapGetters(['userData', 'entitySchemas']),
     entities: function () {
       return this.$store.getters.entities && this.$store.getters.entities.headers ? this.$store.getters.entities : {headers: [], items: []}
-    },
-    entitySchemas: function () {
-      return _.get(this.$store, 'getters.entitySchemas', [])
     },
     headers () {
       return this.entities.headers.concat([{sortable: false}, {sortable: false}])
@@ -144,11 +140,13 @@ export default {
   },
   created () {
     this.getEntitySchemas()
+    this.$store.commit('attachments/item', {hello: 'asdfasd'})
   },
   mounted () {
     this.$refs.entitiesDataTable.defaultPagination.descending = true
   },
   beforeDestroy () {
-    this.$store.commit('UPDATE_ENTITIES', {})
+    this.$store.commit('UPDATE_ENTITIES', [])
+    this.$store.commit('attachments/item', {hello: 'bye'})
   }
 }

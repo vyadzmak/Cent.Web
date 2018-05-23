@@ -48,6 +48,6 @@
   </v-card>
 </template>
 
-<script src="./updateModalJs.js"></script>
+<script src="./updateModal.js"></script>
 
 <style scoped></style>

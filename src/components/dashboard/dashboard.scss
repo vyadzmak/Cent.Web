@@ -7,3 +7,19 @@
 .aside-background{
   background-color:#dcdde1 !important;
 }
+
+@mixin active-color() {
+  color: #f5f6fa !important;
+}
+
+.active-icon {
+  @include active-color();
+}
+
+.active-route{
+  @include active-color();
+  background-color:#718093;
+}
+.route{
+  color:#576574 !important;
+}

@@ -1,5 +1,5 @@
-import questionDialog from '../questionDialog/questionDialog'
-import updateModal from './updateModal/updateModal.vue'
+import questionDialog from '../questionDialog/QuestionDialog.vue'
+import updateModal from './updateModal/UpdateModal.vue'
 import { ModalService } from 'vue-modal-dialog'
 
 export default {
@@ -53,7 +53,7 @@ export default {
   },
   computed: {
     userData () {
-      return this.$store.state.userData
+      return this.$store.getters.userData
     },
     entity: function () {
       return this.$store.getters.currentEntity
@@ -246,13 +246,13 @@ export default {
     },
     getEntities (id) {
       return new Promise((resolve, reject) => {
-        this.$store.dispatch('getEntityTable', {http: this.$http, item: {schema_id: id, parent_id: this.$route.params.id}})
+        this.$store.dispatch('getEntityTable', {item: {schema_id: id, parent_id: this.$route.params.id}})
           .then(response => { resolve(response) })
           .catch(response => { reject(new Error()) })
       })
     },
     updateItem: function (schemaId, varName, item, isUpdate) {
-      this.$store.dispatch('updateEntity', {http: this.$http, isUpdate: isUpdate, item: item})
+      this.$store.dispatch('updateEntity', {isUpdate: isUpdate, item: item})
         .then(response => {
           this.getEntities(schemaId)
             .then(resp => { this[varName + 'Table'] = resp })
@@ -280,7 +280,7 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('getCurrentEntity', {http: this.$http, id: this.$route.params.id})
+    this.$store.dispatch('getCurrentEntity', {id: this.$route.params.id})
   },
   mounted () {
     // this.$refs.objsTable.defaultPagination.descending = true
@@ -291,7 +291,7 @@ export default {
   },
   beforeRouteUpdate (to, from, next) {
     if (to.name === from.name) {
-      this.$store.dispatch('getCurrentEntity', {http: this.$http, id: to.params.id})
+      this.$store.dispatch('getCurrentEntity', {id: to.params.id})
     }
     next()
   }

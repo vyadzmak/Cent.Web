@@ -11,16 +11,14 @@
           v-for="(item, i) in items"
           v-if="item.visible"
           :key="i"
-          :style="{'background-color':$route.path === item.path?'#718093':'',
-                   'color':$route.path === item.path?'#f5f6fa !important':'#576574 !important'}"
-          active-class = ""
-          value="true"
+          :class="item.isActive?'active-route':'route'"
           @click="$router.push({path: item.path})"
         >
           <v-list-tile-action>
             <v-tooltip right>
               <v-icon
                 slot="activator"
+                :class="item.isActive?'active-icon':''"
                 light
                 v-html="item.icon"/>
               <span v-text="item.title"/>
@@ -55,20 +53,121 @@
           slot="activator"
           icon
           dark>
-          <v-icon>more_vert</v-icon>
+          <v-badge
+            color="error"
+            right
+            bottom>
+            <span slot="badge">{{ messages.length }}</span>
+            <v-icon>fas fa-envelope</v-icon>
+          </v-badge>
         </v-btn>
         <v-list>
-          <v-list-tile
-            avatar
-            @click="showUpdateModal()">
-            <v-list-tile-avatar><v-icon>mdi-settings</v-icon></v-list-tile-avatar>
-            <v-list-tile-content>Настройки профиля {{ userData.first_name + ' ' + userData.last_name }}</v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile @click="logOut()">
-            <v-list-tile-avatar><v-icon>mdi-logout</v-icon></v-list-tile-avatar>
-            <v-list-tile-title>Выход</v-list-tile-title>
+          <template v-for="(item, index) in messages">
+            <v-list-tile
+              :key="item.title"
+              ripple
+            >
+              <v-list-tile-content>
+                <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
+              </v-list-tile-content>
+              <v-list-tile-action>
+                <v-list-tile-action-text>{{ item.action }}</v-list-tile-action-text>
+              </v-list-tile-action>
+            </v-list-tile>
+            <v-divider :key="index"/>
+          </template>
+          <v-list-tile ripple>
+            <v-list-tile-content>
+              <v-list-tile-title>Просмотреть все сообщения</v-list-tile-title>
+            </v-list-tile-content>
           </v-list-tile>
         </v-list>
+      </v-menu>
+      <v-menu
+        bottom
+        left>
+        <v-btn
+          slot="activator"
+          icon
+          dark>
+          <v-badge
+            color="error"
+            right
+            bottom>
+            <span slot="badge">{{ notifications.length }}</span>
+            <v-icon>fas fa-bolt</v-icon>
+          </v-badge>
+        </v-btn>
+        <v-list>
+          <template v-for="(item, index) in notifications">
+            <v-list-tile
+              :key="item.title"
+              ripple
+            >
+              <v-list-tile-content>
+                <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
+              </v-list-tile-content>
+              <v-list-tile-action>
+                <v-list-tile-action-text>{{ item.action }}</v-list-tile-action-text>
+              </v-list-tile-action>
+            </v-list-tile>
+            <v-divider :key="index"/>
+          </template>
+          <v-list-tile ripple>
+            <v-list-tile-content>
+              <v-list-tile-title>Просмотреть все уведомления</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
+      <v-menu
+        bottom
+        left>
+        <v-btn
+          slot="activator"
+          icon
+          dark>
+          <v-icon>fas fa-user</v-icon>
+        </v-btn>
+        <v-card>
+          <v-container
+            fluid
+            grid-list-lg>
+            <v-layout row>
+              <v-flex xs7>
+                <div>
+                  <div>Профиль пользователя</div>
+                  <div class="headline">{{ userData.first_name + ' ' + userData.last_name }}</div>
+                </div>
+              </v-flex>
+              <v-flex xs5>
+                <v-avatar size="125px">
+                  <img
+                    class="img-circle elevation-7 mb-1"
+                    src="https://raw.githubusercontent.com/vuetifyjs/docs/dev/static/doc-images/lists/1.jpg"
+                  >
+                </v-avatar>
+              </v-flex>
+            </v-layout>
+          </v-container>
+          <v-card-media class="text-xs-center"/>
+          <v-list>
+            <v-list-tile @click="showUpdateModal()">
+              <v-list-tile-action><v-icon>mdi-account</v-icon></v-list-tile-action>
+              <v-list-tile-content>Редактировать профиль</v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile>
+              <v-list-tile-action><v-icon>mdi-settings</v-icon></v-list-tile-action>
+              <v-list-tile-content>Настройки</v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile @click="logOut()">
+              <v-list-tile-action><v-icon>mdi-logout</v-icon></v-list-tile-action>
+              <v-list-tile-title>Выход</v-list-tile-title>
+            </v-list-tile>
+          </v-list>
+        </v-card>
       </v-menu>
       <v-speed-dial
         v-model="fabSettings.fab"
@@ -119,6 +218,6 @@
   </div>
 </template>
 
-<script src="./dashboardJs.js"></script>
+<script src="./dashboard.js"></script>
 
 <style scoped lang="scss" src="./dashboard.scss"></style>

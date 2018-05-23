@@ -1,6 +1,7 @@
 import types from '../../mutation-types'
+import http from '../../../httpClient/index'
 
-export const getAllFactories = ({ commit, getters }, {http, id}) => {
+export const getAllFactories = ({ commit, getters }, {id}) => {
   commit('showSpinner', true)
   http.get(`fullSchemaClients/` + id)
     .then(response => {
@@ -16,7 +17,7 @@ export const getAllFactories = ({ commit, getters }, {http, id}) => {
     })
 }
 
-export const updateFactory = ({ commit, getters }, {http, isUpdate, item}) => {
+export const updateFactory = ({ commit, getters }, {isUpdate, item}) => {
   return new Promise((resolve, reject) => {
     commit('showSpinner', true)
     http({method: isUpdate ? 'put' : 'post',
@@ -48,7 +49,7 @@ export const updateFactory = ({ commit, getters }, {http, isUpdate, item}) => {
   })
 }
 
-export const deleteFactory = ({ commit, getters }, {http, id}) => {
+export const deleteFactory = ({ commit, getters }, {id}) => {
   commit('showSpinner', true)
   http.delete('schema/' + id)
     .then(response => {
@@ -66,7 +67,7 @@ export const deleteFactory = ({ commit, getters }, {http, id}) => {
     })
 }
 
-export const getSchemaUpdateProperty = ({ commit, getters }, {http, link, id}) => {
+export const getSchemaUpdateProperty = ({ commit, getters }, {link, id}) => {
   return new Promise((resolve, reject) => {
     commit('showSpinner', true)
     http.get(link + (id ? '/' + id : ''))

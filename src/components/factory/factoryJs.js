@@ -1,4 +1,4 @@
-import questionDialog from '../questionDialog/questionDialog'
+import questionDialog from '../questionDialog/QuestionDialog.vue'
 import { ModalService } from 'vue-modal-dialog'
 
 export default {
@@ -11,7 +11,8 @@ export default {
       headers: [
         { text: 'Type Id', align: 'left', value: 'type_id' },
         { text: 'Наименование', align: 'left', value: 'name' },
-        { text: 'Заголовок', align: 'left', value: 'title' }
+        { text: 'Заголовок', align: 'left', value: 'title' },
+        { sortable: false }
       ],
       tableRowsShown: [10, 20, 50, 100, {text: 'Все', value: -1}],
       rowsPerPageText: 'Строк на странице',
@@ -37,7 +38,7 @@ export default {
     },
     factory: {
       get: function () {
-        let cFactory = this.$store.getters.currentFactory
+        let cFactory = _.cloneDeep(this.$store.getters.currentFactory)
         _.forEach(cFactory.data.fields, function (value, key) {
           let result = _.find(cFactory.data.var_descritpions.variables, function (o) { return o.id === value.field_type })
           value.type_title = result ? result.title : ''
@@ -76,7 +77,7 @@ export default {
       this.$validator.validateAll().then((result) => {
         if (result) {
           item.data = JSON.stringify(item.data)
-          this.$store.dispatch('updateFactory', {http: this.$http, isUpdate: isUpdate, item: _.cloneDeep(item)})
+          this.$store.dispatch('updateFactory', {isUpdate: isUpdate, item: _.cloneDeep(item)})
             .then(response => {})
             .catch(e => {})
           item.data = JSON.parse(item.data)
@@ -87,9 +88,9 @@ export default {
     addField () {
       if (this.currentType) {
         if (this.currentType.id === 9) {
-          this.$store.dispatch('getSchemaUpdateProperty', {http: this.$http, link: 'schemaCatalogs', id: this.userData.client_id})
+          this.$store.dispatch('getSchemaUpdateProperty', {link: 'schemaCatalogs', id: this.userData.client_id})
         } else if (this.currentType.id === 5) {
-          this.$store.dispatch('getSchemaUpdateProperty', {http: this.$http, link: 'schemaLinks', id: this.userData.client_id})
+          this.$store.dispatch('getSchemaUpdateProperty', {link: 'schemaLinks', id: this.userData.client_id})
         }
         let newField = {
           'index': _.random(10000, 20000),

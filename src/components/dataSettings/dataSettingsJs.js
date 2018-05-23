@@ -12,7 +12,7 @@ export default {
   },
   computed: {
     userData: function () {
-      return this.$store.state.userData
+      return this.$store.getters.userData
     }
   },
   methods: {

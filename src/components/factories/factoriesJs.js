@@ -1,5 +1,5 @@
-import questionDialog from '../questionDialog/questionDialog'
-import updateModal from './updateModal/updateModal.vue'
+import questionDialog from '../questionDialog/QuestionDialog.vue'
+import updateModal from './updateModal/UpdateModal.vue'
 import { ModalService } from 'vue-modal-dialog'
 
 export default {
@@ -54,7 +54,7 @@ export default {
       )
     },
     showUpdateModal: function (item) {
-      this.$store.dispatch('getSchemaUpdateProperty', {http: this.$http, link: 'schemaTypes', id: null})
+      this.$store.dispatch('getSchemaUpdateProperty', {link: 'schemaTypes', id: null})
       let isUpdate = false
       if (item.id) {
         isUpdate = true
@@ -78,7 +78,7 @@ export default {
           item: isUpdate ? _.cloneDeep(item) : item
         }
       }
-      this.$store.dispatch('getSchemaUpdateProperty', {http: this.$http, link: 'schemaTypes', id: null})
+      this.$store.dispatch('getSchemaUpdateProperty', {link: 'schemaTypes', id: null})
         .then(response => {
           ModalService.open(updateModal, modalConfig).then(
             modalSubmit => {
@@ -92,10 +92,10 @@ export default {
       this.$store.dispatch('deleteFactory', {id: itemId, http: this.$http})
     },
     updateItem: function (item, isUpdate) {
-      this.$store.dispatch('updateFactory', {http: this.$http, isUpdate: isUpdate, item: item})
+      this.$store.dispatch('updateFactory', {isUpdate: isUpdate, item: item})
     },
     getAllFactories () {
-      this.$store.dispatch('getAllFactories', {http: this.$http, id: this.userData.client_id})
+      this.$store.dispatch('getAllFactories', {id: this.userData.client_id})
     },
     goToFactory (item) {
       let clonedItem = _.cloneDeep(item)

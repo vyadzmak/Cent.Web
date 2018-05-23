@@ -1,11 +1,12 @@
 let types = {
   // root mutations
-  addUserData: 'addUserData', // adding to session storage
-  addRUserData: 'addRUserData', // adding to local and session storage
-  deleteUserData: 'deleteUserData', // deleting from local and session storage
   showSpinner: 'showSpinner',
   showSnackbar: 'showSnackbar',
   setUpdateProperty: 'setUpdateProperty',
+
+  // USERDATA
+  USER_DATA: 'USER_DATA',
+  R_USER_DATA: 'R_USER_DATA',
 
   // ENTITY and currentENTITY mutations
   UPDATE_ENTITIES: 'UPDATE_ENTITIES',

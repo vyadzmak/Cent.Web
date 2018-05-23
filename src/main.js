@@ -14,7 +14,7 @@ import VeeValidate, { Validator } from 'vee-validate'
 import ruVeeValidate from 'vee-validate/dist/locale/ru'
 
 import 'vuetify/dist/vuetify.min.css'
-import './scss/main.scss'
+import './assets/styles/scss/main.scss'
 import 'vue-form-generator/dist/vfg.css'
 
 import App from './App'

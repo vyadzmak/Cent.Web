@@ -1,5 +1,5 @@
-import questionDialog from '../questionDialog/questionDialog'
-import updateModal from './updateModal/updateModal.vue'
+import questionDialog from '../questionDialog/QuestionDialog.vue'
+import updateModal from './updateModal/UpdateModal.vue'
 import { ModalService } from 'vue-modal-dialog'
 
 export default {
@@ -102,14 +102,14 @@ export default {
         })
     },
     updateItem: function (item, isUpdate) {
-      this.$store.dispatch('updateCatalog', {http: this.$http, isUpdate: isUpdate, item: item})
+      this.$store.dispatch('updateCatalog', {isUpdate: isUpdate, item: item})
         .then(response => this.getCatalogs())
     },
     getCatalogs () {
-      this.$store.dispatch('getAllCatalogs', {http: this.$http, id: this.currentSchema.id})
+      this.$store.dispatch('getAllCatalogs', {id: this.currentSchema.id})
     },
     getCatalogSchemas () {
-      this.$store.dispatch('getCatalogSchemas', {http: this.$http, id: this.userData.client_id})
+      this.$store.dispatch('getCatalogSchemas', {id: this.userData.client_id})
     }
   },
   computed: {

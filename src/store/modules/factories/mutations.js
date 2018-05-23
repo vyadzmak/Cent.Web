@@ -10,13 +10,17 @@ const mutations = {
   },
 
   [types.UPDATE_FACTORY] (state, factory) {
-    let index = _.findIndex(state.factories, ['id', factory.id])
-    state.factories.splice(index, 1, factory)
+    let index = _.findIndex(state.factories, {'id': factory.id})
+    if (index > -1) {
+      state.factories.splice(index, 1, factory)
+    }
   },
 
   [types.DELETE_FACTORY] (state, id) {
-    let index = _.findIndex(state.factories, ['id', id])
-    state.factories.splice(index, 1)
+    let index = _.findIndex(state.factories, {'id': id})
+    if (index > -1) {
+      state.factories.splice(index, 1)
+    }
   },
 
   [types.CURRENT_FACTORY] (state, currentFactory) {

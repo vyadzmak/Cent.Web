@@ -1,15 +1,3 @@
-export const addUserData = (state, payload) => {
-  state.userData = payload
-}
-
-export const deleteUserData = (state, payload) => {
-  state.userData = null
-}
-
-export const addRUserData = (state, payload) => {
-  state.userData = payload
-}
-
 export const showSpinner = (state, payload) => {
   state.loading = payload ? 1 : 0
 }

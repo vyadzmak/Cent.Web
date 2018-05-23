@@ -2,9 +2,23 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import VuexPersistedState from 'vuex-persistedstate'
 import * as mutations from './mutations'
+import loginUser from './modules/loginUser/loginUser'
 import entities from './modules/entities/entities'
 import factories from './modules/factories/factories'
 import catalogs from './modules/catalogs/catalogs'
+import apiModules from './modules/apiModules/apiModules'
+import ApiModule from './modules/apiModules/ApiModule'
+
+const importedModules = {}
+
+apiModules.forEach(element => {
+  importedModules[element.link] = new ApiModule(element.link)
+})
+
+importedModules.loginUser = loginUser
+importedModules.catalogs = catalogs
+importedModules.factories = factories
+importedModules.entities = entities
 
 Vue.use(Vuex)
 
@@ -25,21 +39,19 @@ const localStorage = VuexPersistedState({
 const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production', // check if something updates our model not through mutation
   state: {
-    userData: null,
     loading: 0,
     snackbarOptions: {snackbar: false},
     updateProperty: null
   },
   // getters
   getters: {
-    userData: state => state.userData,
     snackbarOptions: state => state.snackbarOptions,
     updateProperty: state => state.updateProperty,
     loading: state => state.loading
   },
   mutations,
   plugins: [localStorage, sessionStorage],
-  modules: {entities, factories, catalogs}
+  modules: importedModules
 })
 
 export default store

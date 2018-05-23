@@ -73,6 +73,6 @@
   </v-content>
 </template>
 
-<script src="./loginJs.js"></script>
+<script src="./login.js"></script>
 
 <style scoped></style>

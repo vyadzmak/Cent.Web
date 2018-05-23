@@ -1,6 +1,7 @@
 import types from '../../mutation-types'
+import http from '../../../httpClient/index'
 
-export const getAllCatalogs = ({ commit, getters }, {http, id}) => {
+export const getAllCatalogs = ({ commit, getters }, {id}) => {
   commit('showSpinner', true)
   http.get('schemaObjects' + '/' + id)
     .then(response => {
@@ -14,16 +15,11 @@ export const getAllCatalogs = ({ commit, getters }, {http, id}) => {
     })
 }
 
-export const getCatalogSchemas = ({ commit, getters }, {http, id}) => {
+export const getCatalogSchemas = ({ commit, getters }, {id}) => {
   commit('showSpinner', true)
   http.get(`schemaCatalogs` + '/' + id)
     .then(response => {
-      let catalogs = []
-      _.forEach(response.data, function (value, key) {
-        if (value.schema_type_id === 3) {
-          catalogs.push(value)
-        }
-      })
+      let catalogs = _.response.filter({'schema_type_id': 3})
       commit(types.UPDATE_CATALOG_SCHEMAS, catalogs)
       commit('showSpinner', false)
     })
@@ -33,7 +29,7 @@ export const getCatalogSchemas = ({ commit, getters }, {http, id}) => {
     })
 }
 
-export const getCatalogSchema = ({ commit, getters }, {http, id}) => {
+export const getCatalogSchema = ({ commit, getters }, {id}) => {
   return new Promise((resolve, reject) => {
     commit('showSpinner', true)
     http.get(`schema` + '/' + id)
@@ -50,7 +46,7 @@ export const getCatalogSchema = ({ commit, getters }, {http, id}) => {
   })
 }
 
-export const getUpdateCatalog = ({ commit, getters }, {http, id}) => {
+export const getUpdateCatalog = ({ commit, getters }, {id}) => {
   return new Promise((resolve, reject) => {
     commit('showSpinner', true)
     http.get(`object` + '/' + id)
@@ -69,7 +65,7 @@ export const getUpdateCatalog = ({ commit, getters }, {http, id}) => {
   })
 }
 
-export const updateCatalog = ({ commit, getters }, {http, isUpdate, item}) => {
+export const updateCatalog = ({ commit, getters }, {isUpdate, item}) => {
   return new Promise((resolve, reject) => {
     commit('showSpinner', true)
     http({method: isUpdate ? 'put' : 'post',

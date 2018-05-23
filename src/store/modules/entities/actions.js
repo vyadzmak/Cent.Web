@@ -1,6 +1,7 @@
 import types from '../../mutation-types'
+import http from '../../../httpClient/index'
 
-export const getAllEntities = ({ commit, getters }, {http, id}) => {
+export const getAllEntities = ({ commit, getters }, {id}) => {
   commit('showSpinner', true)
   http.get('schemaObjects' + '/' + id)
     .then(response => {
@@ -14,7 +15,7 @@ export const getAllEntities = ({ commit, getters }, {http, id}) => {
     })
 }
 
-export const getEntitySchemas = ({ commit, getters }, {http, id}) => {
+export const getEntitySchemas = ({ commit, getters }, {id}) => {
   commit('showSpinner', true)
   http.get(`schemaClients` + '/' + id)
     .then(response => {
@@ -34,7 +35,7 @@ export const getEntitySchemas = ({ commit, getters }, {http, id}) => {
     })
 }
 
-export const getCurrentEntity = ({ commit, getters }, {http, id}) => {
+export const getCurrentEntity = ({ commit, getters }, {id}) => {
   commit('showSpinner', true)
   http.get(`entityDetails` + '/' + id)
     .then(response => {
@@ -49,7 +50,7 @@ export const getCurrentEntity = ({ commit, getters }, {http, id}) => {
     })
 }
 
-export const getEntitySchema = ({ commit, getters }, {http, id}) => {
+export const getEntitySchema = ({ commit, getters }, {id}) => {
   return new Promise((resolve, reject) => {
     commit('showSpinner', true)
     http.get(`schema` + '/' + id)
@@ -66,7 +67,7 @@ export const getEntitySchema = ({ commit, getters }, {http, id}) => {
   })
 }
 
-export const getUpdateEntity = ({ commit, getters }, {http, id}) => {
+export const getUpdateEntity = ({ commit, getters }, {id}) => {
   return new Promise((resolve, reject) => {
     commit('showSpinner', true)
     http.get(`object` + '/' + id)
@@ -85,7 +86,7 @@ export const getUpdateEntity = ({ commit, getters }, {http, id}) => {
   })
 }
 
-export const updateEntity = ({ commit, getters }, {http, isUpdate, item}) => {
+export const updateEntity = ({ commit, getters }, {isUpdate, item}) => {
   return new Promise((resolve, reject) => {
     console.log(JSON.stringify(item))
     commit('showSpinner', true)
@@ -108,7 +109,7 @@ export const updateEntity = ({ commit, getters }, {http, isUpdate, item}) => {
   })
 }
 
-export const getEntityTable = ({ commit, getters }, {http, item}) => {
+export const getEntityTable = ({ commit, getters }, {item}) => {
   return new Promise((resolve, reject) => {
     http({method: 'post',
       url: 'entityObjects',
