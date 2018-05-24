@@ -211,9 +211,7 @@
       </v-speed-dial>
     </v-toolbar>
     <v-content>
-      <v-container fluid>
-        <router-view/>
-      </v-container>
+      <router-view/>
     </v-content>
   </div>
 </template>

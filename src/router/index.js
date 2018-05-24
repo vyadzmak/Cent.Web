@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Dashboard from '@/components/dashboard/Dashboard.vue'
 import Login from '@/components/login/Login.vue'
+import Dashboard from '@/components/dashboard/Dashboard.vue'
+import DashboardMain from '@/components/dashboard/main/Main.vue'
 import Factories from '@/components/factories/Factories.vue'
 import Factory from '@/components/factory/Factory.vue'
 import Entities from '@/components/entities/Entities.vue'
@@ -34,21 +35,26 @@ const router = new Router({
     component: Dashboard,
     exact: true,
     redirect: to => {
-      let rPath = ''
+      let redirectName = ''
       let switcher = store.state.loginUser.userData ? store.state.loginUser.userData.user_role_id : 0
       switch (switcher) {
         case 1:
         case 2:
         case 3:
-          rPath = 'Entities'
+          redirectName = 'dashboard.main'
           break
         default:
-          rPath = 'Login'
+          redirectName = 'Login'
           break
       }
-      return {name: rPath}
+      return {name: redirectName}
     },
     children: [ {
+      path: '/dashboard/main',
+      name: 'dashboard.main',
+      component: DashboardMain
+    },
+    {
       path: '/factories',
       name: 'Factories',
       component: Factories
@@ -166,7 +172,9 @@ router.requireAuth = function (to, userRoleId) {
   let found = false
   let userRoutes = []
   switch (userRoleId) {
-    case 1: userRoutes = ['administration', 'administration.log', 'administration.companies',
+    case 1: userRoutes = [
+      'dashboard.main',
+      'administration', 'administration.log', 'administration.companies',
       'administration.users', 'administration.settings', 'administration.company',
       'administration.reports', 'administration.events',
       'administration.company.general', 'administration.company.groups', 'administration.company.manage',

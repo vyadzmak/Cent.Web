@@ -85,6 +85,7 @@
         />
         <v-text-field label="Координаты"/>
         <v-text-field label="Почтовый индекс (ZIP-code)"/>
+        <div>Социальные сети</div>
         <v-layout
           row
           wrap

@@ -4,19 +4,11 @@
     grid-list-md
     text-xs-center>
     <v-layout
-      row
-      wrap>
-      <v-flex
-        xs12
-        sm8
-        md9
-        lg10
-        order-xs1
-        order-sm0>
+      row>
+      <v-flex>
         <!-- GENERAL INFO -->
         <v-card
-          v-show="activeTab==='tab-1'"
-          flat>
+          v-show="activeTab==='tab-1'">
           <v-card-title>
             <h3>Общая информация</h3>
           </v-card-title>
@@ -357,12 +349,7 @@
           flat/>
       </v-flex>
       <v-flex
-        xs12
-        sm4
-        md3
-        lg2
-        order-xs0
-        order-sm1>
+        style="max-width:290px;">
         <v-layout
           row
           wrap>
@@ -371,14 +358,14 @@
             v-if="!item.hidden"
             :key="item.id"
             xs4
-            sm12
+            sm4
             @click.stop="activeTab=item.id">
             <v-card
               :class="{'info':activeTab===item.id}"
               :dark="activeTab===item.id"
               :key="index">
               <v-card-text
-                class="pa-0">
+                class="pt-1 pb-0">
                 <v-icon large>{{ item.icon }}</v-icon>
               </v-card-text>
               <v-card-text

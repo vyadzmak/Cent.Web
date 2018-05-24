@@ -35,9 +35,9 @@ export default {
       return [
         { icon: 'dashboard',
           title: 'Объекты',
-          path: '/entities',
-          visible: this.$router.requireAuth({name: 'Entities'}, this.userData.user_role_id),
-          isActive: this.isActive(['Entities', 'Entity'])
+          path: '/dashboard/name',
+          visible: this.$router.requireAuth({name: 'dashboard.main'}, this.userData.user_role_id),
+          isActive: this.isActive(['dashboard.main', 'Entities', 'Entity'])
         },
         { icon: 'web',
           title: 'Настройки данных',
