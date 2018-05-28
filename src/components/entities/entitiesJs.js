@@ -110,7 +110,7 @@ export default {
         .then(response => this.getEntities())
     },
     goToEntity (itemId) {
-      this.$router.push({name: 'Entity', params: {id: itemId}})
+      this.$router.push({name: 'entity', params: {id: itemId}})
     },
     getEntities () {
       if (this.currentSchema && this.currentSchema.id) {

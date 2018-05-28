@@ -6,28 +6,7 @@
     <v-layout
       row>
       <v-flex>
-        <!-- GENERAL INFO -->
-        <v-card
-          v-show="activeTab==='tab-1'">
-          <v-card-title>
-            <h3>Общая информация</h3>
-          </v-card-title>
-          <v-card-text>
-            <v-layout
-              v-for="item in generalFields"
-              :key="item.index"
-              row>
-              <v-flex
-                xs4
-                sm3
-                offset-sm1><v-subheader v-text="item.title"/></v-flex>
-              <v-flex
-                xs8
-                sm5
-                v-text="item.output_value"/>
-            </v-layout>
-          </v-card-text>
-        </v-card>
+        <router-view/>
         <!-- OBJECTS -->
         <v-card
           v-show="activeTab==='tab-2'"
@@ -359,7 +338,7 @@
             :key="item.id"
             xs4
             sm4
-            @click.stop="activeTab=item.id">
+            @click.stop="goTo(item)">
             <v-card
               :class="{'info':activeTab===item.id}"
               :dark="activeTab===item.id"

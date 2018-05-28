@@ -1,5 +1,5 @@
 import { ModalService } from 'vue-modal-dialog'
-import formGenerator from '../../../formGenerator/formGenerator'
+import formGenerator from '@/formGenerator/formGenerator'
 
 export default {
   inject: ['$validator'],

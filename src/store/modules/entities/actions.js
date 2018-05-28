@@ -53,7 +53,7 @@ export const getCurrentEntity = ({ commit, getters }, {id}) => {
 export const getEntitySchema = ({ commit, getters }, {id}) => {
   return new Promise((resolve, reject) => {
     commit('showSpinner', true)
-    http.get(`schema` + '/' + id)
+    http.get(`schemas` + '/' + id)
       .then(response => {
         commit(types.UPDATE_ENTITY_SCHEMA, response.data)
         commit('showSpinner', false)
@@ -70,7 +70,7 @@ export const getEntitySchema = ({ commit, getters }, {id}) => {
 export const getUpdateEntity = ({ commit, getters }, {id}) => {
   return new Promise((resolve, reject) => {
     commit('showSpinner', true)
-    http.get(`object` + '/' + id)
+    http.get(`objects` + '/' + id)
       .then(response => {
         let responseData = response.data
         responseData.data = JSON.parse(responseData.data)

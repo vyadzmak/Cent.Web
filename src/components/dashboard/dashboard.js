@@ -14,17 +14,7 @@ export default {
       right: true,
       rightDrawer: false,
       title: 'Cent Fusion',
-      fabSettings: {
-        direction: 'bottom',
-        fab: false,
-        hover: false,
-        tabs: null,
-        top: false,
-        right: true,
-        bottom: false,
-        left: false,
-        transition: 'slide-y-reverse-transition'
-      }
+      fab: false
     }
   },
   computed: {
@@ -36,8 +26,8 @@ export default {
         { icon: 'dashboard',
           title: 'Объекты',
           path: '/dashboard/name',
-          visible: this.$router.requireAuth({name: 'dashboard.main'}, this.userData.user_role_id),
-          isActive: this.isActive(['dashboard.main', 'Entities', 'Entity'])
+          visible: this.$router.requireAuth({name: 'main'}, this.userData.user_role_id),
+          isActive: this.isActive(['main', 'Entities', 'entity'])
         },
         { icon: 'web',
           title: 'Настройки данных',

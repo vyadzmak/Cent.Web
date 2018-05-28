@@ -29,6 +29,34 @@
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
+      <v-speed-dial
+        v-model="fab"
+        direction="top"
+        transition="slide-y-reverse-transition"
+        absolute
+      ><v-btn
+        slot="activator"
+        v-model="fab"
+        color="warning"
+        dark
+        fab
+        hover
+      ><v-icon>settings</v-icon><v-icon>close</v-icon></v-btn>
+        <v-btn
+          fab
+          dark
+          small
+          class="green"
+          @click.stop="miniVariant = !miniVariant"
+        ><v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'"/></v-btn>
+        <v-btn
+          fab
+          dark
+          small
+          class="indigo"
+          @click.stop="clipped = !clipped"
+        ><v-icon>web</v-icon></v-btn>
+      </v-speed-dial>
     </v-navigation-drawer>
     <v-toolbar
       :clipped-left="clipped"
@@ -169,46 +197,6 @@
           </v-list>
         </v-card>
       </v-menu>
-      <v-speed-dial
-        v-model="fabSettings.fab"
-        :top="fabSettings.top"
-        :bottom="fabSettings.bottom"
-        :right="fabSettings.right"
-        :left="fabSettings.left"
-        :direction="fabSettings.direction"
-        :open-on-hover="fabSettings.hover"
-        :transition="fabSettings.transition"
-      >
-        <v-btn
-          slot="activator"
-          v-model="fabSettings.fab"
-          color="warning"
-          dark
-          fab
-          hover
-        >
-          <v-icon>settings</v-icon>
-          <v-icon>close</v-icon>
-        </v-btn>
-        <v-btn
-          fab
-          dark
-          small
-          class="green"
-          @click.stop="miniVariant = !miniVariant"
-        >
-          <v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'"/>
-        </v-btn>
-        <v-btn
-          fab
-          dark
-          small
-          class="indigo"
-          @click.stop="clipped = !clipped"
-        >
-          <v-icon>web</v-icon>
-        </v-btn>
-      </v-speed-dial>
     </v-toolbar>
     <v-content>
       <router-view/>

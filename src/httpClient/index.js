@@ -5,8 +5,7 @@ const http = axios.create({
   auth: {
     username: 'cent_user',
     password: 'vPe0N9zb7bGK1Ng5'
-  },
-  withCredentials: true
+  }
 })
 
 export default http

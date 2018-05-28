@@ -1,4 +1,4 @@
-import questionDialog from '../questionDialog/QuestionDialog.vue'
+import questionDialog from '@/components/questionDialog/QuestionDialog.vue'
 import updateModal from './updateModal/UpdateModal.vue'
 import { ModalService } from 'vue-modal-dialog'
 
@@ -10,20 +10,20 @@ export default {
       search: '',
       errors: [],
       tabs: [
-        {id: 'tab-1', name: 'Главная', icon: 'fas fa-info'},
-        {id: 'tab-2', name: 'Документы', icon: 'fas fa-copy'},
-        {id: 'tab-3', name: 'Объекты', icon: 'fas fa-project-diagram'},
-        {id: 'tab-4', name: 'Субъекты', icon: 'fas fa-users'},
-        {id: 'tab-5', name: 'Связи', icon: 'fas fa-link'},
-        {id: 'tab-6', name: 'Группы', icon: 'fas fa-object-group'},
-        {id: 'tab-7', name: 'Карта', icon: 'fas fa-map-marker-alt'},
-        {id: 'tab-8', name: 'Галерея', icon: 'far fa-images'},
-        {id: 'tab-9', name: 'Календарь', icon: 'far fa-calendar-alt'},
-        {id: 'tab-10', name: 'Доступ', icon: 'fas fa-share-alt'},
-        {id: 'tab-11', name: 'Настройки', icon: 'fas fa-cogs'},
-        {id: 'tab-12', name: 'История', icon: 'fas fa-history'},
-        {id: 'tab-13', name: 'События', icon: 'far fa-bell'},
-        {id: 'tab-14', name: 'Отчеты', icon: 'fas fa-clipboard-list'},
+        {id: 'tab-1', name: 'Главная', icon: 'fas fa-info', path: 'entity.card'},
+        {id: 'tab-2', name: 'Документы', icon: 'fas fa-copy', path: 'entity.documents'},
+        {id: 'tab-3', name: 'Объекты', icon: 'fas fa-project-diagram', path: 'entity.objects'},
+        {id: 'tab-4', name: 'Субъекты', icon: 'fas fa-users', path: 'entity.subjects'},
+        {id: 'tab-5', name: 'Связи', icon: 'fas fa-link', path: 'entity.relations'},
+        {id: 'tab-6', name: 'Группы', icon: 'fas fa-object-group', path: 'entity.groups'},
+        {id: 'tab-7', name: 'Карта', icon: 'fas fa-map-marker-alt', path: 'entity.map'},
+        {id: 'tab-8', name: 'Галерея', icon: 'far fa-images', path: 'entity.gallery'},
+        {id: 'tab-9', name: 'Календарь', icon: 'far fa-calendar-alt', path: 'entity.calendar'},
+        {id: 'tab-10', name: 'Доступ', icon: 'fas fa-share-alt', path: 'entity.access'},
+        {id: 'tab-11', name: 'Настройки', icon: 'fas fa-cogs', path: 'entity.settings'},
+        {id: 'tab-12', name: 'История', icon: 'fas fa-history', path: 'entity.history'},
+        {id: 'tab-13', name: 'События', icon: 'far fa-bell', path: 'entity.events'},
+        {id: 'tab-14', name: 'Отчеты', icon: 'fas fa-clipboard-list', path: 'entity.reports'},
         {id: 'tab-15', name: 'Лента', icon: 'fas fa-rss'}
       ],
       activeTab: 'tab-1',
@@ -79,9 +79,6 @@ export default {
     },
     entitySchemas: function () {
       return this.$store.getters.entitySchemas
-    },
-    generalFields () {
-      return this.entity && this.entity.general_section ? this.entity.general_section.data.fields : []
     }
   },
   watch: {
@@ -132,27 +129,19 @@ export default {
     entity: function (newValue) {
       if (newValue && newValue.objects_section && newValue.objects_section.items) {
         this.objsList = newValue.objects_section.items
-        // if (this.objsList.length > 0) {
         this.objsListItem = this.objsList.length > 0 ? this.objsList[0] : null
-        // }
       }
       if (newValue && newValue.documents_section && newValue.documents_section.items) {
         this.docsList = newValue.documents_section.items
-        if (this.docsList.length > 0) {
-          this.docsListItem = this.docsList[0]
-        }
+        this.docsListItem = this.docsList.length > 0 ? this.docsList[0] : null
       }
       if (newValue && newValue.relations_section && newValue.relations_section.items) {
         this.relsList = newValue.relations_section.items
-        if (this.relsList.length > 0) {
-          this.relsListItem = this.relsList[0]
-        }
+        this.relsListItem = this.relsList.length > 0 ? this.relsList[0] : null
       }
       if (newValue && newValue.subjects_section && newValue.subjects_section.items) {
         this.subsList = newValue.subjects_section.items
-        if (this.subsList.length > 0) {
-          this.subsListItem = this.subsList[0]
-        }
+        this.subsListItem = this.subsList.length > 0 ? this.subsList[0] : null
       }
       if (newValue && newValue.general_section && newValue.general_section.data) {
         this.msg = 'Детали ' + this.getDetailObjectName(newValue.general_section.data.fields)
@@ -162,6 +151,10 @@ export default {
     }
   },
   methods: {
+    goTo (item) {
+      this.activeTab = item.id
+      this.$router.push({name: item.path})
+    },
     showDeleteModal: function (varName, schema, itemId) {
       let modalConfig = {
         size: 'md',
@@ -271,7 +264,7 @@ export default {
     },
     goToEntity (itemId) {
       this.activeTab = 'tab-1'
-      this.$router.push({name: 'Entity', params: {id: itemId}})
+      this.$router.push({name: 'entity', params: {id: itemId}})
     },
     getDetailObjectName (fields) {
       let result = ''
