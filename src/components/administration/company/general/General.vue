@@ -50,17 +50,15 @@
         sm12>
         <div
           class="subheading pa-1 hidden-md-and-up">Расширенная информация о компании</div>
-        <v-text-field
+        <v-textarea
           rows="2"
-          textarea
           label="Юридический адрес организации"
         />
         <v-checkbox
           hide-details
           label="Фактический адрес совпадает с юридическим"/>
-        <v-text-field
+        <v-textarea
           rows="2"
-          textarea
           label="Фактический адрес организации"
         />
         <v-text-field label="Номер телефона"/>
@@ -72,15 +70,15 @@
         pa-1
         md4
         sm12>
-        <v-text-field
+        <v-textarea
           rows="2"
-          textarea
           label="Основная информация об организации"
-          style="margin-bottom:32px;"
         />
-        <v-text-field
+        <div
+          style="margin-top:20px; font-size:16px;"
+          class="hidden-sm-and-down">&#160;</div>
+        <v-textarea
           rows="2"
-          textarea
           label="Доп. информация об организации"
         />
         <v-text-field label="Координаты"/>

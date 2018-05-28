@@ -119,6 +119,8 @@ export default {
         },
         modalCancel => { console.log(modalCancel) }
       ).catch(err => { console.log(err) })
-    }
+    },
+    goToMessages: function (item) { console.log(item) },
+    goToNotifications: function (item) { console.log(item) }
   }
 }

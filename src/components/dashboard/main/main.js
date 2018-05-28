@@ -109,7 +109,10 @@ export default {
         default: this.$store.commit('showSnackbar', {text: 'На данный момент функция недоступна, появится в ближайшее время', snackbar: true, context: 'success'})
           break
       }
-    }
+    },
+    goToContact (item) { console.log(item) },
+    goToNews (item) { console.log(item) },
+    goToRecent (item) { console.log(item) }
   },
   created () {
   },

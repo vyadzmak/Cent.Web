@@ -28,7 +28,7 @@
   }
   
 .modal--active > div > {
-  .menu__content--select, .menu__content, .dialog__content {
+  .v-menu__content--select, .v-menu__content, .v-dialog__content {
     z-index: 1095 !important;
   }
 }
@@ -41,7 +41,7 @@
   width:100%;
 }
   
-.datatable tbody td, .toolbar__content .toolbar__title {
+.v-datatable tbody td, .v-toolbar__content .v-toolbar__title {
   cursor: default;
 }
 

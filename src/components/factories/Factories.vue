@@ -42,7 +42,7 @@
                   slot="activator"
                   icon
                   class="info--text"
-                  @click.stop="showUpdateModal(props.item)"><v-icon>mdi-pen</v-icon></v-btn>
+                  @click.stop="showUpdateModal(props.item)"><v-icon color="info">mdi-pen</v-icon></v-btn>
                 <span>Редактировать</span>
               </v-tooltip>
             </td>
@@ -51,8 +51,7 @@
                 <v-btn
                   slot="activator"
                   icon
-                  class="error--text"
-                  @click.stop="showDeleteModal(props.item.id)"><v-icon>mdi-delete-variant</v-icon></v-btn>
+                  @click.stop="showDeleteModal(props.item.id)"><v-icon color="error">mdi-delete-variant</v-icon></v-btn>
                 <span>Удалить</span>
               </v-tooltip>
             </td>

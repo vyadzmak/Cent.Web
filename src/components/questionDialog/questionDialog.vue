@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title :class="[data.titleClass ? data.titleClass : 'info white--text']">
+    <v-card-title :class="[data.titleClass ? data.titleClass : 'primary white--text']">
       <div :class="[data.headlineClass ? data.headlineClass : 'headline']">{{ data.title ? data.title : "Modal header" }}</div>
       <v-spacer/>
       <v-btn

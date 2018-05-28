@@ -2,6 +2,10 @@ export default {
   name: 'entity.gallery',
   data () {
     return {
+      rowsPerPageItems: [6, 9, 12],
+      pagination: {
+        rowsPerPage: 6
+      }
     }
   },
   computed: {

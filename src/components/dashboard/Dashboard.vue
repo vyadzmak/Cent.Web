@@ -94,6 +94,7 @@
             <v-list-tile
               :key="item.title"
               ripple
+              @click="goToMessages(item)"
             >
               <v-list-tile-content>
                 <v-list-tile-title>{{ item.title }}</v-list-tile-title>
@@ -105,7 +106,9 @@
             </v-list-tile>
             <v-divider :key="index"/>
           </template>
-          <v-list-tile ripple>
+          <v-list-tile
+            ripple
+            @click="goToMessages(item)">
             <v-list-tile-content>
               <v-list-tile-title>Просмотреть все сообщения</v-list-tile-title>
             </v-list-tile-content>
@@ -132,6 +135,7 @@
             <v-list-tile
               :key="item.title"
               ripple
+              @click="goToNotifications(item)"
             >
               <v-list-tile-content>
                 <v-list-tile-title>{{ item.title }}</v-list-tile-title>
@@ -143,7 +147,9 @@
             </v-list-tile>
             <v-divider :key="index"/>
           </template>
-          <v-list-tile ripple>
+          <v-list-tile
+            ripple
+            @click="goToNotifications(item)">
             <v-list-tile-content>
               <v-list-tile-title>Просмотреть все уведомления</v-list-tile-title>
             </v-list-tile-content>

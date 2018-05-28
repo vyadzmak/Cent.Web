@@ -56,7 +56,7 @@
         <v-card
           height="30vh"
           style="overflow-y:hidden;">
-          <v-card-title class="py-1 primary">Последние объекты</v-card-title>
+          <v-card-title class="py-1 primary white--text">Последние объекты</v-card-title>
           <v-list
             style="overflow-y:scroll; height:calc(30vh - 30px);"
             dense>
@@ -64,7 +64,8 @@
             <template
               v-for="item in news">
               <v-list-tile
-                :key="item.title+'lastObjects'">
+                :key="item.title+'lastObjects'"
+                @click="goToRecent(item)">
                 <v-list-tile-content>
                   <v-list-tile-sub-title v-html="item.subtitle"/>
                 </v-list-tile-content>
@@ -73,7 +74,7 @@
                 </v-list-tile-action>
               </v-list-tile>
               <v-divider
-                :key="item.title+'lastObjects'"/>
+                :key="item.title+'lastObjects-divid'"/>
             </template>
           </v-list>
         </v-card>
@@ -82,7 +83,7 @@
         <v-card
           height="42vh"
           style="overflow-y:hidden;">
-          <v-card-title class="py-1 primary">Лента</v-card-title>
+          <v-card-title class="py-1 primary white--text">Лента</v-card-title>
           <v-list
             style="overflow-y:scroll; height:calc(42vh - 30px);"
             three-line
@@ -92,7 +93,8 @@
               v-for="item in news">
               <v-list-tile
                 :key="item.title+'news'"
-                avatar>
+                avatar
+                @click="goToNews(item)">
                 <v-list-tile-avatar>
                   <img :src="item.avatar">
                 </v-list-tile-avatar>
@@ -106,14 +108,14 @@
                 </v-list-tile-action>
               </v-list-tile>
               <v-divider
-                :key="item.title+'news'"/>
+                :key="item.title+'news-divid'"/>
             </template>
           </v-list>
         </v-card>
         <v-card
           height="42vh"
           style="overflow-y:hidden;">
-          <v-card-title class="py-1 primary">Контакты</v-card-title>
+          <v-card-title class="py-1 primary white--text">Контакты</v-card-title>
           <v-list
             style="overflow-y:scroll; height:calc(42vh - 30px);"
             two-line
@@ -123,7 +125,8 @@
               v-for="item in contacts">
               <v-list-tile
                 :key="item.title+'contacts'"
-                avatar>
+                avatar
+                @click="goToContact(item)">
                 <v-list-tile-avatar>
                   <img :src="item.avatar">
                 </v-list-tile-avatar>
@@ -145,7 +148,7 @@
                 </v-list-tile-action>
               </v-list-tile>
               <v-divider
-                :key="item.title+'contacts'"/>
+                :key="item.title+'contacts-divid'"/>
             </template>
           </v-list>
         </v-card>
