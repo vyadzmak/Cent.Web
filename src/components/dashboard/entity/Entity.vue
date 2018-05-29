@@ -352,7 +352,9 @@
 <script src="./entityJs.js"></script>
 
 <style scoped lang="scss">
-a:hover {
-  border: 2px solid #10ac84;
+a:hover{
+  .v-card{
+  background-color: rgba(16, 175, 134, 0.42);
+  }
 }
 </style>

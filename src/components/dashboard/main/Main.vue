@@ -1,19 +1,18 @@
 <template>
   <v-container
-    fluid
-    grid-list-md
-    fill-height
-  >
+    pa-1
+    mx-0
+    fluid>
     <v-layout
       row
       wrap>
       <v-flex md8>
         <v-card
           style="overflow-y:scroll;"
-          height="54vh">
+          height="58vh">
           <v-container
-            v-bind="{ [`grid-list-sm`]: true }"
-            fluid>
+            grid-list-sm
+            pa-1>
             <v-layout
               row
               wrap>
@@ -25,26 +24,26 @@
                 sm12
                 xs12
                 @click="goToItem(item)">
-                <v-card height="26vh">
+                <v-card height="28vh">
                   <v-card-title
-                    class="px-2 py-4"
                   ><v-icon
                     color="secondary"
-                    large>{{ item.icon }}</v-icon>
+                    class="main-card">{{ item.icon }}</v-icon>
                     <v-spacer/>
-                    <h1 class="secondary--text"> {{ item.name }}</h1>
+                    <div class="secondary--text main-card"> {{ item.name }}</div>
                     <v-spacer/>
                   </v-card-title>
                   <div class="text-xs-center">
                     <v-badge
                       v-for="bObj in item.sIcons"
                       :key="bObj.icon"
-                      class="px-2"
+                      class="px-2 main-card-icons"
                       overlap
                       bottom
                       color="warning">
                       <span slot="badge">{{ bObj.badge }}</span>
                       <v-icon
+                        class="main-card-icons"
                         color="primary">{{ bObj.icon }}</v-icon>
                     </v-badge>
                   </div>
@@ -81,11 +80,11 @@
       </v-flex>
       <v-flex md4>
         <v-card
-          height="42vh"
+          height="44vh"
           style="overflow-y:hidden;">
           <v-card-title class="py-1 primary white--text">Лента</v-card-title>
           <v-list
-            style="overflow-y:scroll; height:calc(42vh - 30px);"
+            style="overflow-y:scroll; height:calc(44vh - 30px);"
             three-line
           >
             <v-divider/>
@@ -113,11 +112,11 @@
           </v-list>
         </v-card>
         <v-card
-          height="42vh"
+          height="44vh"
           style="overflow-y:hidden;">
           <v-card-title class="py-1 primary white--text">Контакты</v-card-title>
           <v-list
-            style="overflow-y:scroll; height:calc(42vh - 30px);"
+            style="overflow-y:scroll; height:calc(44vh - 30px);"
             two-line
           >
             <v-divider/>
@@ -159,8 +158,43 @@
 
 <script src="./main.js"></script>
 
-<style scoped>
+<style scoped lang="scss">
 a:active, a:hover {
     background-color: #576574;
 }
+
+// Responsive text mixin
+@function strip-unit($number) {
+    @if type-of($number) == 'number' and not unitless($number) {
+      @return $number / ($number * 0 + 1);
+    }
+
+    @return $number;
+  }
+
+@mixin responsiveText ($minSize: $font-size, $maxSize: 28px, $minWidth: 420px, $maxWidth: 980px) {
+
+  $mxS: strip-unit($maxSize);
+  $mnS: strip-unit($minSize);
+  $mxW: strip-unit($maxWidth);
+  $mnW: strip-unit($minWidth);
+
+    font-size: calc( #{$minSize} + (#{$mxS} - #{$mnS}) * (100vw - #{$minWidth}) / (#{$mxW} - #{$mnW})) !important;
+
+    @media screen and (max-width: $minWidth ){
+        font-size: $minSize;
+    }
+
+    @media screen and (min-width: $maxWidth ){
+        font-size: $maxSize;
+    }
+
+  }
+
+  .main-card{
+    @include responsiveText(14px, 26px);
+  }
+  .main-card-icons{
+    @include responsiveText(14px, 20px);
+  }
 </style>

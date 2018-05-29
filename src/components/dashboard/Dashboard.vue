@@ -79,6 +79,20 @@
         left>
         <v-btn
           slot="activator"
+          class="hidden-sm-and-down"
+          flat
+          dark>Сообщения
+          <v-badge
+            color="error"
+            right
+            bottom>
+            <span slot="badge">{{ messages.length }}</span>
+            <v-icon right>fas fa-envelope</v-icon>
+          </v-badge>
+        </v-btn>
+        <v-btn
+          slot="activator"
+          class="hidden-md-and-up"
           icon
           dark>
           <v-badge
@@ -120,6 +134,21 @@
         left>
         <v-btn
           slot="activator"
+          class="hidden-sm-and-down"
+          flat
+          dark>
+          Уведомления
+          <v-badge
+            color="error"
+            right
+            bottom>
+            <span slot="badge">{{ notifications.length }}</span>
+            <v-icon right>fas fa-bolt</v-icon>
+          </v-badge>
+        </v-btn>
+        <v-btn
+          slot="activator"
+          class="hidden-md-and-up"
           icon
           dark>
           <v-badge
@@ -161,6 +190,15 @@
         left>
         <v-btn
           slot="activator"
+          class="hidden-sm-and-down"
+          flat
+          dark>
+          Профиль
+          <v-icon right>fas fa-user</v-icon>
+        </v-btn>
+        <v-btn
+          slot="activator"
+          class="hidden-md-and-up"
           icon
           dark>
           <v-icon>fas fa-user</v-icon>
