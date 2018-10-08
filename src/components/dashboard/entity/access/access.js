@@ -1,5 +1,5 @@
 export default {
-  name: 'entity.access',
+  name: 'entityAccess',
   data () {
     return {
     }

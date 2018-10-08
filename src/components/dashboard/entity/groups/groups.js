@@ -1,5 +1,5 @@
 export default {
-  name: 'entity.groups',
+  name: 'entityGroups',
   data () {
     return {
     }

@@ -5,6 +5,7 @@
         <v-select
           v-model="currentSchema"
           :items="catalogSchemas"
+          return-object
           item-text="title"
           label="Тип"
         />

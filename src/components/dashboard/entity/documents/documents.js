@@ -1,5 +1,5 @@
 export default {
-  name: 'entity.documents',
+  name: 'entityDocuments',
   data () {
     return {
     }

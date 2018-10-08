@@ -15,3 +15,12 @@ export const showSnackbar = (state, payload) => {
 export const setUpdateProperty = (state, payload) => {
   state.updateProperty = payload
 }
+
+export const updateByPath = (state, {path, value}) => {
+  _.set(state, path, value)
+}
+
+export const addElementToArray = (state, {path, value}) => {
+  let arr = _.get(state, path)
+  arr.push(value)
+}

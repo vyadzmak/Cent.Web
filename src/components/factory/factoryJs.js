@@ -31,21 +31,21 @@ export default {
       return this.$store.getters.userData
     },
     tableItems () {
-      return _.get(this.factory, 'data.fields') ? this.factory.data.fields : []
+      return !!this.factory && !!this.factory.data && !!this.factory.data.fields ? this.factory.data.fields : []
     },
     updateProperty () {
       return this.$store.getters.updateProperty ? this.$store.getters.updateProperty : []
     },
     factory: {
       get: function () {
-        let cFactory = _.cloneDeep(this.$store.getters.currentFactory)
+        let cFactory = this.$store.getters.currentFactory
         _.forEach(cFactory.data.fields, function (value, key) {
           let result = _.find(cFactory.data.var_descritpions.variables, function (o) { return o.id === value.field_type })
           value.type_title = result ? result.title : ''
         })
         return cFactory
       },
-      set: function () { this.$store.commit('CURRENT_FACTORY', this.factory) }
+      set (value) { this.$store.commit('CURRENT_FACTORY', value) }
     },
     listOfTypes () {
       if (this.$store.getters.currentFactory.data.var_descritpions.variables) {
@@ -100,7 +100,12 @@ export default {
           'title': this.currentType.title,
           'var': _.cloneDeep(this.currentType.var)
         }
-        this.factory.data.fields.push(newField)
+
+        this.$store.commit('addElementToArray', {path: 'factories.currentFactory.data.fields', value: newField})
+
+        // let factory = Object.assign({}, this.factory)
+        // factory.data.fields.push(newField)
+        // this.factory = factory
       }
     },
     generateFormSchema (factory, updateProperty) {

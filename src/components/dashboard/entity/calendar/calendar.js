@@ -1,5 +1,5 @@
 export default {
-  name: 'entity.calendar',
+  name: 'entityCalendar',
   data () {
     return {
     }

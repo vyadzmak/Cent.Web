@@ -89,7 +89,7 @@ export default {
     },
     deleteItem: function (itemId) {
       this.$store.commit('showSpinner', true)
-      this.$http.delete('object/' + itemId)
+      this.$http.delete('objects/' + itemId)
         .then(response => {
           this.getCatalogs()
           this.$store.commit('showSnackbar', {text: 'Удаление каталога прошло успешно', snackbar: true, context: 'success'})

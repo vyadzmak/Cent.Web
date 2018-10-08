@@ -1,6 +1,7 @@
 import questionDialog from '../questionDialog/QuestionDialog.vue'
 import updateModal from './updateModal/UpdateModal.vue'
 import { ModalService } from 'vue-modal-dialog'
+import {admin, entities, settings} from '@/router/routeNames'
 
 export default {
   name: 'dashboard',
@@ -27,20 +28,19 @@ export default {
           title: 'Объекты',
           path: '/dashboard/name',
           visible: this.$router.requireAuth({name: 'main'}, this.userData.user_role_id),
-          isActive: this.isActive(['main', 'Entities', 'entity'])
+          isActive: _.includes(entities, this.$route.name)
         },
         { icon: 'web',
           title: 'Настройки данных',
           path: '/dataSettings',
-          visible: this.$router.requireAuth({name: 'DataSettings'}, this.userData.user_role_id),
-          isActive: this.isActive(['DataSettings', 'Catalogs', 'Factories', 'Factory'])
+          visible: this.$router.requireAuth({name: 'dataSettings'}, this.userData.user_role_id),
+          isActive: _.includes(settings, this.$route.name)
         },
         { icon: 'mdi-worker',
           title: 'Администрирование',
           path: '/administration',
           visible: this.$router.requireAuth({name: 'administration'}, this.userData.user_role_id),
-          isActive: this.isActive(['administration', 'administration.log', 'administration.companies',
-            'administration.users', 'administration.settings', 'administration.company'])
+          isActive: _.includes(admin, this.$route.name)
         }
       ]
     },
@@ -98,9 +98,6 @@ export default {
           console.log(err)
         }
       )
-    },
-    isActive (names) {
-      return _.includes(names, this.$route.name)
     },
     showUpdateModal: function () {
       let item = _.cloneDeep(this.userData)

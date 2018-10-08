@@ -19,10 +19,10 @@ export default {
     goToSetting (n) {
       switch (n) {
         case 1:
-          this.$router.push({name: 'Factories'})
+          this.$router.push({name: 'factories'})
           break
         case 2:
-          this.$router.push({name: 'Catalogs'})
+          this.$router.push({name: 'catalogs'})
           break
         default: this.$store.commit('showSnackbar', {text: 'На данный момент функция недоступна, появится в ближайшее время', snackbar: true, context: 'success'})
           break

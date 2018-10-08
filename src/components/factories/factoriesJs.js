@@ -100,7 +100,7 @@ export default {
     goToFactory (item) {
       let clonedItem = _.cloneDeep(item)
       this.$store.commit('CURRENT_FACTORY', clonedItem)
-      this.$router.push({name: 'Factory', params: {id: item.id}})
+      this.$router.push({name: 'factory', params: {id: item.id}})
     },
     getSchemaTypeName (id) {
       switch (id) {

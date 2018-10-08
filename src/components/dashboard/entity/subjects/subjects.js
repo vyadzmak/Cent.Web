@@ -1,5 +1,5 @@
 export default {
-  name: 'companyEvents',
+  name: 'entitySubjects',
   data () {
     return {
     }

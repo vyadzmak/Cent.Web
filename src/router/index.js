@@ -10,7 +10,7 @@ import store from '../store/index'
 const routes = [
   {
     path: '/login',
-    name: 'Login',
+    name: 'login',
     component: Login
   },
   {
@@ -30,7 +30,8 @@ router.requireAuth = function (to, userRoleId) {
   let userRoutes = []
   switch (userRoleId) {
     case 1: userRoutes = [
-      'main',
+      'dashboard',
+      'main', 'entities',
       'entity', 'entity.access', 'entity.calendar', 'entity.card',
       'entity.documents', 'entity.events', 'entity.gallery', 'entity.groups',
       'entity.history', 'entity.map', 'entity.objects', 'entity.relations',
@@ -40,14 +41,14 @@ router.requireAuth = function (to, userRoleId) {
       'administration.reports', 'administration.events',
       'administration.company.general', 'administration.company.groups', 'administration.company.manage',
       'administration.company.privacy', 'administration.company.stats', 'administration.company.users',
-      'Dashboard', 'Factories', 'Factory',
-      'Entities', 'entity', 'DataSettings', 'Catalogs']
+      'dataSettings',
+      'factories', 'factory', 'catalogs']
       break
-    case 2:userRoutes = ['Dashboard', 'Factories', 'Factory', 'Entities', 'entity', 'DataSettings', 'Catalogs']
+    case 2:userRoutes = ['dashboard', 'factories', 'factory', 'entities', 'entity', 'dataSettings', 'catalogs']
       break
-    case 3: userRoutes = ['Dashboard', 'Entities', 'entity']
+    case 3: userRoutes = ['dashboard', 'entities', 'entity']
       break
-    case 7: userRoutes = ['Dashboard']
+    case 7: userRoutes = ['dashboard']
       break
     default: break
   }
@@ -64,10 +65,10 @@ router.beforeEach((to, from, next) => {
       next({path: '/'})
     }
   } else {
-    if (to.name === 'Login') {
+    if (to.name === 'login') {
       next()
     } else {
-      next({ name: 'Login' })
+      next({ name: 'login' })
     }
   }
 })

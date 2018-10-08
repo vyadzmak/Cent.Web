@@ -1,5 +1,6 @@
 import questionDialog from '../../questionDialog/QuestionDialog.vue'
 import { ModalService } from 'vue-modal-dialog'
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'log',
@@ -7,7 +8,6 @@ export default {
     return {
       msg: 'Лог',
       search: '',
-      logs: [],
       errors: [],
       headers: [
         { text: 'ID', align: 'left', value: 'id' },
@@ -21,9 +21,9 @@ export default {
     }
   },
   computed: {
-    userData: function () {
-      return this.$store.getters.userData
-    }
+    ...mapGetters({
+      logs: 'logs/items'
+    })
   },
   methods: {
     showDeleteModal: function () {
@@ -64,16 +64,7 @@ export default {
     }
   },
   created () {
-    this.$store.commit('showSpinner', true)
-    this.$http.get(`log`)
-      .then(response => {
-        this.$store.commit('showSpinner', false)
-        this.logs = response.data
-      })
-      .catch(e => {
-        this.errors.push(e)
-        this.$store.commit('showSpinner', false)
-      })
+    this.$store.dispatch('logs/getItems')
   },
   mounted () {
     this.$refs.logDataTable.defaultPagination.descending = true

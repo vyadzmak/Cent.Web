@@ -12,6 +12,7 @@
           :items="listOfTypes"
           item-text="title"
           item-disabled="not_used"
+          return-object
           label="Тип поля"
           class="mx-3"
         />
@@ -37,7 +38,7 @@
       <v-data-table
         ref = "factoryDataTable"
         :headers="headers"
-        :items="factory.data.fields"
+        :items="tableItems"
         :search="search"
         :rows-per-page-items="tableRowsShown"
         :rows-per-page-text="rowsPerPageText"

@@ -1,5 +1,5 @@
 export default {
-  name: 'entity.events',
+  name: 'entityEvents',
   data () {
     return {
     }

@@ -1,5 +1,5 @@
 export default {
-  name: 'entity.map',
+  name: 'entityMap',
   data () {
     return {
     }

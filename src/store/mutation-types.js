@@ -3,6 +3,7 @@ let types = {
   showSpinner: 'showSpinner',
   showSnackbar: 'showSnackbar',
   setUpdateProperty: 'setUpdateProperty',
+  updateByPath: 'updateByPath',
 
   // USERDATA
   USER_DATA: 'USER_DATA',

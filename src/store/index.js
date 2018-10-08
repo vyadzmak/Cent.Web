@@ -12,7 +12,7 @@ import ApiModule from './modules/apiModules/ApiModule'
 const importedModules = {}
 
 apiModules.forEach(element => {
-  importedModules[element.link] = new ApiModule(element.link)
+  importedModules[element.link] = new ApiModule(element)
 })
 
 importedModules.loginUser = loginUser

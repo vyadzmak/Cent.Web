@@ -1,3 +1,20 @@
+const generateItems = function () {
+  let marks = [{id: 1, icon: 'fas fa-home', name: 'Недвижимость'},
+    {id: 2, icon: 'fas fa-car', name: 'Транспорт'},
+    {id: 3, icon: 'fas fa-plane', name: 'Авиатранспорт'},
+    {id: 4, icon: 'mdi-human-handsup', name: 'Субъекты'},
+    {id: 5, icon: 'fas fa-plane', name: 'Авиатранспорт'},
+    {id: 6, icon: 'mdi-human-handsup', name: 'Субъекты'}]
+  let badges = [ 'fas fa-user', 'fas fa-bell', 'fas fa-calendar', 'fas fa-link', 'fas fa-comment',
+    'fas fa-users', 'fas fa-share-alt']
+  for (let i = 0; i < marks.length; i++) {
+    marks[i].sIcons = []
+    _.forEach(badges, badge => {
+      marks[i].sIcons.push({icon: badge, badge: Math.floor(Math.random() * 20)})
+    })
+  }
+  return marks
+}
 
 export default {
   name: 'dataSettings',
@@ -5,78 +22,7 @@ export default {
     return {
       avatarPath: 'https://raw.githubusercontent.com/vuetifyjs/docs/dev/static/doc-images/lists/1.jpg',
       msg: 'Настройки данных',
-      items: [{id: 1,
-        icon: 'fas fa-home',
-        name: 'Недвижимость',
-        sIcons: [
-          {icon: 'fas fa-user', badge: 12},
-          {icon: 'fas fa-bell', badge: 14},
-          {icon: 'fas fa-calendar', badge: 14},
-          {icon: 'fas fa-link', badge: 14},
-          {icon: 'fas fa-comment', badge: 14},
-          {icon: 'fas fa-users', badge: 14},
-          {icon: 'fas fa-share-alt', badge: 14}
-        ]},
-      {id: 2,
-        icon: 'fas fa-car',
-        name: 'Транспорт',
-        sIcons: [
-          {icon: 'fas fa-user', badge: 12},
-          {icon: 'fas fa-bell', badge: 14},
-          {icon: 'fas fa-calendar', badge: 14},
-          {icon: 'fas fa-link', badge: 14},
-          {icon: 'fas fa-comment', badge: 14},
-          {icon: 'fas fa-users', badge: 14},
-          {icon: 'fas fa-share-alt', badge: 14}
-        ]},
-      {id: 3,
-        icon: 'fas fa-plane',
-        name: 'Самолет',
-        sIcons: [
-          {icon: 'fas fa-user', badge: 12},
-          {icon: 'fas fa-bell', badge: 14},
-          {icon: 'fas fa-calendar', badge: 14},
-          {icon: 'fas fa-link', badge: 14},
-          {icon: 'fas fa-comment', badge: 14},
-          {icon: 'fas fa-users', badge: 14},
-          {icon: 'fas fa-share-alt', badge: 14}
-        ]},
-      {id: 4,
-        icon: 'mdi-human-handsup',
-        name: 'Субъекты',
-        sIcons: [
-          {icon: 'fas fa-user', badge: 12},
-          {icon: 'fas fa-bell', badge: 14},
-          {icon: 'fas fa-calendar', badge: 14},
-          {icon: 'fas fa-link', badge: 14},
-          {icon: 'fas fa-comment', badge: 14},
-          {icon: 'fas fa-users', badge: 14},
-          {icon: 'fas fa-share-alt', badge: 14}
-        ]},
-      {id: 5,
-        icon: 'fas fa-plane',
-        name: 'Самолет',
-        sIcons: [
-          {icon: 'fas fa-user', badge: 12},
-          {icon: 'fas fa-bell', badge: 14},
-          {icon: 'fas fa-calendar', badge: 14},
-          {icon: 'fas fa-link', badge: 14},
-          {icon: 'fas fa-comment', badge: 14},
-          {icon: 'fas fa-users', badge: 14},
-          {icon: 'fas fa-share-alt', badge: 14}
-        ]},
-      {id: 6,
-        icon: 'mdi-human-handsup',
-        name: 'Субъекты',
-        sIcons: [
-          {icon: 'fas fa-user', badge: 12},
-          {icon: 'fas fa-bell', badge: 14},
-          {icon: 'fas fa-calendar', badge: 14},
-          {icon: 'fas fa-link', badge: 14},
-          {icon: 'fas fa-comment', badge: 14},
-          {icon: 'fas fa-users', badge: 14},
-          {icon: 'fas fa-share-alt', badge: 14}
-        ]}],
+      items: generateItems(),
       contacts: [
         { title: 'Jason Oner', avatar: this.avatarPath },
         { title: 'Ranee Carlson', avatar: this.avatarPath },
@@ -84,10 +30,10 @@ export default {
         { title: 'Ali Connors', avatar: this.avatarPath }
       ],
       news: [
-        { title: 'Jason Oner', avatar: this.avatarPath, subtitle: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.' },
-        { title: 'Ranee Carlson', avatar: this.avatarPath, subtitle: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.' },
-        { title: 'Cindy Baker', avatar: this.avatarPath, subtitle: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.' },
-        { title: 'Ali Connors', avatar: this.avatarPath, subtitle: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.' }
+        { title: 'Jason Oner', avatar: this.avatarPath, subtitle: 'Изменен объект Автомобиль' },
+        { title: 'Ranee Carlson', avatar: this.avatarPath, subtitle: 'Изменен объект Пример недвижимого имущества' },
+        { title: 'Cindy Baker', avatar: this.avatarPath, subtitle: 'Изменен субъект Иванов И.И.' },
+        { title: 'Ali Connors', avatar: this.avatarPath, subtitle: 'Создан объект Автомобиль' }
       ],
       lastEntities: []
     }
@@ -101,10 +47,10 @@ export default {
     goToItem (item) {
       switch (item.id) {
         case 1:
-          this.$router.push({name: 'Entities'})
+          this.$router.push({name: 'entities'})
           break
         case 2:
-          this.$router.push({name: 'Entities'})
+          this.$router.push({name: 'entities'})
           break
         default: this.$store.commit('showSnackbar', {text: 'На данный момент функция недоступна, появится в ближайшее время', snackbar: true, context: 'success'})
           break

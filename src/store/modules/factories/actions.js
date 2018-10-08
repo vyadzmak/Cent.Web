@@ -21,7 +21,7 @@ export const updateFactory = ({ commit, getters }, {isUpdate, item}) => {
   return new Promise((resolve, reject) => {
     commit('showSpinner', true)
     http({method: isUpdate ? 'put' : 'post',
-      url: isUpdate ? 'schema/' + item.id : 'schemas',
+      url: isUpdate ? 'schemas/' + item.id : 'schemas',
       data: item,
       config: { contentType: 'application/json' }
     })
@@ -51,7 +51,7 @@ export const updateFactory = ({ commit, getters }, {isUpdate, item}) => {
 
 export const deleteFactory = ({ commit, getters }, {id}) => {
   commit('showSpinner', true)
-  http.delete('schema/' + id)
+  http.delete('schemas/' + id)
     .then(response => {
       if (response.status === 204) {
         commit('DELETE_FACTORY', id)

@@ -1,5 +1,5 @@
 export default {
-  name: 'entity.gallery',
+  name: 'entityGallery',
   data () {
     return {
       rowsPerPageItems: [6, 9, 12],

@@ -1,5 +1,5 @@
 export default {
-  name: 'entity.history',
+  name: 'entityHistory',
   data () {
     return {
     }

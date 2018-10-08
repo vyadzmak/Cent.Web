@@ -19,7 +19,7 @@ export const getCatalogSchemas = ({ commit, getters }, {id}) => {
   commit('showSpinner', true)
   http.get(`schemaCatalogs` + '/' + id)
     .then(response => {
-      let catalogs = _.response.filter({'schema_type_id': 3})
+      let catalogs = _.filter(response.data, {'schema_type_id': 3})
       commit(types.UPDATE_CATALOG_SCHEMAS, catalogs)
       commit('showSpinner', false)
     })
@@ -32,7 +32,7 @@ export const getCatalogSchemas = ({ commit, getters }, {id}) => {
 export const getCatalogSchema = ({ commit, getters }, {id}) => {
   return new Promise((resolve, reject) => {
     commit('showSpinner', true)
-    http.get(`schema` + '/' + id)
+    http.get(`schemas` + '/' + id)
       .then(response => {
         commit(types.UPDATE_CATALOG_SCHEMA, response.data)
         commit('showSpinner', false)
@@ -49,7 +49,7 @@ export const getCatalogSchema = ({ commit, getters }, {id}) => {
 export const getUpdateCatalog = ({ commit, getters }, {id}) => {
   return new Promise((resolve, reject) => {
     commit('showSpinner', true)
-    http.get(`object` + '/' + id)
+    http.get(`objects` + '/' + id)
       .then(response => {
         let responseData = response.data
         responseData.data = JSON.parse(responseData.data)
@@ -69,7 +69,7 @@ export const updateCatalog = ({ commit, getters }, {isUpdate, item}) => {
   return new Promise((resolve, reject) => {
     commit('showSpinner', true)
     http({method: isUpdate ? 'put' : 'post',
-      url: isUpdate ? 'object/' + item.id : 'objects',
+      url: isUpdate ? 'objects/' + item.id : 'objects',
       data: item,
       config: { contentType: 'application/json' }
     })

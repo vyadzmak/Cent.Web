@@ -91,7 +91,7 @@ export const updateEntity = ({ commit, getters }, {isUpdate, item}) => {
     console.log(JSON.stringify(item))
     commit('showSpinner', true)
     http({method: isUpdate ? 'put' : 'post',
-      url: isUpdate ? 'object/' + item.id : 'objects',
+      url: isUpdate ? 'objects/' + item.id : 'objects',
       data: item,
       config: { contentType: 'application/json' }
     })

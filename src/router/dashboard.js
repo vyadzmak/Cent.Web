@@ -13,7 +13,7 @@ import entityChildren from './entityChildren'
 
 const dashboard = {
   path: '/',
-  name: 'Dashboard',
+  name: 'dashboard',
   component: Dashboard,
   exact: true,
   redirect: to => {
@@ -26,17 +26,17 @@ const dashboard = {
   },
   {
     path: 'factories',
-    name: 'Factories',
+    name: 'factories',
     component: Factories
   },
   {
     path: 'factory',
-    name: 'Factory',
+    name: 'factory',
     component: Factory
   },
   {
     path: 'entities',
-    name: 'Entities',
+    name: 'entities',
     component: Entities
   },
   {
@@ -50,12 +50,12 @@ const dashboard = {
   },
   {
     path: 'dataSettings',
-    name: 'DataSettings',
+    name: 'dataSettings',
     component: DataSettings
   },
   {
     path: 'catalogs',
-    name: 'Catalogs',
+    name: 'catalogs',
     component: Catalogs
   },
   {
